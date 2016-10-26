@@ -1,0 +1,21 @@
+#!/usr/bin/env node
+var debug = require('../configs/debug.js');
+
+var config = require('../lib/common/config');
+
+//var cacheClient = require('../lib/common/cacheClient');
+//cacheClient.initialize(config.redis);
+
+var mysqlClient = require('../lib/common/mysqlClient');
+mysqlClient.initialize(config.mysql);
+
+//var MongoClient = require('../lib/common/mongoClient');
+//MongoClient.initialize(config.mongo.query_db_full_conn_string)
+
+
+var app = require('../app');
+app.set('port', 3001);
+
+var server = app.listen(app.get('port'), function () {
+    debug('Express server listening on port ' +3001);
+});

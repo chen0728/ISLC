@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <!--<META HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+    <META HTTP-EQUIV="expires" CONTENT="0">-->
+    <meta name="render" content="webkit">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>运营系统</title>
+    <!-- 核心css样式 -->
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <!-- 子页css样式 -->
+    <link rel="stylesheet" type="text/css" href="/js/jquery-ui/css/jquery-ui.min.css">
+    <link rel="stylesheet" type="text/css" href="/js/zTree/css/zTreeStyle.css">
+    <link rel="stylesheet" type="text/css" href="/js/bxslider/jquery.bxslider.css">
+    <link rel="stylesheet" type="text/css" href="/js/select2/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="/js/bootstrap-datepicker/datepicker.css">
+    <link rel="stylesheet" type="text/css" href="/js/fullcalendar/fullcalendar.min.css">
+    <link rel="stylesheet" type="text/css" href="/js/dookaycity/jquery.dookaycity.css">
+    <link rel="stylesheet" type="text/css" href="/css/page.css">
+    <link rel="stylesheet" type="text/css" href="/css/zhangfan.css">
+    <link rel="stylesheet" type="text/css" href="/css/tourism.css">
+    <link rel="stylesheet" type="text/css" href="/css/jigang.css">
+    <!-- 验证样式 -->
+    <link rel="stylesheet" type="text/css" href="/js/validate/css/jquery.validator.css">
+    <!-- 核心js -->
+    <script src="/js/jquery-1.11.1.min.js"></script>
+    <script src="js/highcharts.js"></script>
+    <script src="js/exporting.js"></script>
+    <script src="/js/table-ajax.js"></script>
+    <!-- 上传图片js -->
+    <script type="text/javascript" src="/js/uploadify/jquery.uploadify.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/js/uploadify/uploadify.css" />
+    <script type="text/javascript" src="/js/uploadify/upload-nuode.js"></script>
+    <!-- 表格共通-->
+    <script src="js/table-ajax.js"></script>
+
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.min.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body style="word-warp:break-word; word-break:break-all;">
+<div class="wraper">
+    <!-- header -->
+    <header>
+        <div class="container">
+            <h1 class="logo"><a  style="width:350px">天下酒仓<b>·</b>运营系统</a></h1>
+
+            <div class="right">
+                <div class="user-hello">你好，<a href="#"><%if(username){%>
+                    <%=username%>
+                    <%}else{%>
+                    admin
+                    <%}%></a></div>
+                <div class="dropdown user-opt">
+                    <a href="javascript:;" id="dLabel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="caret-wrap"><i class="caret"></i></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <li role="presentation" class="divider"></li>
+                        <li><a href="/logout">退出</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- content -->
+    <div class="container mt-4" id="j_tabspage">
+        <!-- 标签head -->
+        <nav class="nav-main">
+            <h2 class="pl-2"><%=mm_dd%><span class="ml-3"><%=Week%></span></h2>
+            <!-- <div class="weather" title="多云">
+              <div class="weather-week">周五</div>
+              <div class="weather-date">四月二一</div>
+              <div class="weather-icon"><img src="images/weather/cloudy.png"></div>
+              <div class="weather-temperature">28~22℃</div>
+            </div> -->
+            <ul>
+                <li>
+                    <a href="#tabs-1"><span class="shape"></span>首页</a>
+                </li>
+            </ul>
+            <div class="tab-more" id="j_tabmore">
+                <a id="tabLabel" href="javascript:;">
+                    <span class="shape"></span><span id="tabmorelabel"></span>(<span id="tabmorecount"></span>)
+                </a>
+                <i class="caret"></i>
+            </div>
+        </nav>
+        <!-- 左侧导航 -->
+        <aside class="main-box p-1 pb-3 w-24" id="navAside">
+            <ul class="nav-aside" id="j_menu"></ul>
+        </aside>
+        <!-- 主内容区 -->
+        <div class="w-93-5 pull-right" id="pageWrap">
+            <div class="page" id="tabs-1" data-oldlink="index.html" data-link="index.html">
+                <!--start-->
+                <div class="main-box-index h-48 clearfix">
+                </div>
+                <!--end-->
+            </div>
+        </div>
+    </div>
+    <!-- footer -->
+    <footer>
+        <div class="container">
+            <p>Copyright @2016 北京天下酒仓电子商务有限公司</p>
+        </div>
+    </footer>
+</div>
+<!-- jquery插件 -->
+<script src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.cookie.js"></script>
+<script src="/js/jquery.history.js"></script>
+<script src="/js/jquery-ui/core.js"></script>
+<script src="/js/jquery-ui/widget.js"></script>
+<script src="/js/jquery-ui/tabs.js"></script>
+<script src="/js/jquery-ui/button.js"></script>
+<script src="/js/jquery-ui/mouse.js"></script>
+<script src="/js/jquery-ui/draggable.js"></script>
+<script src="/js/jquery-ui/spinner.js"></script>
+<script src="/js/zTree/jquery.ztree.core.min.js"></script>
+<script src="/js/bxslider/jquery.bxslider.min.js"></script>
+<script src="/js/select2/select2.min.js"></script>
+<script src="/js/jquery.dataTables/js/jquery.dataTables.min.js"></script>
+<script src="/js/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+<script src="/js/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.js"></script>
+<script src="/js/moment/moment.min.js"></script>
+<script src="/js/dookaycalendar/calendar.style-1.js"></script>
+<script src="/js/dookaycalendar/calendar.style-2.js"></script>
+<script src="/js/jquery.validate.min.js"></script>
+<script src="/js/dookaycity/jquery.dookaycity.js"></script>
+<script src="/js/dookaycity/city.js"></script>
+<!-- 表单验证js -->
+<script src="/js/validate/jquery.validator.js"></script>
+<script src="/js/validate/zh_CN.js"></script>
+
+
+
+
+<script src="./js/thrift.js" type="text/javascript" charset="utf-8"></script>
+
+<script src="./api/js/txjcSvc.js" type="text/javascript" charset="utf-8"></script>
+
+<script src="./api/js/agent_types.js" type="text/javascript" charset="utf-8"></script>
+<!--<script src="./api/js/auth_types.js" type="text/javascript" charset="utf-8"></script>-->
+<script src="./api/js/cart_types.js" type="text/javascript" charset="utf-8"></script>
+<script src="./api/js/common_types.js" type="text/javascript" charset="utf-8"></script>
+<script src="./api/js/customer_types.js" type="text/javascript" charset="utf-8"></script>
+<script src="./api/js/global_types.js" type="text/javascript" charset="utf-8"></script>
+<script src="./api/js/homePage_types.js" type="text/javascript" charset="utf-8"></script>
+<script src="./api/js/operator_types.js" type="text/javascript" charset="utf-8"></script>
+<script src="./api/js/order_types.js" type="text/javascript" charset="utf-8"></script>
+<script src="./api/js/product_types.js" type="text/javascript" charset="utf-8"></script>
+<script src="./api/js/role_types.js" type="text/javascript" charset="utf-8"></script>
+<script src="./api/js/warehouse_types.js" type="text/javascript" charset="utf-8"></script>
+
+<script src="js/txjc-js/thrift_client.js" type="text/javascript" charset="utf-8"></script>
+
+<!--<script src="./api/js/server_types.js" type="text/javascript" charset="utf-8"></script>-->
+<script type="text/javascript" charset="utf-8"></script>
+<script>
+    var menu_data = [
+        /*{id: 1, pid:0, name: "产品", open: true,link: '/'},
+        {id: 11, pid:1, name: "产品管理",link: '/product_manage'},
+        {id: 12, pid:1, name: "产品发布",link: '/product_relese'},
+        {id: 13, pid:1, name: "首页管理",link: '/homePage_manage'},
+        {id: 14, pid:1, name: "内容管理",link: '/content_manage'},
+        {id: 15, pid:1, name: "发货管理",link: '/deliverGoods_manage'},
+        {id: 16, pid:1, name: "订单管理",link: '/'},
+        {id: 161, pid:16, name: "普通订单管理",link: '/normalOrder_manage'},
+        {id: 162, pid:16, name: "退换货订单管理",link: '/returnOrder_manage'},
+        {id: 2, pid:0, name: "管理",link: '/'},
+        {id: 21, pid:2, name: "客服代理商管理",link: '/customSvc_manage'},
+        {id: 3, pid:0, name: "运维",link: '/'},
+        {id: 31, pid:3, name: "角色管理",link: '/role_manage'},
+        {id: 32, pid:3, name: "帐户管理",link: '/account_manage'},
+        {id: 33, pid:3, name: "代理商管理",link: '/agent_manage'},
+        {id: 34, pid:3, name: "仓库管理",link: '/'},
+        {id: 341, pid:34, name: "仓库管理",link: '/warehouse_manage'},
+        {id: 341, pid:34, name: "运费管理",link: '/delivery_manage'},
+        {id: 35, pid:3, name: "代理区域设置",link: '/area_manage'}*/
+    ];
+    //左侧菜单json数据
+    $(function () {
+        var result = txjcClient.getMenu('<%=_id%>');
+        menu_data = result.menu
+        debugger;
+        if(menu_data){
+            menu_data[0].open = true;
+        }
+        $.ajaxSetup({cache:false})
+    })
+    var orderId='';
+    var agentId='';
+    var sys_role_name='<%=role_name%>';
+    var sys_username='<%=username%>';
+    var sys_id='<%=_id%>';
+    var page_state = true;
+    $("img").live('click',function(){
+        //获取当前网址，如： http://localhost:8083/uimcardprj/share/meun.jsp
+        var curWwwPath = window.document.location.href;
+        //获取主机地址之后的目录，如： uimcardprj/share/meun.jsp
+        var pathName = window.document.location.pathname;
+        var pos = curWwwPath.indexOf(pathName);
+        //获取主机地址，如： http://localhost:8083
+        var localhostPaht = curWwwPath.substring(0, pos);
+        window.open(localhostPaht+"/"+$(this).attr("src"));
+    })
+
+</script>
+<!-- js应用 -->
+<script src="/js/page.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,139 @@
+// Core variables and mixins
+@import "variables.less";
+@import "mixins.less";
+
+// Reset and dependencies
+@import "normalize.less";
+@import "print.less";
+@import "glyphicons.less";
+
+// Core CSS
+@import "scaffolding.less";
+@import "type.less";
+@import "code.less";
+@import "grid.less";
+@import "tables.less";
+@import "forms.less";
+@import "buttons.less";
+
+// Components
+@import "component-animations.less";
+@import "dropdowns.less";
+@import "button-groups.less";
+@import "input-groups.less";
+@import "navs.less";
+@import "navbar.less";
+@import "breadcrumbs.less";
+//"pagination.less";
+@import "pager.less";
+@import "labels.less";
+@import "badges.less";
+@import "jumbotron.less";
+@import "thumbnails.less";
+@import "alerts.less";
+@import "progress-bars.less";
+@import "media.less";
+@import "list-group.less";
+@import "panels.less";
+@import "responsive-embed.less";
+@import "wells.less";
+@import "close.less";
+
+// Components w/ JavaScript
+@import "modals.less";
+@import "tooltip.less";
+@import "popovers.less";
+@import "carousel.less";
+
+// Utility classes
+@import "utilities.less";
+@import "responsive-utilities.less";
+
+//自定义配置- 文字颜色
+.text-darker{color:@gray-darker;}
+.text-dark{color:@gray-dark;}
+.text-gray{color:@gray;}
+.text-gray-light{color:@gray-light;}
+.text-gray-lighter{color:lighten(@gray-base, 60%);}
+
+//自定义配置 - 色块
+.block-primary{ 
+  display:inline-block;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color:#fff;
+  text-align:center;
+  background-color:@brand-primary;
+  border-radius:@border-radius-base;
+  font-family:@headings-font-family;
+}
+.block-success{
+  .block-primary;
+  background-color:@brand-success;
+}
+.block-info{
+  .block-primary;
+  background-color:@brand-info;
+  color:#666;
+}
+.block-warning{
+  .block-primary;
+  background-color:@brand-warning;
+}
+.block-danger{
+  .block-primary;
+  background-color:@brand-danger;
+}
+
+.block-lg{ 
+  padding: 9px 12px;
+  line-height: 23px;
+  font-size:18px;
+}
+.block-xs{ 
+  padding: 2px 8px;
+  line-height: 20px;
+  font-size:14px;
+}
+
+//colors
+@brand-primary:#57b4f5;
+@brand-success:#54bb80;
+@brand-warning:#fd9d35;
+@brand-info:#cccccc;
+@brand-danger:#ff1d25;
+
+//Scaffolding
+@link-color:@text-color;
+@link-hover-color:#0071bc;
+
+//Typography
+@font-family-base:"Helvetica Neue", Helvetica, Arial, "宋体";
+@headings-font-family:"Helvetica Neue", Helvetica, Arial, "微软雅黑";
+
+//Grid system
+@grid-gutter-width:0;
+
+//Components
+@border-radius-large:4px;
+
+//Buttons
+@btn-default-border:#dcdcdc;
+@input-border:@btn-default-border;
+@btn-primary-border:@btn-primary-bg;
+@btn-success-border:@btn-success-bg;
+@btn-info-border:@btn-info-bg;
+@btn-warning-border:@btn-warning-bg;
+@btn-danger-border:@btn-danger-bg;
+
+//Forms
+@input-border-radius:@border-radius-small;
+
+//Breadcrumbs
+@breadcrumb-padding-vertical:0;
+@breadcrumb-padding-horizontal:0;
+@breadcrumb-bg:transparent;
+@breadcrumb-color:#333;
+@breadcrumb-active-color:#666;
+@breadcrumb-separator:">";
