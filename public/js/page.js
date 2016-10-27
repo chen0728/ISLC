@@ -110,7 +110,7 @@ $(function(){
       page_wrap.append('<div class="page" data-active="'+ pUrl +'" data-link="' + pUrl + '" id="' + _tabid + '"></div>');
       tabs.tabs("refresh");
       tab_counter++;
-
+      debugger;
       //$('#'+ page_wrap.children(':last').data('change',true).attr('aria-labelledby')).trigger('click');
       aHistory.push('p'+_tabid);
       $.History.go('p'+_tabid);

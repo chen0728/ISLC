@@ -1,0 +1,151 @@
+<div id="account_manage_page">
+    <!--start-->
+    <ol class="breadcrumb">
+        <li><a href="index.html">运维</a></li>
+        <li class="active">账户管理</li>
+    </ol>
+    <div class="main-box main-box-noborder overflow-hidden">
+        <div style="clear:both;width: 100%;height:45px;margin-bottom: 10px; border:1px solid #e6e6e6;">
+            <div class="form-group ">
+                <label class="control-label w-5 mt-1 ml-3">姓名：</label>
+                <div class="w-20 relative mt-0-5">
+                    <input class="form-control" type="text" name="account_name" id="user_name_q" placeholder="请输入姓名" maxlength="20">
+                </div>
+                <label class="control-label w-5 mt-1 ml-5">角色：</label>
+                <div class="w-20 relative mt-0-5">
+                    <input class="form-control" type="text" name="account_name" id="roles_q" placeholder="请输入角色" maxlength="20">
+                </div>
+                <a href="#addAccountModal" data-toggle="modal" class="btn btn-success font-14 pull-right mt-0-5 ml-0-5" style="width: 70px" id="add_account">添加</a>
+                <a href="javascript:void(0);" class="btn btn-success font-14 pull-right mt-0-5" style="width: 70px" id="query_account">查询</a>
+            </div>
+        </div>
+        <table  class="table-style-1 table-style-1-a table-hover mb-0-5 " id="account_Table" style="border-spacing: 0">
+            <thead>
+            <tr class="sch " style="background-color: #f6f6f6;height: 10px;" >
+                <td style="padding-top: 32px;width: 14%;" >
+                    <div class="t"  style="text-align: left;padding-left:18px" >编号<span class="sort-ico"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+                </td>
+                <td style="padding-top: 32px;width: 14%;" >
+                    <div class="t"  style="text-align: center;" >姓名<span class="sort-ico"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+                </td>
+                <td style="padding-top: 32px;width: 14%;" >
+                    <div class="t"  style="text-align: center;" >手机号<span class="sort-ico"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+                </td>
+                <td style="padding-top: 32px;width: 14%;" >
+                    <div class="t"  style="text-align: center;" >角色<span class="sort-ico"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+                </td>
+                <td style="padding-top: 32px;width: 14%;">
+                    <div class="t" style="text-align: center;">添加时间<span class="sort-ico"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+                </td>
+                <td  style="padding-top: 32px;width: 14%;">
+                    <div class="t" style="text-align: center;">状态<span class="sort-ico"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+                </td>
+                <td style="padding-top: 32px;width: 16%;">
+                    <div class="t" style="text-align: center;padding-right:8px">操作<span class="sort-ico"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+                </td>
+            </tr>
+            </thead>
+            <tbody  id="accountInquiry">
+            <!--<tr role="row" class="odd">
+                <td><label class="checkbox-inline">01</label></td>
+                <td><div style="text-align: center;">张三</div></td>
+                <td><div style="text-align: center;">13333333333</div></td>
+                <td><div style="text-align: center;">管理员</div></td>
+                <td><div style="text-align: center;">2015-12-8</div></td>
+                <td><div style="text-align: center;">正常</div></td>
+                <td>
+                    <div style="text-align: center;">
+                        <a href="#addAccountModal" data-toggle="modal" class="btn btn-success font-14 " style="width: 60px" name="updateAccount">编辑</a>
+                        <a href="javascript:void(0);" class="btn btn-success font-14 ml-0-5 " style="width: 60px">删除</a>
+                    </div>
+                </td>
+            </tr>-->
+            </tbody>
+        </table>
+        <nav class="pagination-wrap clearfix" style="height: 20px">
+        </nav>
+    </div>
+
+
+    <!-- 添加账户弹出框 -->
+    <div class="modal modal-noline fade" id="addAccountModal" tabindex="-1" role="dialog" aria-labelledby="addAccountModalLabel" aria-hidden="true">
+        <div class="modal-outer">
+            <div class="modal-middle">
+                <div class="modal-dialog modal-inner w-65 float-none">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body p-1 pt-3 pl-5">
+                            <form class="form-horizontal" action="" method="post"   id="add_account_form">
+                                <input id="account_id" type="hidden" name="account_id">
+                                <div class="form-group ">
+                                    <label class="control-label w-9">编号：</label>
+                                    <div class="w-40 relative" disabled>
+                                        <input id="user_no" class="form-control w-32" type="text" name="user_no" maxlength="20" placeholder="系统自动生成" disabled>
+                                        <a href="javascript:void(0);" class="btn btn-success font-14 ml-0-5" style="width: 70px" id="get_user_no" disabled>生成</a>
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <label class="control-label w-9">姓名：</label>
+                                    <div class="w-40 relative">
+                                        <input id="user_name" class="form-control" type="text" name="auser_name" data-rule="姓名:required;" placeholder="请输入姓名" maxlength="20">
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <label class="control-label w-9">手机号：</label>
+                                    <div class="w-40 relative">
+                                        <input id="mobile" class="form-control" type="text" name="mobile" data-rule="手机号:required;mobile"  placeholder="请输入手机号" maxlength="20">
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <label class="control-label w-9">密码：</label>
+                                    <div class="w-40 relative">
+                                        <input id="password" class="form-control" type="password" name="password" data-rule="密码:required;" placeholder="请输入密码" maxlength="20">
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <label class="control-label w-9">角色：</label>
+                                    <div class="w-40 relative">
+                                        <select class="form-control" name="roles" id="roles" data-rule="角色:required;">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group " id="director_id_div" style="display: none">
+                                    <label class="control-label w-9">主管：</label>
+                                    <div class="w-40 relative">
+                                        <select class="form-control" name="director_id" id="director_id">
+                                            <option value="">请选择主管</option>
+                                            <option value="1">主管1</option>
+                                            <option value="2">主管2</option>
+                                            <option value="3">主管3</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <label class="control-label w-9">状态：</label>
+                                    <div class="w-40 relative">
+                                        <select class="form-control" name="data_status" id="data_status">
+                                            <option value="1">正常</option>
+                                            <option value="3">停用</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="modal-footer text-center pb-2">
+                                    <button type="button" class="btn btn-default btn-default-green w-14 font-16 float-none" data-dismiss="modal" id="add_account_cancel">取消</button>
+                                    <button id="save_account" type="button" class="btn btn-success w-14 font-16 float-none ml-2">保存</button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--    &lt;!&ndash; 表格共通&ndash;&gt;
+        <script src="js/table-ajax.js"></script>-->
+    <!--私有js-->
+    <!--<script src="js/txjc-js/account_manage.js"></script>-->
+    <!--end-->
+</div>

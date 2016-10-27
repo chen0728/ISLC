@@ -22,6 +22,7 @@
 	 */
 	// Check our class exists
 	if ( !($.History||false) ) {
+		debugger;
 		// Declare our class
 		$.History = {
 			// Our Plugin definition
@@ -129,6 +130,7 @@
 			 * @param {String} to
 			 */
 			go: function ( to ) {
+				debugger;
 				var History = $.History;
 
 				// Format
