@@ -4,63 +4,69 @@
         <li><a href="index.html">运维</a></li>
         <li class="active">账户管理</li>
     </ol>
-    <div class="main-box main-box-noborder overflow-hidden">
-        <div style="clear:both;width: 100%;height:45px;margin-bottom: 10px; border:1px solid #e6e6e6;">
-            <div class="form-group ">
-                <label class="control-label w-5 mt-1 ml-3">姓名：</label>
-                <div class="w-20 relative mt-0-5">
-                    <input class="form-control" type="text" name="account_name" id="user_name_q" placeholder="请输入姓名" maxlength="20">
-                </div>
-                <label class="control-label w-5 mt-1 ml-5">角色：</label>
-                <div class="w-20 relative mt-0-5">
-                    <input class="form-control" type="text" name="account_name" id="roles_q" placeholder="请输入角色" maxlength="20">
-                </div>
-                <a href="#addAccountModal" data-toggle="modal" class="btn btn-success font-14 pull-right mt-0-5 ml-0-5" style="width: 70px" id="add_account">添加</a>
-                <a href="javascript:void(0);" class="btn btn-success font-14 pull-right mt-0-5" style="width: 70px" id="query_account">查询</a>
-            </div>
-        </div>
-        <table  class="table-style-1 table-style-1-a table-hover mb-0-5 " id="account_Table" style="border-spacing: 0">
+    <div class="main-box main-box-noborder overflow-hidden" style="padding-top: 12px">
+        <table class="table-style-1 table-style-1-a table-hover mb-0-5" id="account_Table">
             <thead>
-            <tr class="sch " style="background-color: #f6f6f6;height: 10px;" >
-                <td style="padding-top: 32px;width: 14%;" >
-                    <div class="t"  style="text-align: left;padding-left:18px" >编号<span class="sort-ico"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+            <tr class="sch">
+                <td style="width: 16%;" align="center">
+                    <div class="t text-left" >姓名
+                    <span class="sort-ico" style="padding-right:45px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span>
+                    </div>
+                    <div class="form-group float-none j_bubble">
+                        <input class="form-control" type="text" name="name_q" id="name_q" placeholder="请输入姓名" maxlength="20">
+                    </div>
                 </td>
-                <td style="padding-top: 32px;width: 14%;" >
-                    <div class="t"  style="text-align: center;" >姓名<span class="sort-ico"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+                <td style="width: 11%;" align="center">
+                    <div class="t">性别<span class="sort-ico" style="padding-right:20px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+                    <div class="form-group float-none j_bubble">
+                        <select class="form-control" id="sex_q" name="sex_q">
+                            <option value="">请选择</option>
+                            <option value="男">男</option>
+                            <option value="女">女</option>
+                        </select>
+                    </div>
                 </td>
-                <td style="padding-top: 32px;width: 14%;" >
-                    <div class="t"  style="text-align: center;" >手机号<span class="sort-ico"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+                <td style="width: 18%;" align="center">
+                    <div class="t">帐号<span class="sort-ico" style="padding-right:55px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+                    <div class="form-group float-none j_bubble text-left">
+                        <input class="form-control" type="text" name="username_q" id="username_q" placeholder="请输入帐号" maxlength="20">
+                    </div>
                 </td>
-                <td style="padding-top: 32px;width: 14%;" >
-                    <div class="t"  style="text-align: center;" >角色<span class="sort-ico"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+                <td style="width: 10%;" align="center">
+                    <div class="t">角色<span class="sort-ico" style="padding-right:18px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+                    <div class="form-group float-none j_bubble text-left">
+                        <select class="form-control" id="part_q" name="part_q">
+                            <option value="">全部</option>
+                            <option value="1">教师</option>
+                            <option value="2">学生</option>
+                            <option value="3">管理员</option>
+                        </select>
+                    </div>
                 </td>
-                <td style="padding-top: 32px;width: 14%;">
-                    <div class="t" style="text-align: center;">添加时间<span class="sort-ico"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+                <td style="width: 19%;" align="center">
+                    <div class="t">班级<span class="sort-ico" style="padding-right:55px;">
+                            <i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+                    <div class="form-group float-none j_bubble text-left">
+                        <input class="form-control" type="text" name="class_q" id="class_q" placeholder="请输入班级" maxlength="20">
+                    </div>
                 </td>
-                <td  style="padding-top: 32px;width: 14%;">
-                    <div class="t" style="text-align: center;">状态<span class="sort-ico"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+                <td style="width: 11%;" align="center">
+                    <div class="t">状态<span class="sort-ico" style="padding-right:20px;">
+                        <i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+                    <select class="form-control" id="status_q" name="status_q">
+                        <option value="">请选择</option>
+                        <option value="1">正常</option>
+                        <option value="2">删除</option>
+                    </select>
                 </td>
-                <td style="padding-top: 32px;width: 16%;">
-                    <div class="t" style="text-align: center;padding-right:8px">操作<span class="sort-ico"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+                <td style="width: 15%;" align="center">
+                    <div class="t">操作</div>
+                    <button class="btn btn-success float-none j_bubble" type="button" id="employeeSeatchBut">搜索
+                    </button>
                 </td>
             </tr>
             </thead>
-            <tbody  id="accountInquiry">
-            <!--<tr role="row" class="odd">
-                <td><label class="checkbox-inline">01</label></td>
-                <td><div style="text-align: center;">张三</div></td>
-                <td><div style="text-align: center;">13333333333</div></td>
-                <td><div style="text-align: center;">管理员</div></td>
-                <td><div style="text-align: center;">2015-12-8</div></td>
-                <td><div style="text-align: center;">正常</div></td>
-                <td>
-                    <div style="text-align: center;">
-                        <a href="#addAccountModal" data-toggle="modal" class="btn btn-success font-14 " style="width: 60px" name="updateAccount">编辑</a>
-                        <a href="javascript:void(0);" class="btn btn-success font-14 ml-0-5 " style="width: 60px">删除</a>
-                    </div>
-                </td>
-            </tr>-->
-            </tbody>
+            <tbody></tbody>
         </table>
         <nav class="pagination-wrap clearfix" style="height: 20px">
         </nav>
@@ -146,6 +152,6 @@
     <!--    &lt;!&ndash; 表格共通&ndash;&gt;
         <script src="js/table-ajax.js"></script>-->
     <!--私有js-->
-    <!--<script src="js/txjc-js/account_manage.js"></script>-->
+    <script src="js/backstage/account_manage.js"></script>
     <!--end-->
 </div>
