@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="render" content="webkit">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>天下酒仓·运营系统</title>
+    <!-- 核心css样式 -->
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <!-- 账户模块css样式 -->
+    <link rel="stylesheet" type="text/css" href="/js/bxslider/jquery.bxslider.css">
+    <link rel="stylesheet" type="text/css" href="/css/account.css">
+    <link rel="stylesheet" type="text/css" href="/css/zhangfan.css">
+    <link rel="stylesheet" type="text/css" href="/js/validate/css/jquery.validator.css">
+    <link rel="stylesheet" type="text/css" href="/css/tourism.css">
+
+    <!--<script src="./api/js/thrift.js" type="text/javascript" charset="utf-8"></script>-->
+    <!--<script src="./api/js/authSvc.js" type="text/javascript" charset="utf-8"></script>-->
+    <!--<script src="./api/js/auth_types.js" type="text/javascript" charset="utf-8"></script>-->
+    <script type="text/javascript" charset="utf-8">
+
+    </script>
+    <!-- 核心js -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+    <script src="js/jquery-1.11.1.min.js"></script>
+</head>
+<body>
+<div class="wraper">
+    <!-- header -->
+    <header>
+        <div class="container">
+            <h1 class="logo"><a href="#" style="width:350px">天下酒仓<b>·</b>运营系统</a></h1>
+        </div>
+    </header>
+    <div class="login-main">
+        <!-- banner -->
+        <div class="login-banner">
+            <ul id="j_slide">
+                <li style="background-image:url(/images/temp/login-banner-1.jpg)"></li>
+                <li style="background-image:url(/images/temp/login-banner-2.jpg)"></li>
+            </ul>
+        </div>
+        <!-- 登陆框 -->
+        <!-- 登陆框 -->
+        <div class="container">
+            <div class="login-box">
+                <h3>账号登录</h3>
+
+                <form method="post" role="form" action="/login" id="loginform"  data-validator-option="{beforeSubmit:function(){return true;}}">
+                    <div class="form-group relative" id="msgShow_div">
+                        <input autofocus="autofocus" data-rule="账号:required;" 　onkeyup="loginPage.clearMsg()"
+                               name="username" id="username"  type="text" class="form-control"
+                               placeholder="请输入工号">
+                    </div>
+                    <div class="form-group relative">
+                        <div class="t_msg_1 relative" style="display: none" id="te_msg2">
+                            <span id="pmsgtext">密码不正确！</span>
+                    <span class="n-arrow-01">
+                      <b>◆</b>
+                    </span>
+                        </div>
+                        <!--  <span class="msg-box n-top"><span class="msg-wrap" role="alert" style="display:black"><span class="n-arrow"><b>◆</b><i>◆</i></span><span class="n-msg">密码错误</span></span></span>-->
+                        <input name="password" id="password" data-rule="密码:required;" 　onkeyup="loginPage.clearMsg()"
+                               type="password" class="form-control" placeholder="请输入密码">
+                    </div>
+                    <input type="hidden" id="hidmsg">
+                    <button class="btn btn-success btn-lg" type="button" id="loginbutton">登 录</button>
+                </form>
+                <div class="dec-line-dotwhite mt-2 mb-1"></div>
+                <div class="text-white clearfix">
+                    <span class="w-4-5">提示：</span>
+
+                    <p class="ml-4-5">如忘记密码请与管理员联系。</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- footer -->
+    <footer>
+        <div class="container">
+            <p>Copyright @2016 北京天下酒仓电子商务有限公司</p>
+        </div>
+    </footer>
+</div>
+<!-- jquery插件 -->
+<script src="js/bootstrap.min.js"></script>
+<script src="js/bxslider/jquery.bxslider.min.js"></script>
+
+<!-- js应用 -->
+<script src="js/validate/jquery.validator.js"></script>
+<script src="js/validate/zh_CN.js"></script>
+
+<!-- js应用 -->
+<script src="js/login.js"></script>
+<script>
+    var showCode = '<%=code%>';
+    var showTxt = '<%=text%>';
+    if (showCode!=0) {
+        debugger;
+        setTimeout(function(){
+            var username = $('#loginform').find("#username").val();
+            var password = $('#loginform').find("#password").val();
+            $('#loginform')[0].reset();
+            $("#loginform").isValid();
+            $("#msgShow_div").find(".n-msg").html(showTxt);
+            $('#loginform').find("#username").val(username);
+            $('#loginform').find("#password").val(password);
+        },100);
+    }
+
+</script>
+</body>
+</html>
