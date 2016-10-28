@@ -73,7 +73,7 @@ $(function () {
                         text = fnemployeePage.stautss[i].key_val_cn;
                     }
                 }*/
-                return '<td><div class="text-center">' + text + '</div></td>';
+                return '<td><div class="text-center">' + data + '</div></td>';
             }
         }, {
         }, {
@@ -88,7 +88,7 @@ $(function () {
                         text = fnemployeePage.stautss[i].key_val_cn;
                     }
                 }*/
-                return '<td><div class="text-center">' + text + '</div></td>';
+                return '<td><div class="text-center">' + data + '</div></td>';
             }
         }, {
             "colIndex": 6,
@@ -134,6 +134,15 @@ $(function () {
         // 绘画表格
         TableAjax.drawTable(table_src, ajax_url, pageSize, aoColumns, aoColumnDefs, params, sZeroRecords, fnChangeDataCallback,fnDrawCallback);
     };
+
+    //初始化列表
+    init();
+
+    //搜索后列表重构
+    $("#employeeSeatchBut").on('click',function(){
+        init();
+    });
+
     //获取到数据的回调函数，需要更该时可定义
     function fnChangeDataCallback(data){
         return data;
@@ -142,12 +151,12 @@ $(function () {
     function fnDrawCallback(data){
         return data;
     }
-    init();
 
+    //添加用户弹窗
+    $('#addStaffModal').on('click', function () {
+        $('#addAccountModal').modal('show');
+    });
 
-    $("select").select2({
-        minimumResultsForSearch: Infinity   //隐藏下拉列表搜索框。Infinity可以数字替换，下拉列表项的最少条目数等于该数字时出现搜索框。
-    }); // 美化下拉列表
 
     //弹出框居中
     $('.modal').on('show.bs.modal', function () {
@@ -155,7 +164,7 @@ $(function () {
     }).on('hidden.bs.modal', function () {
         $(this).removeClass('modal-outer');
     });
-})
+});
 
 
 

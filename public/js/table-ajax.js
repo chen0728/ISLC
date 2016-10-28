@@ -278,4 +278,4 @@ var BuildTable = {
         }
         return out_params;
     }
-}
+};
