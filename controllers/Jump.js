@@ -39,6 +39,10 @@ module.exports = function (app) {
     router.get('/account_manage', function (req, res) {
         res.render('Backstage/account_manage',{code:0,text:""});
     });
+    //权限管理
+    router.get('/role_manage', function (req, res) {
+        res.render('Backstage/role_manage',{code:0,text:""});
+    });
 
 
 
