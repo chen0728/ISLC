@@ -15,15 +15,15 @@ $(function () {
     });
     var tempObj;
     var tempEmpObj;
+    var new_account_id;
     var $p_id = $("#account_manage_page");
-    var usernameList = []; //保存所有帐号
 
 
     function init() {
         var params = { // 查询查询参数
             name: $p_id.find('#name_q').val(), // 名字
             sex: $p_id.find('#sex_q').val(), // 性别
-            username: $p_id.find('#username_q').val(), // 帐号
+            account_id: $p_id.find('#account_id_q').val(), // 帐号
             part: $p_id.find('#part_q').val(), // 角色
             year: $p_id.find('#year_q').val(), // 年级
             class: $p_id.find('#class_q').val(), // 班级
@@ -34,7 +34,7 @@ $(function () {
         var ajax_url = '/account/list'; // 定义数据请求路径
         var pageSize = 10 ;// 定义每页长度默认为10
         var aoColumns = [
-            {"col_id": "username"},
+            {"col_id": "account_id"},
             {"col_id": "name"},
             {"col_id": "sex"},
             {"col_id": "part"},
@@ -125,7 +125,7 @@ $(function () {
             "colIndex": 7,
             "html": function (data, type, full) {
                 var retHtml = '';
-                if (full.username == 'admin') {
+                if (full.account_id == 'P10000') {
                     retHtml = retHtml + '<div class="drop-opt">' +
                         '<a href="javascript:;" id="dropLabel-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">详情<span class="icon-chevron-down"></span></a>' +
                         '<ul class="drop-cnt in" role="menu" aria-labelledby="dropLabel-1">' +
@@ -163,10 +163,12 @@ $(function () {
 
     //获取到数据的回调函数，需要更该时可定义
     function fnChangeDataCallback(data){
+        //定义new_account_id为最新唯一ID
+        new_account_id = data.data[0].account_id;
+        var str = new_account_id.split("P");
+        str = parseInt(str[1])+1;
+        new_account_id = 'P' + str;
         debugger;
-        for(var i=0; i<data.data.length ;i++){
-            usernameList[i] = data.data[i].username;
-        }
         return data;
     }
     //绘画完成之后的回调函数
@@ -176,6 +178,15 @@ $(function () {
 
     //添加用户弹窗
     $('#addStaffModal').on('click', function () {
+        $("input[name='part']:eq(0)").attr("checked",'checked');
+        $("#account_id").val(new_account_id);
+        $("#name").val('');
+        $("#sex").val('男');
+        $("#password").val('');
+        $("#class").val('');
+        $("#year").val('');
+        $('#addclass').show();
+
         $('#addAccountModal').modal('show');
         $('#seq_no').val('0');
     });
@@ -192,16 +203,10 @@ $(function () {
         var addpart = $("input[name='part']:checked").val();
         if (addpart == 1) { //学生
             $('#addclass').show();
-            $('#class').attr('data-rule','班级:required;');
-            $('#year').attr('data-rule','年级:required;');
         } else if (addpart == 2) {  //教师
             $('#addclass').hide();
-            $('#class').attr('data-rule','班级;');
-            $('#year').attr('data-rule','年级;');
         } else if (addpart == 3) {  //管理员
             $('#addclass').hide();
-            $('#class').attr('data-rule','班级;');
-            $('#year').attr('data-rule','年级;');
         }
     });
 
@@ -209,13 +214,6 @@ $(function () {
     $('#save_account').on('click', function () {
         // 默认允许提交
         var holdSubmit = true;
-        for(var i=0; i<usernameList.length ;i++){
-            if(usernameList[i] == $('#username').val()){
-                $('#username').attr('class','form-control n-invalid');
-                return;
-            }
-        }
-
         debugger;
         if ($('#add_account_form').isValid()) {
             if (holdSubmit) {
@@ -226,7 +224,6 @@ $(function () {
                     account_id:$("#account_id").val(),
                     name:$("#name").val(),
                     sex:$("#sex").val(),
-                    username:$("#username").val(),
                     password:$("#password").val()
                 };
                 //新建
@@ -274,7 +271,6 @@ $(function () {
 
     // 动态绑定删除事件
     $(document).on("click", ".employee_del", function () {
-        debugger;
         $('#seq_no').val($(this).attr('data-id'));
         // 显示成功对话框
         $("#sureDel").modal('show');
@@ -282,7 +278,7 @@ $(function () {
         //    fnemployeePage.delEmployee($(this));
         //}
     });
-
+    // 确认删除
     $("#confirmDialog").click(function () {
         $.ajax({
             "dataType": 'json',
@@ -298,7 +294,62 @@ $(function () {
             }
         });
     });
+    // 动态绑定编辑事件
+    $(document).on("click", ".employee_edit", function () {
+        debugger;
+        $('#seq_no').val($(this).attr('data-id'));
+        //请求数据自动填充
+        $.ajax({
+            "dataType": 'json',
+            "type": "get",
+            "timeout": 20000,
+            "url": '/account/list?seq_no=' + $('#seq_no').val(),
+            "data": {},
+            "success": function (data) {
+                $("input[name='part']:eq("+(data.data[0].part-1)+")").attr("checked",'checked');
+                $("#account_id").val(data.data[0].account_id);
+                $("#name").val(data.data[0].name);
+                $("#sex").val(data.data[0].sex);
+                $("#password").val(data.data[0].password);
+                $("#class").val(data.data[0].class);
+                $("#year").val(data.data[0].year);
+                if(data.data[0].part == 1){ //学生
+                    $('#addclass').show();
+                } else {
+                    $('#addclass').hide();
+                }
+            },
+            "error": function (data) {
+                console.log(data);
+            }
+        });
+        // 显示成功对话框
+        $('#addAccountModal').modal('show');
+    });
 
+    // 动态绑定重置密码事件
+    $(document).on("click", ".employee_resetpass", function () {
+        $('#seq_no').val($(this).attr('data-id'));
+        // 显示成功对话框
+        $("#sureReset").modal('show');
+    });
+    // 确认删除
+    $("#resetPassword").click(function () {
+        $.ajax({
+            "dataType": 'json',
+            "type": "get",
+            "timeout": 20000,
+            "url": '/account/resetPassword?seq_no=' + $('#seq_no').val(),
+            "data": {},
+            "success": function (data) {
+                debugger;
+                window.location.reload();
+            },
+            "error": function (data) {
+                console.log(data);
+            }
+        });
+    });
 
 });
 

@@ -20,11 +20,11 @@ module.exports = function (app) {
         if(params.name){
             sql = sql.where('name','like','%' + params.name + '%');
         }
+        if(params.account_id){
+            sql = sql.where('account_id','like','%' + params.account_id + '%');
+        }
         if(params.sex){
             sql = sql.where('sex',params.sex);
-        }
-        if(params.username){
-            sql = sql.where('username','like','%' + params.username + '%');
         }
         if(params.part){
             sql = sql.where('part',params.part);
@@ -37,6 +37,9 @@ module.exports = function (app) {
         }
         if(params.status){
             sql = sql.where('status',params.status);
+        }
+        if(params.seq_no){
+            sql = sql.where('seq_no',params.seq_no);
         }
         var infos={};
         sql.then(function (reply) {
@@ -75,6 +78,17 @@ module.exports = function (app) {
     //逻辑删除用户
     router.get('/account/del', function (req, res,next) {
         var sql = knex('account').where('seq_no',req.query.seq_no).update('status',2);
+
+        sql.then(function (reply) {
+            res.json(reply);
+        }).catch(function (err) {
+            next(err);
+        });
+    });
+
+    //用户重置密码
+    router.get('/account/resetPassword', function (req, res,next) {
+        var sql = knex('account').where('seq_no',req.query.seq_no).update('password',123456);
 
         sql.then(function (reply) {
             res.json(reply);
