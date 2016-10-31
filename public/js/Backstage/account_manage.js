@@ -15,7 +15,7 @@ $(function () {
     });
     var tempObj;
     var tempEmpObj;
-    var new_account_id;
+    var new_account_id;//新数据的编号（最大+1)
     var $p_id = $("#account_manage_page");
 
 

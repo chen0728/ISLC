@@ -19,7 +19,7 @@ module.exports = function (app) {
 
     /*********************后台*********************/
 
-        //后台登陆页面
+    //后台登陆页面
     router.get('/', function (req, res) {
         res.render('Backstage/login',{code:0,text:""});
     });
@@ -29,18 +29,28 @@ module.exports = function (app) {
     });
     //后台首页
     router.post('/login', function (req, res) {
-        res.render('Backstage/index',{username:'超级管理员',mm_dd:'10月26日',Week:'周三',role_name:'哈哈哈',_id:123});
+        userInfo = req.body;
+        knex.select('*').from('account').where('account_id', userInfo.username).where('password', userInfo.password).then(function (reply) {
+           if(reply.length == 1){
+               req.session.account_id = userInfo.username;
+               res.render('Backstage/index',{username:'超级管理员',mm_dd:'10月26日',Week:'周三',role_name:'哈哈哈',_id:123});
+           }else{
+               res.redirect('/');
+           }
+        }).catch(function (err) {
+            next(err);
+        });
     });
     //后台首页
-    router.get('/index', function (req, res) {
+    router.get('/index',filter.authorize, function (req, res) {
         res.render('Backstage/index',{username:'超级管理员',mm_dd:'10月26日',Week:'周三',role_name:'哈哈哈',_id:123});
     });
         //后台首页
-    router.get('/account_manage', function (req, res) {
+    router.get('/account_manage',filter.authorize, function (req, res) {
         res.render('Backstage/account_manage',{code:0,text:""});
     });
     //权限管理
-    router.get('/role_manage', function (req, res) {
+    router.get('/role_manage',filter.authorize, function (req, res) {
         res.render('Backstage/role_manage',{code:0,text:""});
     });
 
