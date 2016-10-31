@@ -18,16 +18,19 @@ module.exports = function (app) {
         var sql = knex.select('*').from('account');
         var params = req.query;
         if(params.name){
-            sql = sql.where('name',params.name);
+            sql = sql.where('name','like','%' + params.name + '%');
         }
         if(params.sex){
             sql = sql.where('sex',params.sex);
         }
         if(params.username){
-            sql = sql.where('username',params.username);
+            sql = sql.where('username','like','%' + params.username + '%');
         }
         if(params.part){
             sql = sql.where('part',params.part);
+        }
+        if(params.year){
+            sql = sql.where('year',params.year);
         }
         if(params.class){
             sql = sql.where('class',params.class);
@@ -49,6 +52,36 @@ module.exports = function (app) {
         });
     });
 
+    //修改或新建用户
+    router.get('/account/new', function (req, res,next) {
+        var params = req.query.params;
+        var sql = knex('account');
+
+        //修改
+        if(params.seq_no){
+            sql = sql.where('seq_no',params.seq_no).update(params);
+        } else {
+            sql = sql.insert(params);
+            params.regTime = moment().format('YYYY-MM-DD HH:mm:ss');
+        }
+
+        sql.then(function (reply) {
+            res.json(reply);
+        }).catch(function (err) {
+            next(err);
+        });
+    });
+
+    //逻辑删除用户
+    router.get('/account/del', function (req, res,next) {
+        var sql = knex('account').where('seq_no',req.query.seq_no).update('status',2);
+
+        sql.then(function (reply) {
+            res.json(reply);
+        }).catch(function (err) {
+            next(err);
+        });
+    });
 
 
 
