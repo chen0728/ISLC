@@ -37,8 +37,8 @@
                     <div class="form-group float-none j_bubble text-left">
                         <select class="form-control" id="part_q" name="part_q">
                             <option value="">全部</option>
-                            <option value="1">学生</option>
-                            <option value="2">教师</option>
+                            <option value="1">教师</option>
+                            <option value="2">学生</option>
                             <option value="3">管理员</option>
                         </select>
                     </div>
@@ -47,14 +47,24 @@
                     <div class="t">年级<span class="sort-ico" style="padding-right:30px;">
                             <i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
                     <div class="form-group float-none j_bubble text-left">
-                        <input class="form-control" type="text" name="year_q" id="year_q" placeholder="请输入年级" maxlength="20">
+                        <select class="form-control" id="year_q" name="year_q">
+                            <option value="">请选择</option>
+                            <option value="1">一年级</option>
+                            <option value="2">二年级</option>
+                            <option value="3">三年级</option>
+                        </select>
                     </div>
                 </td>
                 <td style="width: 100px;" align="center">
                     <div class="t">班级<span class="sort-ico" style="padding-right:30px;">
                             <i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
                     <div class="form-group float-none j_bubble text-left">
-                        <input class="form-control" type="text" name="class_q" id="class_q" placeholder="请输入班级" maxlength="20">
+                        <select class="form-control" id="class_q" name="class_q">
+                            <option value="">请选择</option>
+                            <option value="1">一班</option>
+                            <option value="2">二班</option>
+                            <option value="3">三班</option>
+                        </select>
                     </div>
                 </td>
                 <td style="width: 100px;" align="center">
@@ -99,8 +109,8 @@
                                 <div class="form-group ">
                                     <label class="control-label w-9">用户角色：</label>
                                     <div class="w-40 relative">
-                                        <label class="radio-inline pr-1"><input type="radio" name="part" value="1" data-rule="角色:required;" checked>学生</label>
-                                        <label class="radio-inline pr-1"><input type="radio" name="part" value="2" data-rule="角色:required;">教师</label>
+                                        <label class="radio-inline pr-1"><input type="radio" name="part" value="1" data-rule="角色:required;">教师</label>
+                                        <label class="radio-inline pr-1"><input type="radio" name="part" value="2" data-rule="角色:required;" checked>学生</label>
                                         <label class="radio-inline pr-1"><input type="radio" name="part" value="3" data-rule="角色:required;">管理员</label>
                                     </div>
                                 </div>
@@ -129,7 +139,7 @@
                                 <div class="form-group ">
                                     <label class="control-label w-9">密码：</label>
                                     <div class="w-40 relative">
-                                        <input id="password" class="form-control" type="text" name="password" data-rule="密码:required;" placeholder="请输入密码" maxlength="20">
+                                        <input id="password" class="form-control" type="text" name="password" data-rule="密码:required;" placeholder="请输入密码" minlength="3" maxlength="20" onkeyup="this.value=this.value.replace(/[^\w_]/g,'');">
                                     </div>
                                 </div>
                                 <div class="form-group " id="addclass">

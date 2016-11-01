@@ -178,11 +178,11 @@ $(function () {
 
     //添加用户弹窗
     $('#addStaffModal').on('click', function () {
-        $("input[name='part']:eq(0)").attr("checked",'checked');
+        $("input[name='part']:eq(1)").attr("checked",'checked');
         $("#account_id").val(new_account_id);
         $("#name").val('');
         $("#sex").val('男');
-        $("#password").val('');
+        $("#password").val(new_account_id);
         $("#class").val('');
         $("#year").val('');
         $('#addclass').show();
@@ -201,9 +201,9 @@ $(function () {
     //根据添加用户类型，来显示（隐藏）班级信息
     $("input[name='part']").change(function() {
         var addpart = $("input[name='part']:checked").val();
-        if (addpart == 1) { //学生
+        if (addpart == 2) { //学生
             $('#addclass').show();
-        } else if (addpart == 2) {  //教师
+        } else if (addpart == 1) {  //教师
             $('#addclass').hide();
         } else if (addpart == 3) {  //管理员
             $('#addclass').hide();
@@ -228,7 +228,7 @@ $(function () {
                 };
                 //新建
                 if($('#seq_no').val() == 0){
-                    if(params.part == 1){//学生
+                    if(params.part == 2){//学生
                         params.year = $("#year").val();
                         params.class = $("#class").val();
                     }
@@ -249,6 +249,14 @@ $(function () {
                     });
                 }else{   //更新
                     params.seq_no = $('#seq_no').val();
+                    if(params.part == 2){//学生
+                        params.year = $("#year").val();
+                        params.class = $("#class").val();
+                    }else{
+                        debugger;
+                        params.year = '';
+                        params.class = '';
+                    }
                     $.ajax({
                         "dataType": 'json',
                         "type": "get",
@@ -313,7 +321,7 @@ $(function () {
                 $("#password").val(data.data[0].password);
                 $("#class").val(data.data[0].class);
                 $("#year").val(data.data[0].year);
-                if(data.data[0].part == 1){ //学生
+                if(data.data[0].part == 2){ //学生
                     $('#addclass').show();
                 } else {
                     $('#addclass').hide();

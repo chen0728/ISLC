@@ -27,6 +27,11 @@ module.exports = function (app) {
     router.get('/login', function (req, res) {
         res.render('Backstage/login',{code:0,text:""});
     });
+    //退出后台登录
+    router.get('/logout', function (req, res) {
+        req.session.destroy();
+        res.render('Backstage/login',{code:0,text:""});
+    });
     //后台首页
     router.post('/login', function (req, res) {
         userInfo = req.body;
