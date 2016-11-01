@@ -58,6 +58,10 @@ module.exports = function (app) {
     router.get('/role_manage',filter.authorize, function (req, res) {
         res.render('Backstage/role_manage',{code:0,text:""});
     });
+    //数据字典
+    router.get('/value_mapping',filter.authorize, function (req, res) {
+        res.render('Backstage/value_mapping',{code:0,text:""});
+    });
 
 
 
