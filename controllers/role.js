@@ -58,7 +58,7 @@ module.exports = function (app) {
             next(err);
         });
     });
-
+//查询详情
     router.get('/role_info/get', function (req, res, next) {
         var seq_no = req.query.seq_no;
         var sql = knex.select('*').from('role_info').where('seq_no',seq_no);
@@ -104,6 +104,16 @@ module.exports = function (app) {
         // 执行sql
         sql.then(function (reply) {
             res.json({data: reply});
+        }).catch(function (err) {
+            next(err);
+        });
+    });
+    //查询seq
+    router.get('/role_info/select', function (req, res, next) {
+        var sql = knex.select('*').from('role_info').orderBy('seq_no','desc');
+        // 执行sql
+        sql.then(function (reply) {
+            res.json(reply);
         }).catch(function (err) {
             next(err);
         });

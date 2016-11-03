@@ -51,4 +51,64 @@ module.exports = function (app) {
             next(err);
         });
     });
+
+    //查询详情
+    router.get('/value_mapping/get', function (req, res, next) {
+        var pro = req.body;
+        var num1 = req.query.num1;
+        var sql = knex.select('*').from('value_mapping').where('num1',num1);
+        // 执行sql
+        sql.then(function (reply) {
+            res.json(reply);
+        }).catch(function (err) {
+            next(err);
+        });
+    });
+    //更新
+    router.post('/value_mapping/update', function (req, res, next) {
+        var pro = req.body;
+        var num1 = req.query.num1;
+        var sql = knex('value_mapping').update(pro).where('num1',num1);
+        // 执行sql
+        sql.then(function (reply) {
+            res.json({data: reply});
+        }).catch(function (err) {
+            next(err);
+        });
+    });
+    //删除
+    router.post('/value_mapping/del', function (req, res, next) {
+        var num1 = req.query.num1;
+        var sql = knex('value_mapping').update('data_status',2).where('num1',num1);
+        // 执行sql
+        sql.then(function (reply) {
+            res.json({data: reply});
+        }).catch(function (err) {
+            next(err);
+        });
+    });
+
+    //新建
+    router.post('/value_mapping/insert', function (req, res, next) {
+        var pro = req.body;
+        mydate = moment().format('YYYY-MM-DD HH:mm:ss');
+        pro.date1 = mydate;
+        var sql = knex('value_mapping').insert(pro);
+        // 执行sql
+        sql.then(function (reply) {
+            res.json({data: reply});
+        }).catch(function (err) {
+            next(err);
+        });
+    });
+    //查询num1
+    router.get('/value_mapping/select', function (req, res, next) {
+        var sql = knex.select('*').from('value_mapping').orderBy('num1','desc');
+        // 执行sql
+        sql.then(function (reply) {
+            res.json(reply);
+        }).catch(function (err) {
+            next(err);
+        });
+    });
 };

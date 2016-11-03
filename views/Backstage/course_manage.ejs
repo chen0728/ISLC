@@ -1,46 +1,58 @@
-<div id="value_mapping_page">
+<div id="course_manage_page">
     <!--start-->
     <ol class="breadcrumb">
         <li><a href="index.html">运维</a></li>
-        <li class="active">数据字典</li>
+        <li class="active">语音课堂管理</li>
     </ol>
     <div class="main-box main-box-noborder overflow-hidden" style="padding-top: 12px">
         <table class="table-style-1 table-style-1-a table-hover mb-0-5" id="account_Table">
             <thead>
             <tr class="sch">
                 <td style="width: 15%;" align="center">
-                    <div class="t text-left" >编号
-                    <span class="sort-ico" style="padding-right:60px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span>
+                    <div class="t text-left" >课程名
+                    <span class="sort-ico" style="padding-right:42px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span>
                     </div>
                     <div class="form-group float-none j_bubble">
                         <input class="form-control" type="text" name="seq_q" id="seq_q" placeholder="" maxlength="20">
                     </div>
                 </td>
                 <td style="width: 15%;" align="center">
-                    <div class="t">类型<span class="sort-ico" style="padding-right:60px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+                    <div class="t">课程编号<span class="sort-ico" style="padding-right:36px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
                     <div class="form-group float-none j_bubble">
                         <input class="form-control" type="text" name="type" id="type" maxlength="20">
                     </div>
                 </td>
                 <td style="width: 15%;" align="center">
-                    <div class="t">关键字<span class="sort-ico" style="padding-right:54px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+                    <div class="t">上课班级<span class="sort-ico" style="padding-right:38px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
                     <div class="form-group float-none j_bubble">
                         <input class="form-control" type="text" name="key_name" id="key_name" maxlength="20">
                     </div>
                 </td>
-                <td style="width: 15%;" align="center">
-                    <div class="t">名称<span class="sort-ico" style="padding-right:60px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
-                    <div class="form-group float-none j_bubble">
-                        <input class="form-control" type="text" name="name_n" id="name_n" maxlength="20">
-                    </div>
-                </td>
                 <td width="15%" align="center" class="sorting" tabindex="0" aria-controls="product_searchTab" rowspan="1" colspan="1" aria-label="
-                创建时间: activate to sort column ascending" style="width: 113px;">
-                    <div class="t" style="padding-right: 10px;">创建时间<span class="sort-ico" style="padding-right:34px"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+                创建时间: activate to sort column ascending">
+                    <div class="t" style="padding-right: 10px;">创建时间<span class="sort-ico" style="padding-right:42px"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
                     <div class="form-group j_bubble j_datebetween">
                         <input type="text" class="form-control input-xs j_datepicker" placeholder="开始" id="search_s">
                         <input type="text" class="form-control mt-1 input-xs j_datepicker" placeholder="结束" id="search_e">
                     </div>
+                </td>
+                <td width="15%" align="center" class="sorting" tabindex="0" aria-controls="product_searchTab" rowspan="1" colspan="1" aria-label="
+                创建时间: activate to sort column ascending" >
+                    <div class="t" style="padding-right: 10px;">上课时间<span class="sort-ico" style="padding-right:42px"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+                    <div class="form-group j_bubble j_datebetween">
+                        <input type="text" class="form-control input-xs j_datepicker" placeholder="开始" id="search_s">
+                        <input type="text" class="form-control mt-1 input-xs j_datepicker" placeholder="结束" id="search_e">
+                    </div>
+                </td>
+                <td style="width: 10%;" align="center">
+                    <div class="t text-left" >课程状态
+                        <span class="sort-ico" style="padding-right:12px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span>
+                    </div>
+                    <select class="form-control" id="status_q" name="status_q">
+                        <option value="">全部</option>
+                        <option value="1">已上</option>
+                        <option value="2">未上</option>
+                    </select>
                 </td>
                 <td style="width: 15%;" align="center">
                     <div class="t">操作</div>
@@ -136,6 +148,6 @@
     <!--    &lt;!&ndash; 表格共通&ndash;&gt;
         <script src="js/table-ajax.js"></script>-->
     <!--私有js-->
-    <script src="js/backstage/value_mapping.js"></script>
+    <script src="js/backstage/course_manage.js"></script>
     <!--end-->
 </div>

@@ -4,7 +4,6 @@
  */
 
 $(function () {
-
     var tempObj;
     var tempEmpObj;
     var seq_no;
@@ -127,7 +126,6 @@ $(function () {
     });
     //获取到数据的回调函数，需要更该时可定义
     function fnChangeDataCallback(data){
-        new_seq_no=data.data[0].seq_no;
         debugger;
         return data;
     }
@@ -242,6 +240,7 @@ $(function () {
     });
     $(document).on("click", ".employee_del", function () {
         $("#delAccountModal").modal('show');
+        seq_no = $(this).attr('data-id');
         $('#del_account').on('click', function () {
             $.ajax({
                 type: "post",
@@ -287,7 +286,21 @@ $(function () {
                 menu_id += 5+';';
             }
             debugger;
-            new_seq = parseInt(new_seq_no);
+            $.ajax({
+                type: "get",
+                url: '/role_info/select',
+                dataType: "json",
+                data:{},
+                success: function (data) {
+                    debugger;
+                    new_seq_no=data[0].seq_no;
+                    new_seq = parseInt(new_seq_no);
+                },
+                error: function (data) {
+                    debugger;
+                    alert("系统错误12");
+                }
+            });
             var data = {
                 menu_id:menu_id,
                 role_name:$("#newnameLab").val(),
