@@ -66,6 +66,11 @@ module.exports = function (app) {
     router.get('/course_manage',filter.authorize, function (req, res) {
         res.render('Backstage/course_manage',{code:0,text:""});
     });
+    //操作日志
+    router.get('/operation_record',filter.authorize, function (req, res) {
+        res.render('Backstage/operation_record',{code:0,text:""});
+    });
+
 
 
 };

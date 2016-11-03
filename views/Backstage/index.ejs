@@ -60,10 +60,10 @@
 
             <div class="right">
                 <div class="user-hello">你好，<a href="#"><%if(username){%>
-                        <%=username%>
-                        <%}else{%>
-                        admin
-                        <%}%></a></div>
+                    <%=username%>
+                    <%}else{%>
+                    admin
+                    <%}%></a></div>
                 <div class="dropdown user-opt">
                     <a href="javascript:;" id="dLabel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="caret-wrap"><i class="caret"></i></span>
@@ -153,19 +153,21 @@
 <script type="text/javascript" charset="utf-8"></script>
 <script>
     var menu_data = [
-                {id: 1, pid:0, name: "用户管理", open: true,link: '/account_manage'},
-                {id: 11, pid:0, name: "权限管理",open: true,link: '/role_manage'},
-                {id: 13, pid:0, name: "数据字典",open: true,link: '/value_mapping'},
-                {id: 2, pid:0, name: "语言课堂管理",open: true,link: '/course_manage'},/*
-                {id: 14, pid:0, name: "操作日志维护",link: '/'},
-                {id: 5, pid:0, name: "课堂回顾",link: '/'},
-                {id: 15, pid:5, name: "课堂多媒体资料回顾",link: '/'},
-                {id: 16, pid:5, name: "分组语音对话回顾",link: '/'},
-                {id: 161, pid:5, name: "课堂语音回顾",link: '/'},
-                {id: 162, pid:0, name: "试题库管理",link: '/'},
-                {id: 21, pid:0, name: "课堂资料管理",link: '/'},
-                {id: 3, pid:0, name: "学生分组管理",link: '/'},
-                {id: 31, pid:0, name: "课堂音频管理",link: '/'},*/
+        {id: 1, pid:0, name: "用户管理", open: true,link: '/account_manage'},
+        {id: 11, pid:0, name: "权限管理",open: true,link: '/role_manage'},
+        {id: 13, pid:0, name: "数据字典",open: true,link: '/value_mapping'},
+        {id: 14, pid:0, name: "操作日志维护",link: '/operation_record'},
+         {id: 2, pid:0, name: "语言课堂管理",open: true,link: '/course_manage'},/*
+        {id: 14, pid:0, name: "操作日志维护",link: '/'},
+        {id: 5, pid:0, name: "课堂回顾",link: '/'},
+        {id: 15, pid:5, name: "课堂多媒体资料回顾",link: '/'},
+        {id: 16, pid:5, name: "分组语音对话回顾",link: '/'},
+        {id: 161, pid:5, name: "课堂语音回顾",link: '/'},
+        {id: 2, pid:0, name: "语言课堂管理",link: '/'},
+        {id: 162, pid:0, name: "试题库管理",link: '/'},
+        {id: 21, pid:0, name: "课堂资料管理",link: '/'},
+        {id: 3, pid:0, name: "学生分组管理",link: '/'},
+        {id: 31, pid:0, name: "课堂音频管理",link: '/'},*/
     ];
     //左侧菜单json数据
     $(function () {
