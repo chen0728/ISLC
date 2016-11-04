@@ -16,25 +16,31 @@ module.exports = function (app) {
     //查询角色权限列表
     router.get('/course_manage/list', function (req, res,next) {
         var sql = knex.select('*').from('course_info').where('status','!=',2)
-        //var params = req.query;
-        //if(params.num1){
-        //    sql = sql.where('num1', params.num1);
-        //}
-        //if(params.type){
-        //    sql = sql.where('type','like','%'+params.type+'%');
-        //}
-        //if(params.key_id){
-        //    sql = sql.where('key_id',params.key_id);
-        //}
-        //if(params.key_val_cn){
-        //    sql = sql.where('key_val_cn','like','%'+params.key_val_cn+'%');
-        //}
-        //if(params.date1S){
-        //    sql = sql.where('date1','>=',params.date1S);
-        //}
-        //if(params.date1E){
-        //    sql = sql.where('date1','<=',params.date1E);
-        //}
+        var params = req.query;
+        if(params.name){
+            sql = sql.where('name','like', '%'+params.name+'%');
+        }
+        if(params.number){
+            sql = sql.where('number',params.number);
+        }
+        if(params.class){
+            sql = sql.where('class',params.class);
+        }
+        if(params.creat_timeS){
+            sql = sql.where('creat_time','>=',params.creat_timeS);
+        }
+        if(params.creat_timeE){
+            sql = sql.where('creat_time','<=',params.creat_timeE);
+        }
+        if(params.class_timeS){
+            sql = sql.where('class_time','>=',params.class_timeS);
+        }
+        if(params.class_timeE){
+            sql = sql.where('class_time','<=',params.class_timeE);
+        }
+        if(params.class_status){
+            sql = sql.where('class_status',params.class_status);
+        }
         var infos={};
         sql.then(function (reply) {
             infos.totalSize = reply.length;
@@ -48,6 +54,30 @@ module.exports = function (app) {
                 infos.data = reply;
                 res.json(infos);
             }
+        }).catch(function (err) {
+            next(err);
+        });
+    });
+
+    //查询详情
+    router.get('/course_info/get', function (req, res, next) {
+        var seq_no = req.query.seq_no;
+        var sql = knex.select('*').from('course_info').where('seq_no',seq_no);
+        // 执行sql
+        sql.then(function (reply) {
+            res.json(reply);
+        }).catch(function (err) {
+            next(err);
+        });
+    });
+
+    //删除
+    router.post('/course_info/del', function (req, res, next) {
+        var seq_no = req.query.seq_no;
+        var sql = knex('course_info').update('status',2).where('seq_no',seq_no);
+        // 执行sql
+        sql.then(function (reply) {
+            res.json({data: reply});
         }).catch(function (err) {
             next(err);
         });

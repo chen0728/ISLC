@@ -238,6 +238,7 @@ $(function () {
             })
         });
     });
+    //删除
     $(document).on("click", ".employee_del", function () {
         $("#delAccountModal").modal('show');
         seq_no = $(this).attr('data-id');
@@ -298,7 +299,7 @@ $(function () {
                 },
                 error: function (data) {
                     debugger;
-                    alert("系统错误12");
+                    alert("系统错误");
                 }
             });
             var data = {

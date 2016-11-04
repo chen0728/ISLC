@@ -72,5 +72,9 @@ module.exports = function (app) {
     });
 
 
+    //课程管理
+    router.get('/course_add',filter.authorize, function (req, res) {
+        res.render('Backstage/course_add',{code:0,text:""});
+    });
 
 };
