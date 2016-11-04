@@ -1,0 +1,222 @@
+<div id="questions_manage_page">
+    <!--start-->
+    <ol class="breadcrumb">
+        <li><a>运维</a></li>
+        <li class="active">账户管理</li>
+    </ol>
+    <div class="main-box main-box-noborder overflow-hidden" style="padding-top: 12px">
+        <table class="table-style-1 table-style-1-a table-hover mb-0-5" id="questions_Table">
+            <thead>
+            <tr class="sch">
+                <td align="center">
+                    <div class="t">试题编号<span class="sort-ico" style="padding-right:55px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+                    <div class="form-group float-none j_bubble text-left">
+                        <input class="form-control" type="text" name="seq_no_q" id="seq_no_q" placeholder="试题编号" maxlength="20">
+                    </div>
+                </td>
+                <td width="155" align="center">
+                    <div class="t text-left" >题目<span class="sort-ico" style="padding-right:45px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span>
+                    </div>
+                    <div class="form-group float-none j_bubble">
+                        <input class="form-control" type="text" name="question_q" id="question_q" placeholder="题目" maxlength="20">
+                    </div>
+                </td>
+                <td align="center">
+                    <div class="t">分值<span class="sort-ico" style="padding-right:20px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+                    <div class="form-group float-none j_bubble">
+                        <input class="form-control" type="text" name="score_q" id="score_q" placeholder="分值" maxlength="20">
+                    </div>
+                </td>
+                <td align="center">
+                    <div class="t">题目类型<span class="sort-ico" style="padding-right:18px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+                    <div class="form-group float-none j_bubble">
+                        <input class="form-control" type="text" name="remarks_q" id="remarks_q" placeholder="类型" maxlength="20">
+                    </div>
+                </td>
+                <td align="center">
+                    <div class="t">上传账户<span class="sort-ico" style="padding-right:30px;">
+                            <i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+                    <div class="form-group float-none j_bubble">
+                        <input class="form-control" type="text" name="account_id_q" id="account_id_q" placeholder="上传账户" maxlength="20">
+                    </div>
+                </td>
+                <td align="center">
+                    <div class="t">是否公开<span class="sort-ico" style="padding-right:18px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+                    <div class="form-group float-none j_bubble text-left w-10">
+                        <select class="form-control" id="public_q" name="public_q">
+                            <option value="">全部</option>
+                            <option value="1">公开</option>
+                            <option value="2">私有</option>
+                        </select>
+                    </div>
+                </td>
+                <td align="center">
+                    <div class="t">状态<span class="sort-ico" style="padding-right:20px;">
+                        <i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+                    <div class="form-group float-none j_bubble text-left w-10">
+                        <select class="form-control" id="status_q" name="status_q">
+                            <option value="">全部</option>
+                            <option value="1">正常</option>
+                            <option value="2">删除</option>
+                        </select>
+                    </div>
+                </td>
+                <td width="65px" align="center">
+                    <div class="t">操作</div>
+                    <button class="btn btn-success float-none j_bubble" type="button" id="employeeSeatchBut">搜索
+                    </button>
+                </td>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <nav class="pagination-wrap clearfix">
+            <div class="ml-2 mt-1 mb-2">
+                <a class="form-btn-upload" id="addStaffModal" data-toggle="modal"><i class="icon-plus-sign"></i>添加新用户</a>
+            </div>
+        </nav>
+    </div>
+
+
+    <!-- 添加账户弹出框 -->
+    <div class="modal modal-noline fade" id="addAccountModal" tabindex="-1" role="dialog" aria-labelledby="addAccountModalLabel" aria-hidden="true">
+        <div class="modal-outer">
+            <div class="modal-middle">
+                <div class="modal-dialog modal-inner w-65 float-none">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body p-1 pt-3 pl-5">
+                            <form class="form-horizontal" action="" method="post"   id="add_account_form">
+                                <input id="seq_no" type="hidden" name="seq_no">
+                                <div class="form-group ">
+                                    <label class="control-label w-9">用户角色：</label>
+                                    <div class="w-40 relative">
+                                        <label class="radio-inline pr-1"><input type="radio" name="part" value="1" data-rule="角色:required;">教师</label>
+                                        <label class="radio-inline pr-1"><input type="radio" name="part" value="2" data-rule="角色:required;" checked>学生</label>
+                                        <label class="radio-inline pr-1"><input type="radio" name="part" value="3" data-rule="角色:required;">管理员</label>
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <label class="control-label w-9">用户编号：</label>
+                                    <div class="w-40 relative">
+                                        <input id="account_id" class="form-control w-32" type="text" name="account_id" maxlength="20" placeholder="系统自动生成" disabled>
+                                        <a href="javascript:void(0);" class="btn btn-success font-14 ml-0-5" style="width: 70px" id="get_user_no" disabled>生成</a>
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <label class="control-label w-9">姓名：</label>
+                                    <div class="w-40 relative">
+                                        <input id="name" class="form-control" type="text" name="name" data-rule="姓名:required;" placeholder="请输入姓名" maxlength="20">
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <label class="control-label w-9">性别：</label>
+                                    <div class="w-40 relative">
+                                        <select class="form-control" name="sex" id="sex" data-rule="性别:required;">
+                                            <option value="男">男</option>
+                                            <option value="女">女</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <label class="control-label w-9">密码：</label>
+                                    <div class="w-40 relative">
+                                        <input id="password" class="form-control" type="text" name="password" data-rule="密码:required;" placeholder="请输入密码" minlength="3" maxlength="20" onkeyup="this.value=this.value.replace(/[^\w_]/g,'');">
+                                    </div>
+                                </div>
+                                <div class="form-group " id="addclass">
+                                    <label class="control-label w-9">班级：</label>
+                                    <div class="w-18 relative">
+                                        <select class="form-control" name="year" id="year" data-rule="年级:required;">
+                                            <option value="">请选择</option>
+                                            <option value="1">一年级</option>
+                                            <option value="2">二年级</option>
+                                            <option value="3">三年级</option>
+                                        </select>
+
+                                    </div>
+                                    <div class="w-4 relative">
+                                        -
+                                    </div>
+                                    <div class="w-18 relative">
+                                        <select class="form-control" name="class" id="class" data-rule="班级:required;">
+                                            <option value="">请选择</option>
+                                            <option value="1">一班</option>
+                                            <option value="2">二班</option>
+                                            <option value="3">三班</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer text-center pb-2">
+                                    <button type="button" class="btn btn-default btn-default-green w-14 font-16 float-none" data-dismiss="modal" id="add_account_cancel">取消</button>
+                                    <button id="save_account" type="button" class="btn btn-success w-14 font-16 float-none ml-2">保存</button>
+                                </div>
+
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 弹出删除确认信息 -->
+    <div style="width: 30%;margin: 0 auto" class="modal modal-noline fade" id="sureDel" tabindex="-1" role="dialog"
+         aria-labelledby="sureDelLabel" aria-hidden="true">
+        <div class="modal-middle">
+            <div class="modal-dialog-notice modal-inner">
+                <div class="modal-content">
+                    <div class="background-grey-2 p-1 indent-1 modal-dialog-notice-radius">
+                        <span class="font-20 wryh text-zdy-2">信息确认：</span>
+                    </div>
+                    <div class="p-3">
+                        <p class="text-center font-18 wryh text-gray-light">确认要删除该员工信息吗？</p>
+
+                        <div class="modal-footer text-center pb-2">
+                            <button type="button" class="btn btn-default btn-default-blue font-16 float-none"
+                                    data-dismiss="modal">取消
+                            </button>
+                            <button type="button" class="btn btn-primary font-16 float-none ml-1" id="confirmDialog"
+                                    data-dismiss="modal">确定
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 弹出重置密码确认信息 -->
+    <div style="width: 30%;margin: 0 auto" class="modal modal-noline fade" id="sureReset" tabindex="-1" role="dialog"
+         aria-labelledby="sureDelLabel" aria-hidden="true">
+        <div class="modal-middle">
+            <div class="modal-dialog-notice modal-inner">
+                <div class="modal-content">
+                    <div class="background-grey-2 p-1 indent-1 modal-dialog-notice-radius">
+                        <span class="font-20 wryh text-zdy-2">信息确认：</span>
+                    </div>
+                    <div class="p-3">
+                        <p class="text-center font-18 wryh text-gray-light">确认要重置该员工密码为'123456'吗？</p>
+
+                        <div class="modal-footer text-center pb-2">
+                            <button type="button" class="btn btn-default btn-default-blue font-16 float-none"
+                                    data-dismiss="modal">取消
+                            </button>
+                            <button type="button" class="btn btn-primary font-16 float-none ml-1" id="resetPassword"
+                                    data-dismiss="modal">确定
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--    &lt;!&ndash; 表格共通&ndash;&gt;
+        <script src="js/table-ajax.js"></script>-->
+    <!--私有js-->
+    <script src="js/backstage/questions_manage.js"></script>
+    <!--end-->
+</div>
