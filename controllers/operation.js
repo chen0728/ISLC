@@ -15,31 +15,27 @@ module.exports = function (app) {
 
     //查询操作记录列表
     router.get('/operation/list', function (req, res,next) {
-        var sql = knex.select('*').from('account');
+        var sql = knex.select('*').from('operation_record');
         var params = req.query;
-        if(params.name){
-            sql = sql.where('name','like','%' + params.name + '%');
-        }
-        if(params.account_id){
-            sql = sql.where('account_id','like','%' + params.account_id + '%');
-        }
-        if(params.sex){
-            sql = sql.where('sex',params.sex);
-        }
-        if(params.part){
-            sql = sql.where('part',params.part);
-        }
-        if(params.year){
-            sql = sql.where('year',params.year);
-        }
-        if(params.class){
-            sql = sql.where('class',params.class);
-        }
-        if(params.status){
-            sql = sql.where('status',params.status);
-        }
         if(params.seq_no){
-            sql = sql.where('seq_no',params.seq_no);
+            sql = sql.where('seq_no','like','%' + params.seq_no + '%');
+        }
+        if(params.operator_name){
+            sql = sql.where('operator_name','like','%' + params.operator_name + '%');
+        }
+        if(params.operation_type){
+            sql = sql.where('operation_type',params.operation_type);
+        }
+        if(params.operat_time_s){
+            params.operat_time_s = moment(params.operat_time_s);
+            sql = sql.where('operat_time','<=',params.operat_time);
+        }
+        if(params.operat_time_e){
+            params.operat_time_e = moment(params.operat_time_e);
+            sql = sql.where('operat_time','>=',params.operat_time);
+        }
+        if(params.operator_part){
+            sql = sql.where('operator_part',params.operator_part);
         }
         var infos={};
         sql.then(function (reply) {

@@ -1,4 +1,4 @@
-<div id="role_manage_page">
+<div id="operation_record_page">
     <!--start-->
     <ol class="breadcrumb">
         <li><a href="index.html">运维</a></li>
@@ -8,36 +8,36 @@
         <table class="table-style-1 table-style-1-a table-hover mb-0-5" id="operation_Table">
             <thead>
             <tr class="sch">
-                <td style="width: 15%;" align="center">
+                <td style="width: 102px;;" align="center">
                     <div class="t text-left" >编号
-                    <span class="sort-ico" style="padding-right:60px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span>
+                    <span class="sort-ico" style="padding-right:25px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span>
                     </div>
                     <div class="form-group float-none j_bubble">
                         <input class="form-control" type="text" name="seq_no_q" id="seq_no_q" placeholder="" maxlength="20">
                     </div>
                 </td>
-                <td style="width: 15%;" align="center">
-                    <div class="t">操作人名<span class="sort-ico" style="padding-right:60px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+                <td style="width: 146px;" align="center">
+                    <div class="t">操作人名<span class="sort-ico" style="padding-right:40px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
                     <div class="form-group float-none j_bubble">
                         <input class="form-control" type="text" name="operator_name_q" id="operator_name_q" maxlength="20">
                     </div>
                 </td>
-                <td style="width: 15%;" align="center">
-                    <div class="t">操作类型<span class="sort-ico" style="padding-right:60px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+                <td style="width: 146px;" align="center">
+                    <div class="t">操作类型<span class="sort-ico" style="padding-right:40px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
                     <div class="form-group float-none j_bubble">
                         <input class="form-control" type="text" name="operation_type_q" id="operation_type_q" maxlength="20">
                     </div>
                 </td>
-                <td width="15%" align="center" class="sorting" tabindex="0" aria-controls="product_searchTab" rowspan="1" colspan="1" aria-label="
+                <td style="width: 227px;"  align="center" class="sorting" tabindex="0" aria-controls="product_searchTab" rowspan="1" colspan="1" aria-label="
                 创建时间: activate to sort column ascending" style="width: 90px;">
-                    <div class="t" style="padding-right: 10px;">操作时间<span class="sort-ico" style="padding-right:34px"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+                    <div class="t" style="padding-right: 10px;">操作时间<span class="sort-ico" style="padding-right:90px"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
                     <div class="form-group j_bubble j_datebetween">
                         <input type="text" class="form-control input-xs j_datepicker" placeholder="开始" id="operat_time_s">
                         <input type="text" class="form-control mt-1 input-xs j_datepicker" placeholder="结束" id="operat_time_e">
                     </div>
                 </td>
-                <td style="width: 15%;" align="center">
-                    <div class="t">操作人角色<span class="sort-ico" style="padding-right:60px;">
+                <td style="width: 146px;" align="center">
+                    <div class="t">操作人角色<span class="sort-ico" style="padding-right:35px;">
                         <i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
                     <select class="form-control" id="operator_part_q" name="operator_part_q">
                         <option value="">请选择</option>
@@ -45,7 +45,7 @@
                         <option value="3">管理员</option>
                     </select>
                 </td>
-                <td style="width: 15%;" align="center">
+                <td style="width: 78px;" align="center">
                     <div class="t">操作</div>
                     <button class="btn btn-success float-none j_bubble" type="button" id="employeeSeatchBut">搜索
                     </button>
@@ -54,17 +54,11 @@
             </thead>
             <tbody></tbody>
         </table>
-        <nav class="pagination-wrap clearfix" style="height: 20px;margin-top:-22px">
-        </nav>
-        <nav class="pagination-wrap clearfix">
-            <div class="ml-2 mt-1 mb-2">
-                <a class="form-btn-upload" id="addStaffModal" data-toggle="modal"><i class="icon-plus-sign"></i>添加新角色</a>
-            </div>
+        <nav class="pagination-wrap clearfix" style="height: 70px;margin-top:-22px">
         </nav>
     </div>
 
-
-    <!-- 编辑角色权限 -->
+    <!-- ‘查看’弹出框 -->
     <div class="modal modal-noline fade" id="addAccountModal" tabindex="-1" role="dialog" aria-labelledby="addAccountModalLabel" aria-hidden="true">
         <div class="modal-outer">
             <div class="modal-middle">
@@ -75,41 +69,20 @@
                         </div>
                         <div class="modal-body p-1 pt-3 pl-5">
                             <form class="form-horizontal" action="" method="post"   id="add_account_form">
-                                <input id="account_id" type="hidden" name="account_id">
                                 <div class="form-group ">
-                                    <label class="control-label w-9" style="font-size: 29px;width: 135px;">编辑权限</label>
-                                </div>
-                                <div class="form-group ">
-                                    <label class="control-label w-9">角色编号：</label>
-                                    <div class="w-40 relative">
-                                        <input id="idLab" class="form-control w-32" type="text" name="account_id" maxlength="20"  disabled>
-                                    </div>
+                                    <h2>操作日志详情</h2>
+
                                 </div>
                                 <div class="form-group ">
-                                    <label class="control-label w-9">角色名称：</label>
-                                    <div class="w-40 relative">
-                                        <input id="nameLab" class="form-control w-32" type="text" name="account_id" maxlength="20" >
-                                    </div>
+                                    <label class="control-label w-20" style="text-align: left" id="seq_no"></label>
+                                    <label class="control-label w-7" style="margin: 0 auto" id="operator_name"></label>
+                                    <label class="control-label w-7" style="margin: 0 auto" id="operator_part"></label>
+                                    <label class="control-label w-24" style="float: right" id="operat_time"></label>
                                 </div>
                                 <div class="form-group ">
-                                    <label class="control-label w-9">权限：</label>
-                                    <div class="w-40 relative">
-                                        <input id="check1" type="checkbox">
-                                        <label style="font-size: 16px;font-weight: 500;margin-top: 7px;margin-right: 8px;">用户管理</label>
-                                        <input id="check2" type="checkbox">
-                                        <label style="font-size: 16px;font-weight: 500;margin-top: 7px;margin-right: 8px;">权限管理</label>
-                                        <input id="check3" type="checkbox">
-                                        <label style="font-size: 16px;font-weight: 500;margin-top: 7px;margin-right: 8px;">数据字典维护</label>
-                                        <input id="check4" type="checkbox">
-                                        <label style="font-size: 16px;font-weight: 500;margin-top: 7px;margin-right: 8px;">教师权限</label>
-                                        <input id="check5" type="checkbox">
-                                        <label style="font-size: 16px;font-weight: 500;margin-top: 7px;margin-right: 8px;">学生权限</label>
-                                    </div>
+                                    <textarea style="width: 100%;height: 100px;" id="remarks"></textarea>
                                 </div>
-                                <div class="modal-footer text-center pb-2">
-                                    <button type="button" class="btn btn-default btn-default-green w-14 font-16 float-none" data-dismiss="modal" id="add_account_cancel">取消</button>
-                                    <button id="save_account" type="button" class="btn btn-success w-14 font-16 float-none ml-2">保存</button>
-                                </div>
+
                             </form>
                         </div>
 
@@ -118,87 +91,7 @@
             </div>
         </div>
     </div>
-    <!-- 确定框 -->
-    <div class="modal modal-noline fade" id="delAccountModal" tabindex="-1" role="dialog" aria-labelledby="addAccountModalLabel" aria-hidden="true">
-        <div class="modal-outer">
-            <div class="modal-middle">
-                <div class="modal-dialog modal-inner w-65 float-none">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal"></button>
-                        </div>
-                        <div class="modal-body p-1 pt-3 pl-5" style="margin: -12px 19px 0px -23px;">
-                            <form class="form-horizontal" action="" method="post"   id="add_account_form">
-                                <input id="account_id" type="hidden" name="account_id">
-                                <div class="form-group ">
-                                    <label class="control-label w-9" style="font-size: 29px;width: 284px;">是否确定删除此角色</label>
-                                </div>
-                                <div class="modal-footer text-center pb-2">
-                                    <button type="button" class="btn btn-default btn-default-green w-14 font-16 float-none" data-dismiss="modal" id="add_account_cancel">取消</button>
-                                    <button id="del_account" type="button" class="btn btn-success w-14 font-16 float-none ml-2">确定</button>
-                                </div>
-                            </form>
-                        </div>
 
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- 添加角色 -->
-    <div class="modal modal-noline fade" id="newAccountModal" tabindex="-1" role="dialog" aria-labelledby="addAccountModalLabel" aria-hidden="true">
-        <div class="modal-outer">
-            <div class="modal-middle">
-                <div class="modal-dialog modal-inner w-65 float-none">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal"></button>
-                        </div>
-                        <div class="modal-body p-1 pt-3 pl-5">
-                            <form class="form-horizontal" action="" method="post"   id="add_account_form">
-                                <input id="account_id" type="hidden" name="account_id">
-                                <div class="form-group ">
-                                    <label class="control-label w-9" style="font-size: 29px;width: 135px;">添加角色</label>
-                                </div>
-                                <div class="form-group ">
-                                    <label class="control-label w-9">角色编号：</label>
-                                    <div class="w-40 relative">
-                                        <input id="newidLab" class="form-control w-32" type="text" name="account_id" maxlength="20" placeholder="系统自动生成" disabled>
-                                    </div>
-                                </div>
-                                <div class="form-group ">
-                                    <label class="control-label w-9">角色名称：</label>
-                                    <div class="w-40 relative">
-                                        <input id="newnameLab" class="form-control w-32" type="text" name="account_id" maxlength="20" >
-                                    </div>
-                                </div>
-                                <div class="form-group ">
-                                    <label class="control-label w-9">权限：</label>
-                                    <div class="w-40 relative">
-                                        <input id="Ncheck1" type="checkbox">
-                                        <label style="font-size: 16px;font-weight: 500;margin-top: 7px;margin-right: 8px;">用户管理</label>
-                                        <input id="Ncheck2" type="checkbox">
-                                        <label style="font-size: 16px;font-weight: 500;margin-top: 7px;margin-right: 8px;">权限管理</label>
-                                        <input id="Ncheck3" type="checkbox">
-                                        <label style="font-size: 16px;font-weight: 500;margin-top: 7px;margin-right: 8px;">数据字典维护</label>
-                                        <input id="Ncheck4" type="checkbox">
-                                        <label style="font-size: 16px;font-weight: 500;margin-top: 7px;margin-right: 8px;">教师权限</label>
-                                        <input id="Ncheck5" type="checkbox">
-                                        <label style="font-size: 16px;font-weight: 500;margin-top: 7px;margin-right: 8px;">学生权限</label>
-                                    </div>
-                                </div>
-                                <div class="modal-footer text-center pb-2">
-                                    <button type="button" class="btn btn-default btn-default-green w-14 font-16 float-none" data-dismiss="modal" id="add_account_cancel">取消</button>
-                                    <button id="new_account" type="button" class="btn btn-success w-14 font-16 float-none ml-2">保存</button>
-                                </div>
-                            </form>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <!--    &lt;!&ndash; 表格共通&ndash;&gt;
         <script src="js/table-ajax.js"></script>-->
     <!--私有js-->
