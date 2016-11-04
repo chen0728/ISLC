@@ -15,7 +15,7 @@ module.exports = function (app) {
 
     //查询角色权限列表
     router.get('/questions/list', function (req, res,next) {
-        var sql = knex.select('*').from('questions_info').where('status','!=',2)
+        var sql = knex.select('*').from('questions_info').where('public',1).orWhere('account_id', 'P10000');
         var params = req.query;
         if(params.seq_no){
             sql = sql.where('seq_no',params.seq_no);

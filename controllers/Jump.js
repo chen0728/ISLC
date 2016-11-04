@@ -38,7 +38,7 @@ module.exports = function (app) {
         knex.select('*').from('account').where('account_id', userInfo.username).where('password', userInfo.password).then(function (reply) {
            if(reply.length == 1){
                req.session.account_id = userInfo.username;
-               res.render('Backstage/index',{username:'超级管理员',mm_dd:'10月26日',Week:'周三',role_name:'哈哈哈',_id:123});
+               res.render('Backstage/index',{login_account_id:req.session.account_id,username:'超级管理员',mm_dd:'10月26日',Week:'周三',role_name:'哈哈哈',_id:123});
            }else{
                res.redirect('/');
            }

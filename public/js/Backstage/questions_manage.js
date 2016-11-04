@@ -110,12 +110,19 @@ $(function () {
             "colIndex": 7,
             "html": function (data, type, full) {
                 var retHtml = '';
-                if (full.seq_no) {
+                if (full.seq_no && full.account_id == $('#login_account_id').val()) {
                     retHtml = retHtml + '<div class="drop-opt">' +
                         '<a href="javascript:;" id="dropLabel-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">详情<span class="icon-chevron-down"></span></a>' +
                         '<ul class="drop-cnt in" role="menu" aria-labelledby="dropLabel-1">' +
-                        '<li><a class="employee_edit" href="course_add" target="_blank" data-id="'+full.seq_no+'" data-toggle="modal">编辑</a></li>' +
+                        '<li><a class="employee_edit" href="javascript:void(0)" target="_blank" data-id="'+full.seq_no+'" data-toggle="modal">编辑</a></li>' +
                         '<li><a class="employee_del" href="javascript:void(0)" data-id="'+full.seq_no+'" data-toggle="modal">删除</a></li>' +
+                        '</ul>' +
+                        '</div>';
+                }else if(full.seq_no){
+                    retHtml = retHtml + '<div class="drop-opt">' +
+                        '<a href="javascript:;" id="dropLabel-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">详情<span class="icon-chevron-down"></span></a>' +
+                        '<ul class="drop-cnt in" role="menu" aria-labelledby="dropLabel-1">' +
+                        '<li><a class="employee_edit" href="javascript:void(0)" target="_blank" data-id="'+full.seq_no+'" data-toggle="modal">查看</a></li>' +
                         '</ul>' +
                         '</div>';
                 }
