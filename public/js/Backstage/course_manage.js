@@ -104,7 +104,7 @@ $(function () {
                     retHtml = retHtml + '<div class="drop-opt">' +
                         '<a href="javascript:;" id="dropLabel-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">详情<span class="icon-chevron-down"></span></a>' +
                         '<ul class="drop-cnt in" role="menu" aria-labelledby="dropLabel-1">' +
-                        '<li><a class="employee_edit" href="course_add" target="_blank" data-id="'+full.seq_no+'" data-toggle="modal">编辑</a></li>' +
+                        '<li><a class="employee_edit" href="course_add?seq_no='+full.seq_no+'" target="_blank" data-title="编辑课程" data-toggle="modal">编辑</a></li>' +
                         '<li><a class="employee_del" href="javascript:void(0)" data-id="'+full.seq_no+'" data-toggle="modal">删除</a></li>' +
                         '</ul>' +
                         '</div>';
@@ -138,29 +138,6 @@ $(function () {
     $("select").select2({
         minimumResultsForSearch: Infinity   //隐藏下拉列表搜索框。Infinity可以数字替换，下拉列表项的最少条目数等于该数字时出现搜索框。
     }); // 美化下拉列表
-    $(document).on("click", ".employee_edit", function () {
-        debugger;
-        seq_no = $(this).attr('data-id');
-        //查询详情 并自动填充
-        $.ajax({
-            type: "get",
-            url: "/course_info/get?seq_no="+seq_no,
-            dataType: "json",
-            data: {},
-            success: function (data) {
-                debugger;
-                var $p_id = $("#course_add_page");
-                $p_id.find("#class_name").val(data[0].name);
-                $p_id.find("#take_lass").val(data[0].class);
-                $p_id.find("#class_Time").val(data[0].class_time);
-                debugger;
-                window.location.href="course_add"
-            },
-            error: function (data) {
-                alert("系统错误");
-            }
-        });
-    });
     //删除
     $(document).on("click", ".employee_del", function () {
         $("#delclassModal").modal('show');

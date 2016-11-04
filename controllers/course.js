@@ -65,6 +65,20 @@ module.exports = function (app) {
         var sql = knex.select('*').from('course_info').where('seq_no',seq_no);
         // 执行sql
         sql.then(function (reply) {
+            for(var i =0;i<reply.length;i++){
+                reply[i].class_time = moment(reply[i].class_time).format('YYYY-MM-DD HH:MM:SS');
+            }
+            res.json(reply);
+        }).catch(function (err) {
+            next(err);
+        });
+    });
+    //查询数据引用
+    router.get('/course_info/getl', function (req, res, next) {
+        var seq_nol = req.query.seq_nol;
+        var sql = knex.select('*').from('data_info').where('seq_no',seq_nol);
+        // 执行sql
+        sql.then(function (reply) {
             res.json(reply);
         }).catch(function (err) {
             next(err);
