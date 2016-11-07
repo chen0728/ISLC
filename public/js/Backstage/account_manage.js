@@ -341,7 +341,7 @@ $(function () {
         // 显示成功对话框
         $("#sureReset").modal('show');
     });
-    // 确认删除
+    // 确认修改密码
     $("#resetPassword").click(function () {
         $.ajax({
             "dataType": 'json',

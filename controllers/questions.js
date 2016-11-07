@@ -15,13 +15,35 @@ module.exports = function (app) {
 
     //查询角色权限列表
     router.get('/questions/list', function (req, res,next) {
-        var sql = knex.select('*').from('questions_info').where('public',1).orWhere('account_id', 'P10000');
+        var sql = knex.select('*').from('questions_bank').where('public',1).where('status',1);
         var params = req.query;
         if(params.seq_no){
             sql = sql.where('seq_no',params.seq_no);
         }
-        if(params.question){
-            sql = sql.where('question','like', '%'+params.question+'%');
+        if(params.question_name){
+            sql = sql.where('question_name','like', '%'+params.question_name+'%');
+        }
+        if(params.score){
+            sql = sql.where('score',params.score);
+        }
+        if(params.type){
+            sql = sql.where('type','like', '%'+params.type+'%');
+        }
+        if(params.account_id){
+            sql = sql.where('account_id','like', '%'+params.account_id+'%');
+        }
+        if(params.public){
+            sql = sql.where('public',params.public);
+        }
+        if(params.status){
+            sql = sql.where('status',params.status);
+        }
+        sql = sql.orWhere('account_id', params.login_account_id);
+        if(params.seq_no){
+            sql = sql.where('seq_no',params.seq_no);
+        }
+        if(params.question_name){
+            sql = sql.where('question_name','like', '%'+params.question_name+'%');
         }
         if(params.score){
             sql = sql.where('score',params.score);
@@ -51,6 +73,36 @@ module.exports = function (app) {
                 infos.data = reply;
                 res.json(infos);
             }
+        }).catch(function (err) {
+            next(err);
+        });
+    });
+
+    //修改或新建题目
+    router.get('/questions/new', function (req, res,next) {
+        var params = req.query.params;
+        var sql = knex('questions_bank');
+
+        //修改
+        if(params.seq_no){
+            sql = sql.where('seq_no',params.seq_no).update(params);
+        } else {
+            sql = sql.insert(params);
+        }
+
+        sql.then(function (reply) {
+            res.json(reply);
+        }).catch(function (err) {
+            next(err);
+        });
+    });
+
+    //逻辑删除题目
+    router.get('/questions/del', function (req, res,next) {
+        var sql = knex('questions_bank').where('seq_no',req.query.seq_no).update('status',2);
+
+        sql.then(function (reply) {
+            res.json(reply);
         }).catch(function (err) {
             next(err);
         });
