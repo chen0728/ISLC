@@ -10,7 +10,6 @@ $(function () {
     var num1;
     var new_num;
     var $p_id = $("#course_manage_page");
-    debugger;
     //数据表格筛选处事件冒泡
     $('.j_bubble').click(function (event) {
         event.stopPropagation();
@@ -22,7 +21,6 @@ $(function () {
     });
 
     function init() {
-        debugger;
         var params = { // 查询查询参数
             name: $p_id.find('#nameIn').val(), // 课程名
             number: $p_id.find('#numIn').val(), // 编号
@@ -33,7 +31,7 @@ $(function () {
             class_timeE: $p_id.find('#class_e').val(), // 班级
             class_status: $p_id.find('#status_q').val(), // 班级
         };
-        var table_src = $('#account_Table'); // 定义指向
+        var table_src = $('#course_Table'); // 定义指向
         var ajax_url = '/course_manage/list'; // 定义数据请求路径
         var pageSize = 10 ;// 定义每页长度默认为10
         var aoColumns = [
@@ -44,7 +42,6 @@ $(function () {
             {"col_id": "class_time"},
             {"col_id": "class_status"},
         ]; // 定义表格数据列id
-        debugger;
         var aoColumnDefs = [{
             "colIndex": 0,
             "html": function (data, type, full) {
@@ -125,7 +122,6 @@ $(function () {
     });
     //获取到数据的回调函数，需要更该时可定义
     function fnChangeDataCallback(data){
-        debugger;
         return data;
     }
     //绘画完成之后的回调函数
@@ -149,13 +145,11 @@ $(function () {
                 dataType: "json",
                 data:{},
                 success: function (data) {
-                    debugger;
                     alert("删除成功！");
                     window.location.reload();
                 },
                 error: function (data) {
                     alert("系统错误");
-                    debugger;
                 }
             })
         });

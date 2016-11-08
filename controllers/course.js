@@ -96,5 +96,37 @@ module.exports = function (app) {
             next(err);
         });
     });
+    //资料列表弹窗查询
+    router.get('/course_add/list', function (req, res,next) {
+        var sql = knex.select('*').from('data_info').where('status','!=',2)
+        var params = req.query;
+        if(params.name){
+            sql = sql.where('name','like', '%'+params.name+'%');
+        }
+        if(params.number) {
+            sql = sql.where('number', params.number);
+        }
+        if (params.up_timeS) {
+            sql = sql.where('up_time', '>=', params.up_timeS);
+        }
+        if (params.up_timeE) {
+            sql = sql.where('up_time', '<=', params.up_timeE);
+        }
+        var infos={};
+        sql.then(function (reply) {
+            infos.totalSize = reply.length;
+            return sql = util.queryAppend(req.query, sql)
+        }).then(function (reply) {
+            if (reply) {
+                for(var i =0;i<reply.length;i++){
+                    reply[i].up_time = moment(reply[i].up_time).format('YYYY-MM-DD');
+                }
+                infos.data = reply;
+                res.json(infos);
+            }
+        }).catch(function (err) {
+            next(err);
+        });
+    });
 
 };
