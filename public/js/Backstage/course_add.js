@@ -7,7 +7,8 @@ $(function () {
     var tempEmpObj;
     var num1;
     var new_num;
-    var XXXlist;
+    var seq_no_chec;
+    var seq_no_arr = new Array();
     var $p_id = $("#course_add_page");
     debugger;
     $('.j_bubble').click(function (event) {
@@ -90,14 +91,36 @@ $(function () {
     //绘画完成之后的回调函数
     function fnDrawCallback(data){
         $p_id.find(".add_zl").on('click',function(){
-            var info = $(this).attr("data-value");
-            info = JSON.parse(info);
             debugger;
-            $p_id.find("#data_no").val($p_id.find("#data_no").val()+';'+info.seq_no);
-            $p_id.find("#data_tbody").append('<div class="form-control w-32" style="width: auto; background: #e6e6e6;margin-right:10px;margin-bottom: 10px;"> ' +info.name+'</div>');
+            var seq_no = $(this).attr('value');
+            seq_no_chec = $(this).attr('checked');
+            if(seq_no_chec && seq_no_chec == 'checked'){
+                var  abc = seq_no_arr.push(seq_no);
+            }else{
+                for(var i=0; i<seq_no_arr.length; i++)
+                {
+                    if(seq_no_arr[i] == seq_no)
+                    {
+                        seq_no_arr.splice(i,1);//删除方法
+                        break;
+                    }
+                }
+            }
             debugger;
-            //$p_id.find(".close").trigger("click");
+            for(var i=0; i<seq_no_arr.length; i++)
+            {
+                alert(seq_no_arr[i]);
+            }
         });
+        //$p_id.find(".add_zl").on('click',function(){
+        //    //var info = $(this).attr("data-value");
+        //    //info = JSON.parse(info);
+        //    debugger;
+        //    //$p_id.find("#data_no").val($p_id.find("#data_no").val()+';'+info.seq_no);
+        //    //$p_id.find("#data_tbody").append('<div class="form-control w-32" style="width: auto; background: #e6e6e6;margin-right:10px;margin-bottom: 10px;"> ' +info.name+'</div>');
+        //    //$p_id.find(".close").trigger("click");
+        //});
+
         return data;
     }
     init();
