@@ -1,0 +1,76 @@
+<div id="TLquestions_manage_page">
+    <!--start-->
+    <ol class="breadcrumb">
+        <li><a>运维</a></li>
+        <li class="active">听力试题</li>
+    </ol>
+    <div class="main-box p-1-5">
+        <form class="form-horizontal ng-pristine ng-valid nice-validator n-yellow" style="margin: 20px 0px 0 30px" id="package_step1Form">
+            <!-- 隐藏的题目id-->
+            <input type="" name="qusetion_seq_no" value="<%=seq_no%>">
+
+            <div class="form-group">
+                <label class="control-label w-9">试题名称：</label>
+
+                <div class="w-40 relative">
+                    <input id="product_name" class="form-control w-30" type="text" name="name" data-rule="required;" maxlength="256" placeholder="引用题库将自动填充整页">
+                    <a href="javascript:void(0);" class="btn btn-success font-14 ml-0-5" style="width: 78px" id="">引用题库</a>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label w-9 relative">音频文件：</label>
+
+                <div class="w-40 relative">
+                    <input id="name_remarks" value="" class="form-control w-30" data-rule="required;" disabled type="text" maxlength="32" placeholder="请上传音频文件">
+                    <a href="javascript:void(0);" class="btn btn-success font-14 ml-0-5" style="width: 78px" id="">自己上传</a>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label w-9 relative">试题说明：</label>
+                <div class="w-40 relative">
+                    <textarea id="name_remarks" class="form-control" data-rule="required;" style="height: 100px;" type="text" placeholder="对于本套试题的概述（如：《高考听力套卷一》）"></textarea>
+                </div>
+            </div>
+            <div class="timu w-76 alert alert-dismissable alert-policy-01 pull-left clearfix clearfix form-group j_theme_choose">
+                <label class="control-label w-9">第 1 题：</label>
+                <input id="product_name" class="form-control w-40" data-rule="required;" type="text" maxlength="256" placeholder="问题">
+                <br>
+                <br>
+                <button type="button" class="close closefirst" data-dismiss="alert" style="position: inherit;margin: -69px -28px 0 0;"></button>
+                <div>
+                    <ul class="y-theme-choose-list clearfix" id="themeChoose">
+
+                        <li style="width: 310px;margin: 10px 0 0 90px">
+                            <label style="float: left"><input style="margin-top: 10px" type="checkbox" value="1" name="themes">A</label>
+                            <input id="product_name" class="form-control w-23 ml-1" type="text" placeholder="答案A，没有则不填">
+                        </li>
+                        <li style="width: 310px;margin-top: 10px">
+                            <label style="float: left"><input style="margin-top: 10px" type="checkbox" value="1" name="themes">B</label>
+                            <input id="product_name" class="form-control w-23 ml-1" type="text" placeholder="答案B，没有则不填">
+                        </li>
+                        <li style="width: 310px;margin: 10px 0 0 90px">
+                            <label style="float: left"><input style="margin-top: 10px" type="checkbox" value="1" name="themes">C</label>
+                            <input id="product_name" class="form-control w-23 ml-1" type="text" placeholder="答案C，没有则不填">
+                        </li>
+                        <li style="width: 310px;margin-top: 10px">
+                            <label style="float: left"><input style="margin-top: 10px" type="checkbox" value="1" name="themes">D</label>
+                            <input id="product_name" class="form-control w-23 ml-1" type="text" placeholder="答案D，没有则不填">
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </form>
+        <div class="text-center mt-5 mb-2">
+            <button class="btn btn-success w-12 float-none" id="to_step2">下一步</button>
+        </div>
+    </div>
+
+
+
+    <!--    &lt;!&ndash; 表格共通&ndash;&gt;
+        <script src="js/table-ajax.js"></script>-->
+    <!--私有js-->
+    <script src="js/backstage/TLquestions_manage.js"></script>
+    <!--end-->
+</div>

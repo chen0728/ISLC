@@ -74,6 +74,10 @@ module.exports = function (app) {
     router.get('/questions_manage',filter.authorize, function (req, res) {
         res.render('Backstage/questions_manage',{code:0,text:""});
     });
+    //题目管理
+    router.get('/TLquestions_manage',filter.authorize, function (req, res) {
+        res.render('Backstage/TLquestions_manage',{seq_no:req.query.seq_no});
+    });
 
 
     //课程管理
