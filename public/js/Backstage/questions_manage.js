@@ -10,7 +10,6 @@ $(function () {
     var num1;
     var new_num;
     var $p_id = $("#questions_manage_page");
-    debugger;
     //数据表格筛选处事件冒泡
     $('.j_bubble').click(function (event) {
         event.stopPropagation();
@@ -32,7 +31,6 @@ $(function () {
             status: $p_id.find('#status_q').val(), // 状态
             login_account_id: $('#login_account_id').val() // 状态
         };
-        debugger;
         var table_src = $('#questions_Table'); // 定义指向
         var ajax_url = '/questions/list'; // 定义数据请求路径
         var pageSize = 10 ;// 定义每页长度默认为10
@@ -139,7 +137,6 @@ $(function () {
             status:1,
             type:'听说题'
         };
-        debugger;
         var table_src = $('#TSquestion_Table'); // 定义指向
         var ajax_url = '/questions/list'; // 定义数据请求路径
         var pageSize = 5 ;// 定义每页长度默认为10
@@ -216,9 +213,15 @@ $(function () {
 
     //添加听说试题弹窗
     $('#addTS').on('click', function () {
+        $(document).ready(function(){
+            $("#add_account_form").find("*").removeAttr('disabled');
+        });
         $("input[name='public']:eq(1)").attr("checked",'checked');
-        $('#addTSdiv').modal('show');
         $('#seq_no').val('0');
+        $("#question_name").val('');
+        $("#remarks").val('');
+        $("#audio_url").val('');
+        $('#addTSdiv').modal('show');
     });
 
     //添加听说题库引用弹窗
@@ -233,10 +236,9 @@ $(function () {
             "dataType": 'json',
             "type": "get",
             "timeout": 20000,
-            "url": '/questions/list?seq_no='+$(this).attr('data-id'),
+            "url": '/questions/list?seq_no='+$(this).attr('data-id')+'&login_account_id='+$('#login_account_id').val(),
             "data": {},
             "success": function (data) {
-                debugger;
 
                 $('#remarks').val(data.data[0].remarks);
                 $('#question_name').val(data.data[0].question_name);
@@ -254,7 +256,6 @@ $(function () {
     $('#save_TSquestion').on('click', function () {
         // 默认允许提交
         var holdSubmit = true;
-        debugger;
         if ($('#add_account_form').isValid()) {
             if (holdSubmit) {
                 // 只提交一次
@@ -331,29 +332,33 @@ $(function () {
         });
     });
 
-    // 动态绑定编辑事件
+    // 动态绑定编辑-查看事件
     $(document).on("click", ".employee_edit", function () {
-        debugger;
         $('#seq_no').val($(this).attr('data-id'));
         //请求数据自动填充
         $.ajax({
             "dataType": 'json',
             "type": "get",
             "timeout": 20000,
-            "url": '/account/list?seq_no=' + $('#seq_no').val(),
+            "url": '/questions/list?seq_no=' + $('#seq_no').val()+'&login_account_id='+$('#login_account_id').val(),
             "data": {},
             "success": function (data) {
-                $("input[name='part']:eq("+(data.data[0].part-1)+")").attr("checked",'checked');
-                $("#account_id").val(data.data[0].account_id);
-                $("#name").val(data.data[0].name);
-                $("#sex").val(data.data[0].sex);
-                $("#password").val(data.data[0].password);
-                $("#class").val(data.data[0].class);
-                $("#year").val(data.data[0].year);
-                if(data.data[0].part == 2){ //学生
-                    $('#addclass').show();
-                } else {
-                    $('#addclass').hide();
+                $(document).ready(function(){
+                    $("#add_account_form").find("*").removeAttr('disabled');
+                });
+                $("input[name='public']:eq("+(data.data[0].public-1)+")").attr("checked",'checked');
+                $("#question_name").val(data.data[0].question_name);
+                $("#remarks").val(data.data[0].remarks);
+                $("#audio_url").val(data.data[0].audio_url);
+                debugger;
+                if(data.data[0].account_id == $('#login_account_id').val()){
+                    $(document).ready(function(){
+                        $("#add_account_form").find("*").remove('disabled');
+                    });
+                } else {//他人的题目不可编辑
+                    $(document).ready(function(){
+                        $("#add_account_form").find("*").attr('disabled','true');
+                    });
                 }
             },
             "error": function (data) {
@@ -361,7 +366,7 @@ $(function () {
             }
         });
         // 显示成功对话框
-        $('#addAccountModal').modal('show');
+        $('#addTSdiv').modal('show');
     });
     //
     //// 动态绑定重置密码事件
@@ -387,6 +392,8 @@ $(function () {
     //        }
     //    });
     //});
+
+
 
 });
 
