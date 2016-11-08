@@ -89,7 +89,7 @@ $(function () {
                     return '';
                 }
                 if(full.class_status == 1){
-                    return '<td><div class="text-center">以上</div></td>';
+                    return '<td><div class="text-center">已上</div></td>';
                 }
                 return '<td><div class="text-center">未上</div></td>';
             }

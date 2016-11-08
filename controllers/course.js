@@ -41,6 +41,7 @@ module.exports = function (app) {
         if(params.class_status){
             sql = sql.where('class_status',params.class_status);
         }
+
         var infos={};
         sql.then(function (reply) {
             infos.totalSize = reply.length;
@@ -111,6 +112,12 @@ module.exports = function (app) {
         }
         if (params.up_timeE) {
             sql = sql.where('up_time', '<=', params.up_timeE);
+        }
+        if(params.seq_no){
+            for(var i=0; i<seq_no.length; i++)
+            {
+                sql = sql.where('seq_no','!=',params.seq_no[i]);
+            }
         }
         var infos={};
         sql.then(function (reply) {
