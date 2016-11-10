@@ -78,11 +78,13 @@ module.exports = function (app) {
     router.get('/TLquestions_manage',filter.authorize, function (req, res) {
         res.render('Backstage/TLquestions_manage',{seq_no:req.query.seq_no});
     });
-
-
     //课程管理
     router.get('/course_add',filter.authorize, function (req, res) {
         res.render('Backstage/course_add',{seq_no:req.query.seq_no});
+    });
+    //课堂音频管理
+    router.get('/class_audio',filter.authorize, function (req, res) {
+        res.render('Backstage/class_audio',{seq_no:req.query.seq_no});
     });
 
 };
