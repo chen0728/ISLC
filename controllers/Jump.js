@@ -86,5 +86,10 @@ module.exports = function (app) {
     router.get('/class_audio',filter.authorize, function (req, res) {
         res.render('Backstage/class_audio',{seq_no:req.query.seq_no});
     });
+    //学生分组管理
+    router.get('/grouping',filter.authorize, function (req, res) {
+        res.render('Backstage/grouping',{seq_no:req.query.seq_no});
+    });
+
 
 };
