@@ -24,17 +24,17 @@ $(function () {
     function init() {
         debugger;
         var params = { // 查询查询参数
-            number: $p_id.find('#seq_q').val(), // 编号
-            key_val_cn: $p_id.find('#name_n').val(), // 名称
-            up_time: $p_id.find('#search_s').val(), // 时间起
-            date1E: $p_id.find('#search_e').val(), // 时间止
+            name: $p_id.find('#audio_name').val(), // 编号
+            class_name: $p_id.find('#class_name').val(), // 名称
+            up_timeS: $p_id.find('#search_s').val(), // 时间起
+            up_timeE: $p_id.find('#search_e').val(), // 时间止
         };
         var table_src = $('#audio_Table'); // 定义指向
         var ajax_url = '/class_audio/list'; // 定义数据请求路径
         var pageSize = 10 ;// 定义每页长度默认为10
         var aoColumns = [
             {"col_id": "number"},
-            {"col_id": "key_val_cn"},
+            {"col_id": ""},
             {"col_id": "up_time"},
         ]; // 定义表格数据列id
         debugger;

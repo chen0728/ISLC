@@ -14,7 +14,7 @@ module.exports = function (app) {
     app.use('/', router);
     //资料列表查询
     router.get('/class_audio/list', function (req, res,next) {
-        var sql = knex.select('*').from('data_info').where('status','!=',2).where('tata_type',4);
+        var sql = knex.select('*').from('data_info').where('status','!=',2).where('data_type',4);
         var params = req.query;
         if(params.number) {
             sql = sql.where('number', params.number);

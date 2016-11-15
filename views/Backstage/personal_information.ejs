@@ -1,0 +1,159 @@
+<div id="personal_information_page">
+    <!--start-->
+    <ol class="breadcrumb">
+        <li><a href="index.html">运维</a></li>
+        <li class="active">个人资料管理</li>
+    </ol>
+    <div class="main-box main-box-noborder overflow-hidden" style="padding-top: 12px">
+        <table class="table-style-1 table-style-1-a table-hover mb-0-5" id="personal_Table">
+            <thead>
+            <tr class="sch">
+                <td style="width: 14%;" align="center">
+                    <div class="t text-left" >资料名
+                    <span class="sort-ico" style="padding-right:72px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span>
+                    </div>
+                    <div class="form-group float-none j_bubble">
+                        <input class="form-control" type="text" name="" id="name" placeholder="" maxlength="20">
+                    </div>
+                </td>
+                <td style="width: 14%;" align="center">
+                    <div class="t">资料编号<span class="sort-ico" style="padding-right:66px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+                    <div class="form-group float-none j_bubble">
+                        <input class="form-control" type="text" name="" id="number" maxlength="20">
+                    </div>
+                </td>
+                <td style="width: 14%;" align="center">
+                    <div class="t">资料类型<span class="sort-ico" style="padding-right:66px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+                    <select class="form-control" id="tata_type" name="">
+                        <option value="">请选择</option>
+                        <option value="1">文档</option>
+                        <option value="2">音频</option>
+                        <option value="3">视屏</option>
+                    </select>
+                </td>
+                <td width="41%" align="center" class="sorting" tabindex="0" aria-controls="product_searchTab" rowspan="1" colspan="1" aria-label="
+                创建时间: activate to sort column ascending" style="width: 113px;">
+                    <div class="t" style="padding-right: 10px;">上传时间<span class="sort-ico" style="padding-right:57px"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+                    <div class="form-group j_bubble j_datebetween">
+                        <input type="text" class="form-control input-xs j_datepicker" placeholder="开始" id="up_timeS">
+                        <input type="text" class="form-control mt-1 input-xs j_datepicker" placeholder="结束" id="up_timeE">
+                    </div>
+                </td>
+                <td style="width: 17%;" align="center">
+                    <div class="t">操作</div>
+                    <button class="btn btn-success float-none j_bubble" type="button" id="employeeSeatchBut">搜索
+                    </button>
+                </td>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <nav class="pagination-wrap clearfix" style="height: 20px;margin-top:-22px">
+        </nav>
+        <nav class="pagination-wrap clearfix">
+            <div class="ml-2 mt-1 mb-2">
+                <a class="form-btn-upload" id="addData" data-toggle="modal"><i class="icon-plus-sign"></i>添加新资料</a>
+            </div>
+        </nav>
+    </div>
+
+
+    <!--资料详情-->
+    <div class="modal modal-noline fade" id="detail" tabindex="-1" role="dialog" aria-labelledby="addAccountModalLabel" aria-hidden="true">
+        <div class="modal-outer">
+            <div class="modal-middle">
+                <div class="modal-dialog modal-inner w-65 float-none">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body p-1 pt-3 pl-5">
+                            <form class="form-horizontal" action="" method="post"   id="add_account_form">
+                                <input id="account_id" type="hidden" name="account_id">
+                                <div class="form-group ">
+                                    <label id="areaLab" class="control-label w-9" style="font-size: 29px;width: 135px;"></label>
+                                </div>
+                                <div class="form-group ">
+                                    <label class="control-label w-9">资料公开：</label>
+                                    <div class="w-40 relative">
+                                        <input id="radio1" type="radio" name="public">
+                                        <label style="font-size: 16px;font-weight: 500;margin-top: 7px;margin-right: 8px;">个人</label>
+                                        <input id="radio2" type="radio" name="public" checked>
+                                        <label style="font-size: 16px;font-weight: 500;margin-top: 7px;margin-right: 8px;">公开</label>
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <label class="control-label w-9">资料类型：</label>
+                                    <div class="w-40 relative">
+                                        <select class="form-control" id="type_detail" name="type_detail" style="width: 80%;">
+                                            <option value="">请选择</option>
+                                            <option value="1">文档</option>
+                                            <option id="name1" value="2">音频</option>
+                                            <option value="3">视屏</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <label class="control-label w-9">文件名称：</label>
+                                    <div class="w-40 relative">
+                                        <input id="name_detail" class="form-control w-32" type="text" name="" maxlength="20" >
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <label class="control-label w-9"></label>
+                                    <div class="w-40 relative">
+                                        <button type="button" class="btn btn-default btn-default-green w-14 font-16 float-none" id="">选择文件</button>
+                                    </div>
+                                </div>
+                                <div class="modal-footer text-center pb-2">
+                                    <button type="button" class="btn btn-default btn-default-green w-14 font-16 float-none" data-dismiss="modal" id="add_account_cancel">取消</button>
+                                    <button id="save_map" type="button" class="btn btn-success w-14 font-16 float-none ml-2">保存</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 确定框 -->
+    <div class="modal modal-noline fade" id="delMapModal" tabindex="-1" role="dialog" aria-labelledby="addAccountModalLabel" aria-hidden="true">
+        <div class="modal-outer">
+            <div class="modal-middle">
+                <div class="modal-dialog modal-inner w-65 float-none">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body p-1 pt-3 pl-5" style="margin: -12px 19px 0px -23px;">
+                            <form class="form-horizontal" action="" method="post"   id="add_account_form">
+                                <input id="account_id" type="hidden" name="account_id">
+                                <div class="form-group ">
+                                    <label class="control-label w-9" style="font-size: 29px;width: 284px;">是否确定删除此资料</label>
+                                </div>
+                                <div class="modal-footer text-center pb-2">
+                                    <button type="button" class="btn btn-default btn-default-green w-14 font-16 float-none" data-dismiss="modal" id="add_account_cancel">取消</button>
+                                    <button id="del_infor" type="button" class="btn btn-success w-14 font-16 float-none ml-2">确定</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--    &lt;!&ndash; 表格共通&ndash;&gt;
+        <script src="js/table-ajax.js"></script>-->
+    <!--私有js-->
+    <script>
+        function check(){
+            document.getElementById("radio1").checked=true
+        }
+        function uncheck(){
+            document.getElementById("radio1").checked=false
+        }
+    </script>
+
+    <script src="js/backstage/personal_information.js"></script>
+    <!--end-->
+</div>
