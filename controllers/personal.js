@@ -90,7 +90,7 @@ module.exports = function (app) {
             next(err);
         });
     });
-    //查询num1
+    //查询seq_no
     router.get('/personal/select', function (req, res, next) {
         var sql = knex.select('*').from('data_info').orderBy('seq_no','desc');
         // 执行sql

@@ -90,10 +90,6 @@ module.exports = function (app) {
     router.get('/grouping',filter.authorize, function (req, res) {
         res.render('Backstage/grouping',{seq_no:req.query.seq_no});
     });
-    //学生分组管理
-    router.get('/grouping',filter.authorize, function (req, res) {
-        res.render('Backstage/grouping',{seq_no:req.query.seq_no});
-    });
     //公共资料管理
     router.get('/public_information',filter.authorize, function (req, res) {
         res.render('Backstage/public_information',{seq_no:req.query.seq_no});
@@ -102,6 +98,17 @@ module.exports = function (app) {
     router.get('/personal_information',filter.authorize, function (req, res) {
         res.render('Backstage/personal_information',{seq_no:req.query.seq_no});
     });
-
+    //分组语音对话回顾
+    router.get('/group_audio',filter.authorize, function (req, res) {
+        res.render('Backstage/group_audio',{seq_no:req.query.seq_no});
+    });
+    //课堂多媒体资料回顾
+    router.get('/class_media',filter.authorize, function (req, res) {
+        res.render('Backstage/class_media',{seq_no:req.query.seq_no});
+    });
+    //课堂多媒体资料查看
+    router.get('/media_player',filter.authorize, function (req, res) {
+        res.render('Backstage/media_player',{seq_no:req.query.seq_no});
+    });
 
 };

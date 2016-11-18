@@ -111,7 +111,6 @@ $(function () {
             "html": function (data, type, full) {
                 var retHtml = '';
                 if (full.seq_no) {
-                    var info = JSON.stringify(full);
                     retHtml = retHtml + "<td><div class='text-center' style='padding: 0px 5px;' data-id='"+full.seq_no+"'><input id='"+full.seq_no+"' name='related_data_qwe' type='checkbox' value='"+full.seq_no+"' class='add_zl' data-value='"+info+"'></div></td>";
                 }
                 return retHtml;

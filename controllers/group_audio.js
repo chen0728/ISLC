@@ -13,18 +13,18 @@ var filter = require('../lib/filter');
 module.exports = function (app) {
     app.use('/', router);
     //资料列表查询
-    router.get('/class_audio/list', function (req, res,next) {
-        var sql = knex.select('*').from('data_info').where('status','!=',2).where('data_type',4);
-        var params = req.query;
-        if(params.number) {
-            sql = sql.where('number', params.number);
-        }
-        if (params.up_timeS) {
-            sql = sql.where('up_time', '>=', params.up_timeS);
-        }
-        if (params.up_timeE) {
-            sql = sql.where('up_time', '<=', params.up_timeE);
-        }
+    router.get('/group_audio/list', function (req, res,next) {
+        var sql = knex.select('*').from('data_info').where('status','!=',2);
+        //var params = req.query;
+        //if(params.number) {
+        //    sql = sql.where('number', params.number);
+        //}
+        //if (params.up_timeS) {
+        //    sql = sql.where('up_time', '>=', params.up_timeS);
+        //}
+        //if (params.up_timeE) {
+        //    sql = sql.where('up_time', '<=', params.up_timeE);
+        //}
         var infos={};
         sql.then(function (reply) {
             infos.totalSize = reply.length;
@@ -32,7 +32,7 @@ module.exports = function (app) {
         }).then(function (reply) {
             if (reply) {
                 for(var i =0;i<reply.length;i++){
-                    reply[i].up_time = moment(reply[i].up_time).format('YYYY-MM-DD');
+                    reply[i].up_time = moment(reply[i].up_time).format('YYYY-MM-DD HH:MM');
                 }
                 infos.data = reply;
                 res.json(infos);
@@ -41,9 +41,8 @@ module.exports = function (app) {
             next(err);
         });
     });
-
     //播放查询
-    router.get('/class_audio/get', function (req, res, next) {
+    router.get('/group_audio/get', function (req, res, next) {
         var seq_no = req.query.seq_no;
         var sql = knex.select('*').from('data_info').where('seq_no',seq_no);
         // 执行sql

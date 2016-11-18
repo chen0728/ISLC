@@ -6,23 +6,49 @@
     </ol>
     <div class="main-box main-box-noborder overflow-hidden" style="padding-top: 22px;height: 387px">
         <select class="form-control" id="slc_class" name="" style="width: 15%;margin-left: 150px;float: left">
-            <option value="">请选择班级</option>
+            <option value="9999">请选择班级</option>
         </select>
         <div style="float: left;margin-top:4px;">&mdash;&mdash;</div>
         <select class="form-control" id="slc_group" name="" style="width: 15%;float: left">
-            <option value="">请选择组别</option>
-            <option value="1" class="slc_group">添加组</option>
+            <!--<option value="">请选择组别</option>-->
+            <!--<option value="1" class="slc_group">添加组</option>-->
         </select>
         <button class="btn btn-success float-none j_bubble" type="button" id="" style="float: left;margin-left: 25px;">删除该组</button>
         <br>
-        <input class="form-control" type="text" name="s" id="" style="width: 15%;height: 200px;margin: 26px 0px 0px -415px;float: left">
+        <div class="form-control" type="text" name="" id="outGroup" style="width: 15%;height: 200px;margin: 26px 0px 0px -415px;float: left;overflow:auto;">
+            <p>pppppppppppp</p>
+            <p>ppppppppppp</p>
+            <p>pppppppppp</p>
+            <p>ppppppppp</p>
+            <p>pppppppp</p>
+            <p>ppppppp</p>
+            <p>pppppp</p>
+            <p>ppppp</p>
+            <p>pppp</p>
+            <p>ppp</p>
+            <p>pp</p>
+            <p>p</p>
+        </div>
         <div style="float: left;margin: 230px 0 0 -415px;color: #666;">未分组（点击分组）</div>
         <div style="float: left;margin: 105px 0 0 -271px;">&ndash;&rarr;</div>
         <div style="float: left;margin: 116px 0 0 -272px;">&larr;&ndash;</div>
-        <input class="form-control" type="text" name="s" id="" style="width: 15%;height: 200px;margin: 26px 0px 0px -247px;float: left">
+        <div class="form-control" type="text" name="" id="inGroup" style="width: 15%;height: 200px;margin: 26px 0px 0px -247px;float: left;overflow:auto;">
+            <p>p</p>
+            <p>pp</p>
+            <p>ppp</p>
+            <p>pppp</p>
+            <p>ppppp</p>
+            <p>pppppp</p>
+            <p>ppppppp</p>
+            <p>pppppppp</p>
+            <p>ppppppppp</p>
+            <p>pppppppppp</p>
+            <p>ppppppppppp</p>
+            <p>pppppppppppp</p>
+        </div>
         <div style="float: left;margin: 230px 0 0 -247px;color: #666;">组内（点击去除）</div>
         <div class="t" style="width: 30%;height: 200px;margin: 26px 0px 0px -83px;float: left">场景设定：
-            <input class="form-control" type="text" name="s" id="" style="height: 176px;margin-top: 4px;">
+            <textarea class="form-control" name="s" id="" style="height: 176px;margin-top: 4px;"></textarea>
         </div>
         <div class="modal-footer text-center pb-2" style="float: left;margin-left: 302px;">
             <button type="button" class="btn btn-default btn-default-green w-14 font-16 float-none" data-dismiss="modal" id="">重置</button>
@@ -37,7 +63,7 @@
                 <div class="modal-dialog modal-inner w-65 float-none">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal"></button>
+                            <button type="button" class="close" data-dismiss="modal" name="close"></button>
                         </div>
                         <div class="modal-body p-1 pt-3 pl-5">
                             <form class="form-horizontal" action="" method="post"   id="add_account_form">
@@ -48,12 +74,12 @@
                                 <div class="form-group ">
                                     <label class="control-label w-9">组名</label>
                                     <div class="w-40 relative">
-                                        <input id="idLab" class="form-control w-32" type="text" name="account_id" maxlength="20">
+                                        <input id="groupName" class="form-control w-32" type="text" name="account_id" maxlength="20">
                                     </div>
                                 </div>
                                 <div class="modal-footer text-center pb-2">
-                                    <button type="button" class="btn btn-default btn-default-green w-14 font-16 float-none" data-dismiss="modal" id="add_account_cancel">取消</button>
-                                    <button id="save_account" type="button" class="btn btn-success w-14 font-16 float-none ml-2">保存</button>
+                                    <button type="button" class="btn btn-default btn-default-green w-14 font-16 float-none" data-dismiss="modal" id="add_account_cancel" name="close">取消</button>
+                                    <button id="save_group" type="button" class="btn btn-success w-14 font-16 float-none ml-2">保存</button>
                                 </div>
                             </form>
                         </div>
@@ -79,7 +105,7 @@
                                     <label class="control-label w-9" style="font-size: 29px;width: 284px;">是否确定删除此课程</label>
                                 </div>
                                 <div class="modal-footer text-center pb-2">
-                                    <button type="button" class="btn btn-default btn-default-green w-14 font-16 float-none" data-dismiss="modal" id="add_account_cancel">取消</button>
+                                    <button type="button" class="btn btn-default btn-default-green w-14 font-16 float-none" data-dismiss="modal" id="add_account_cancel" >取消</button>
                                     <button id="del_class" type="button" class="btn btn-success w-14 font-16 float-none ml-2">确定</button>
                                 </div>
                             </form>
