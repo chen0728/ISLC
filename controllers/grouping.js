@@ -70,4 +70,46 @@ module.exports = function (app) {
             next(err);
         });
     });
+
+    //查询未分组学生
+    router.post('/grouping/groupOut', function (req, res, next) {
+        var seq_no = req.query.seq_no;
+        var sql = knex.select('*').from('account')
+            .where('class',seq_no).whereNull('grouping').orWhere('grouping','').where('class',seq_no);
+        // 执行sql
+        sql.then(function (reply) {
+            res.json(reply);
+        }).catch(function (err) {
+            next(err);
+        });
+    });
+
+    //查询未分组学生
+    router.get('/grouping/save', function (req, res, next) {
+        var in_group = req.query.in_group;
+        var out_group = req.query.out_group;
+        var seq_no_name = req.query.seq_no_name;
+        var sql = knex.select('*').from('account');
+        var sql_ = knex.select('*').from('account');
+        if(in_group){
+            for(var i = 0; i<in_group.length; i++ ){
+                sql = sql.orWhere('seq_no',in_group[i]);
+            };
+            sql = sql.update('grouping',seq_no_name);
+        };
+        if(out_group){
+            for(var i = 0; i<out_group.length; i++ ){
+                sql_ = sql_.orWhere('seq_no',out_group[i]);
+            };
+            sql_ = sql_.update('grouping','');
+        }
+        // 执行sql
+        sql.then(function (reply) {
+            return sql_;
+        }).then(function (reply) {
+            res.json(reply);
+        }).catch(function (err) {
+            next(err);
+        });
+    });
 };
