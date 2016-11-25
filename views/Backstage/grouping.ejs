@@ -5,7 +5,6 @@
         <li class="active">学生分组管理</li>
     </ol>
     <div class="main-box main-box-noborder overflow-hidden" style="padding-top: 22px;height: 387px">
-        <input id="login_account_id" value="123">
         <select class="form-control" id="slc_class" name="" style="width: 15%;margin-left: 150px;float: left">
             <option value="9999">请选择班级</option>
         </select>
@@ -14,7 +13,7 @@
             <!--<option value="">请选择组别</option>-->
             <!--<option value="1" class="slc_group">添加组</option>-->
         </select>
-        <button class="btn btn-success float-none j_bubble" type="button" id="" style="float: left;margin-left: 25px;">删除该组</button>
+        <button class="btn btn-success float-none j_bubble" type="button" id="delGroup" style="float: left;margin-left: 25px;">删除该组</button>
         <br>
         <div class="form-control" type="text" name="" id="outGroup" style="width: 15%;height: 200px;margin: 26px 0px 0px -415px;float: left;overflow:auto;">
         </div>
@@ -25,10 +24,10 @@
         </div>
         <div style="float: left;margin: 230px 0 0 -247px;color: #666;">组内（点击去除）</div>
         <div class="t" style="width: 30%;height: 200px;margin: 26px 0px 0px -83px;float: left">场景设定：
-            <textarea class="form-control" name="s" id="" style="height: 176px;margin-top: 4px;"></textarea>
+            <textarea class="form-control" name="" id="scene" style="height: 176px;margin-top: 4px;"></textarea>
         </div>
         <div class="modal-footer text-center pb-2" style="float: left;margin-left: 302px;">
-            <button type="button" class="btn btn-default btn-default-green w-14 font-16 float-none" data-dismiss="modal" id="">重置</button>
+            <button type="button" class="btn btn-default btn-default-green w-14 font-16 float-none" data-dismiss="modal" id="reset">重置</button>
             <button id="saveGroup" type="button" class="btn btn-success w-14 font-16 float-none ml-2" style="margin-left: 20px;">确定</button>
         </div>
     </div>
@@ -67,7 +66,7 @@
         </div>
     </div>
     <!-- 确定框 -->
-    <div class="modal modal-noline fade" id="delclassModal" tabindex="-1" role="dialog" aria-labelledby="addAccountModalLabel" aria-hidden="true">
+    <div class="modal modal-noline fade" id="SureDelGroup" tabindex="-1" role="dialog" aria-labelledby="addAccountModalLabel" aria-hidden="true">
         <div class="modal-outer">
             <div class="modal-middle">
                 <div class="modal-dialog modal-inner w-65 float-none">
@@ -76,14 +75,14 @@
                             <button type="button" class="close" data-dismiss="modal"></button>
                         </div>
                         <div class="modal-body p-1 pt-3 pl-5" style="margin: -12px 19px 0px -23px;">
-                            <form class="form-horizontal" action="" method="post"   id="add_account_form">
+                            <form class="form-horizontal" action="" method="post"   id="">
                                 <input id="account_id" type="hidden" name="account_id">
                                 <div class="form-group ">
-                                    <label class="control-label w-9" style="font-size: 29px;width: 284px;">是否确定删除此课程</label>
+                                    <label class="control-label w-9" style="font-size: 29px;width: 284px;">是否确定删除此组</label>
                                 </div>
                                 <div class="modal-footer text-center pb-2">
-                                    <button type="button" class="btn btn-default btn-default-green w-14 font-16 float-none" data-dismiss="modal" id="add_account_cancel" >取消</button>
-                                    <button id="del_class" type="button" class="btn btn-success w-14 font-16 float-none ml-2">确定</button>
+                                    <button type="button" class="btn btn-default btn-default-green w-14 font-16 float-none" data-dismiss="modal" id="" >取消</button>
+                                    <button id="sureDel" type="button" class="btn btn-success w-14 font-16 float-none ml-2">确定</button>
                                 </div>
                             </form>
                         </div>

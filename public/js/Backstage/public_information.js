@@ -276,6 +276,34 @@ $(function () {
         $(this).removeClass('modal-outer');
     });
 
+    var picClient =new PicClient();
+    var add_top_num = 0;
+    debugger;
+
+    //添加头部图片
+    function add_top_img(top_img_url){
+        add_top_num++;
+        debugger;
+        $p_id.find("#img_cover_ul").append('<li class="alert alert-dismissable"> ' +
+            '<strong> ' +
+            '<img id="img_cover'+add_top_num+'" src="'+top_img_url+'" alt="" width="160" height="110"> ' +
+                //'<input id="add_img_cover'+add_top_num+'" name="img_cover" value="'+top_img_url+'"> ' +
+            '</strong> ' +
+            '</li>');
+
+        debugger;
+    }
+
+    picClient.addsingles(['add_top_img'],function callback(date1,date2,date3){
+        setTimeout(function () {
+            debugger;
+            add_top_img('');
+            $p_id.find('#img_cover'+add_top_num).attr('src','upload/'+JSON.parse(date2).date);
+            //$p_id.find("#add_img_cover"+add_top_num).val('upload/'+JSON.parse(date2).date);
+            $p_id.find("#img_url").val($p_id.find("#img_url").val()+';'+'upload/'+JSON.parse(date2).date);
+            debugger;
+        }, 1000);
+    })
 })
 
 

@@ -20,9 +20,12 @@ module.exports = function (app) {
     /*********************后台*********************/
 
     //后台登陆页面
-    router.get('/', function (req, res) {
-        res.render('Backstage/login',{code:0,text:""});
-    });
+    //router.get('/', function (req, res) {
+    //    res.render('Backstage/login',{code:0,text:""});
+    //});
+        router.get('/', function (req, res) {
+            res.render('/index',{code:0,text:""});
+        });
     //后台登陆页面
     router.get('/login', function (req, res) {
         res.render('Backstage/login',{code:0,text:""});
@@ -110,5 +113,8 @@ module.exports = function (app) {
     router.get('/media_player',filter.authorize, function (req, res) {
         res.render('Backstage/media_player',{seq_no:req.query.seq_no});
     });
-
+    //文件上传
+    //router.get('/media_player',filter.authorize, function (req, res) {
+    //    res.render('Backstage/media_player',{seq_no:req.query.seq_no});
+    //});
 };
