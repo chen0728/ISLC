@@ -262,7 +262,7 @@ $(function () {
             error: function (data) {
                 alert("系统错误");
             }
-        })
+        });
     });
     //删除组
     $("#delGroup") .on("click",function (){

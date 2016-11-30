@@ -8,7 +8,6 @@
         <div class="modal-body p-1 pt-3 pl-5">
             <form class="form-horizontal" action="" method="post"   id="add_account_form" style="margin-top: -28px">
                 <input id="seq_no" type="" name="seq_no" value="<%=seq_no%>">
-                <input id="data_no" type="" name="data_no">
                 <div class="form-group ">
                     <label id="areaLab" class="control-label w-9" style="font-size: 29px;width: 135px;"></label>
                 </div>
@@ -19,15 +18,22 @@
                     </div>
                 </div>
                 <div class="form-group ">
-                    <label class="control-label w-9">上课班级：</label>
-                    <div class="w-40 relative">
-                        <input id="take_lass_" class="form-control w-32" type="text" name="account_id" maxlength="20" >
-                    </div>
-                </div>
-                <div class="form-group ">
                     <label class="control-label w-9">上课时间：</label>
                     <div class="w-40 relative">
                         <input id="class_Time_" class="form-control w-32" type="text" name="account_id" maxlength="20" >
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <label class="control-label w-9">上课班级：</label>
+                    <div id="class_tbody_" class="w-40 relative" style="width: 80%">
+                    </div>
+                </div>
+                <div class="form-group " style="margin-top: 5px;">
+                    <label class="control-label w-9"></label>
+                    <div class="w-9 relative" style="height:21px;margin-top: -18px">
+                        <div class="ml-2 mt-1 mb-2" style="margin: 5px 0px 0px 0px">
+                            <a class="form-btn-upload" id="" data-toggle="modal"><i class="icon-plus-sign"></i>添加班级</a>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group ">
@@ -45,9 +51,14 @@
                 </div>
                 <div class="form-group ">
                     <label class="control-label w-9">关联考题：</label>
-                    <div class="w-40 relative">
-                        <div class="ml-2 mt-1 mb-2" style="margin: 42px 0px 0px 0px">
-                            <a class="form-btn-upload" id="addmap" data-toggle="modal"><i class="icon-plus-sign"></i>添加题目</a>
+                    <div id="question_tbody_" class="w-40 relative" style="width: 80%">
+                    </div>
+                </div>
+                <div class="form-group " style="margin-top: 5px;">
+                    <label class="control-label w-9"></label>
+                    <div class="w-9 relative" style="height:21px;margin-top: -18px">
+                        <div class="ml-2 mt-1 mb-2" style="margin: 5px 0px 0px 0px">
+                            <a class="form-btn-upload" id="" data-toggle="modal"><i class="icon-plus-sign"></i>添加题目</a>
                         </div>
                     </div>
                 </div>
@@ -56,7 +67,7 @@
                     <div style="margin-top: 7px;">无</div>
                 </div>
                 <div class="modal-footer text-center pb-2">
-                    <button type="button" class="btn btn-default btn-default-green w-14 font-16 float-none" data-dismiss="modal" id="add_account_cancel">取消</button>
+                    <button type="button" class="btn btn-default btn-default-green w-14 font-16 float-none" onclick="CloseWebPage()" data-dismiss="modal" id="add_account_cancel">取消</button>
                     <button id="save_data" type="button" class="btn btn-success w-14 font-16 float-none ml-2">保存</button>
                 </div>
             </form>
@@ -118,11 +129,10 @@
                                 </div>
                                 <div class="modal-footer text-center pb-2">
                                     <button type="button" class="btn btn-default btn-default-green w-14 font-16 float-none" data-dismiss="modal" id="add_account_cancel">取消</button>
-                                    <button id="new_data" type="button" class="btn btn-success w-14 font-16 float-none ml-2">保存</button>
+                                    <button id="new_data" type="button" class="btn btn-success w-14 font-16 float-none ml-2">确定</button>
                                 </div>
                             </form>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -130,6 +140,14 @@
     </div>
     <!--    &lt;!&ndash; 表格共通&ndash;&gt;
         <script src="js/table-ajax.js"></script>-->
+    <script>
+        function CloseWebPage(){
+            $(".nav-main ul .close-page").trigger("click");
+        }
+        $('.close').on('click',function(){
+            $("#addDataModal").modal('hide');
+        })
+    </script>
     <!--私有js-->
     <script src="js/backstage/course_add.js"></script>
     <!--end-->

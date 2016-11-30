@@ -31,11 +31,12 @@ module.exports = function (app) {
 
 
     router.post("/upload", function (req, res, next) {
+        debugger;
         var form = new formidable.IncomingForm();   //创建上传表单
         form.encoding = 'utf-8';		//设置编辑
         form.uploadDir = 'public' + AVATAR_UPLOAD_FOLDER;	 //设置上传目录
         form.keepExtensions = true;	 //保留后缀
-        form.maxFieldsSize = 2 * 1024 * 1024;   //文件大小
+        form.maxFieldsSize = 512 * 1024 * 1024;   //文件大小
 
         form.parse(req, function(err, fields, files) {
 
@@ -44,7 +45,7 @@ module.exports = function (app) {
                 res.render('index', { title: TITLE });
                 return;
             }
-
+debugger;
             var extName =files.Filedata.name.split(".")[1];  //后缀名.
             var avatarName = uuid.v1() + '.' + extName;
             var newPath = form.uploadDir + avatarName;

@@ -13,7 +13,7 @@ var filter = require('../lib/filter');
 module.exports = function (app) {
     app.use('/', router);
 
-    //查询角色权限列表
+    //查询课堂列表
     router.get('/course_manage/list', function (req, res,next) {
         var sql = knex.select('*').from('course_info').where('status','!=',2)
         var params = req.query;
@@ -59,7 +59,17 @@ module.exports = function (app) {
             next(err);
         });
     });
-
+    //删除
+    router.post('/course_info/del', function (req, res, next) {
+        var seq_no = req.query.seq_no;
+        var sql = knex('course_info').update('status',2).where('seq_no',seq_no);
+        // 执行sql
+        sql.then(function (reply) {
+            res.json({data: reply});
+        }).catch(function (err) {
+            next(err);
+        });
+    });
     //查询详情
     router.get('/course_info/get', function (req, res, next) {
         var seq_no = req.query.seq_no;
@@ -85,18 +95,18 @@ module.exports = function (app) {
             next(err);
         });
     });
-
-    //删除
-    router.post('/course_info/del', function (req, res, next) {
+    //查询数据引用
+    router.get('/course_info/qusetion', function (req, res, next) {
         var seq_no = req.query.seq_no;
-        var sql = knex('course_info').update('status',2).where('seq_no',seq_no);
+        var sql = knex.select('*').from('questions_bank').where('seq_no',seq_no);
         // 执行sql
         sql.then(function (reply) {
-            res.json({data: reply});
+            res.json(reply);
         }).catch(function (err) {
             next(err);
         });
     });
+
     //资料列表弹窗查询
     router.get('/course_add/list', function (req, res,next) {
         var sql = knex.select('*').from('data_info').where('status','!=',2)
@@ -135,5 +145,14 @@ module.exports = function (app) {
             next(err);
         });
     });
-
+    //查询seq_no
+    router.get('/course_info/course_seq', function (req, res, next) {
+        var sql = knex.select('*').from('course_info').orderBy('seq_no','desc');
+        // 执行sql
+        sql.then(function (reply) {
+            res.json(reply);
+        }).catch(function (err) {
+            next(err);
+        });
+    });
 };

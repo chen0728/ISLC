@@ -32,7 +32,7 @@ $(function () {
             menu_id: $p_id.find('#status_q').val(), // 员工工号
         };
 
-        var table_src = $('#account_Table'); // 定义指向
+        var table_src = $('#role_Table'); // 定义指向
         var ajax_url = '/role_info/list'; // 定义数据请求路径
         var pageSize = 10 ;// 定义每页长度默认为10
         var aoColumns = [

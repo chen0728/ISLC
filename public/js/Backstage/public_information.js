@@ -282,7 +282,7 @@ $(function () {
 
     //添加头部图片
     function add_top_img(top_img_url){
-        add_top_num++;
+        //add_top_num++;
         debugger;
         $p_id.find("#img_cover_ul").append('<li class="alert alert-dismissable"> ' +
             '<strong> ' +
@@ -298,6 +298,10 @@ $(function () {
         setTimeout(function () {
             debugger;
             add_top_img('');
+            var filedata = JSON.parse(date2).date.split(".")[1];;
+            if('jpg,png,jpeg，JPG,PNG,JPEG'.indexOf() > -1){
+                //alert("找到");
+            }
             $p_id.find('#img_cover'+add_top_num).attr('src','upload/'+JSON.parse(date2).date);
             //$p_id.find("#add_img_cover"+add_top_num).val('upload/'+JSON.parse(date2).date);
             $p_id.find("#img_url").val($p_id.find("#img_url").val()+';'+'upload/'+JSON.parse(date2).date);

@@ -25,7 +25,7 @@
     $('#'+id).uploadify({
         'swf'      : '/js/uploadify/uploadify.swf',
         'uploader' : '/upload',
-        'fileSizeLimit' : '1MB',
+        'fileSizeLimit' : '500MB',
         'multi':false,
         // Put your options here
         'onUploadSuccess':function(file, data, response){
