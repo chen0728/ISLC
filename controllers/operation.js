@@ -17,7 +17,7 @@ module.exports = function (app) {
     router.get('/operation/list', function (req, res,next) {
         var sql = knex.select('*').from('operation_record');
         var params = req.query;
-        if(params.seq_no){
+        if(params.sefq_no){
             sql = sql.where('seq_no','like','%' + params.seq_no + '%');
         }
         if(params.operator_name){

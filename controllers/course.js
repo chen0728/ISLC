@@ -16,32 +16,6 @@ module.exports = function (app) {
     //查询课堂列表
     router.get('/course_manage/list', function (req, res,next) {
         var sql = knex.select('*').from('course_info').where('status','!=',2)
-        var params = req.query;
-        if(params.name){
-            sql = sql.where('name','like', '%'+params.name+'%');
-        }
-        if(params.number){
-            sql = sql.where('number',params.number);
-        }
-        if(params.class){
-            sql = sql.where('class',params.class);
-        }
-        if(params.creat_timeS){
-            sql = sql.where('creat_time','>=',params.creat_timeS);
-        }
-        if(params.creat_timeE){
-            sql = sql.where('creat_time','<=',params.creat_timeE);
-        }
-        if(params.class_timeS){
-            sql = sql.where('class_time','>=',params.class_timeS);
-        }
-        if(params.class_timeE){
-            sql = sql.where('class_time','<=',params.class_timeE);
-        }
-        if(params.class_status){
-            sql = sql.where('class_status',params.class_status);
-        }
-
         var infos={};
         sql.then(function (reply) {
             infos.totalSize = reply.length;
@@ -84,7 +58,7 @@ module.exports = function (app) {
             next(err);
         });
     });
-    //查询数据引用
+    //关联资料查询
     router.get('/course_info/getl', function (req, res, next) {
         var seq_nol = req.query.seq_nol;
         var sql = knex.select('*').from('data_info').where('seq_no',seq_nol);
@@ -95,7 +69,7 @@ module.exports = function (app) {
             next(err);
         });
     });
-    //查询数据引用
+    //关联题库查询
     router.get('/course_info/qusetion', function (req, res, next) {
         var seq_no = req.query.seq_no;
         var sql = knex.select('*').from('questions_bank').where('seq_no',seq_no);
@@ -109,13 +83,14 @@ module.exports = function (app) {
 
     //资料列表弹窗查询
     router.get('/course_add/list', function (req, res,next) {
-        var sql = knex.select('*').from('data_info').where('status','!=',2)
         var params = req.query;
+        var sql = knex.select('*').from('data_info');
+        sql.where('status','=',1)
         if(params.name){
             sql = sql.where('name','like', '%'+params.name+'%');
         }
-        if(params.number) {
-            sql = sql.where('number', params.number);
+        if(params.public) {
+            sql = sql.where('public', params.public);
         }
         if (params.up_timeS) {
             sql = sql.where('up_time', '>=', params.up_timeS);
@@ -123,12 +98,30 @@ module.exports = function (app) {
         if (params.up_timeE) {
             sql = sql.where('up_time', '<=', params.up_timeE);
         }
-        if(params.seq_no){
-            for(var i=0; i<seq_no.length; i++)
-            {
-                sql = sql.where('seq_no','!=',params.seq_no[i]);
+        if(params.seq_data_arr){
+            for(var i = 0; i<params.seq_data_arr.length; i++ ){
+                sql = sql.where('seq_no','!=',params.seq_data_arr[i]);
             }
+        };
+        sql = sql.where('accouat_id',params.accouat_id).orWhere('public',1);
+        sql.where('status','=',1)
+        if(params.name){
+            sql = sql.where('name','like', '%'+params.name+'%');
         }
+        if(params.public) {
+            sql = sql.where('public', params.public);
+        }
+        if (params.up_timeS) {
+            sql = sql.where('up_time', '>=', params.up_timeS);
+        }
+        if (params.up_timeE) {
+            sql = sql.where('up_time', '<=', params.up_timeE);
+        }
+        if(params.seq_data_arr){
+            for(var i = 0; i<params.seq_data_arr.length; i++ ){
+                sql = sql.where('seq_no','!=',params.seq_data_arr[i]);
+            }
+        };
         var infos={};
         sql.then(function (reply) {
             infos.totalSize = reply.length;

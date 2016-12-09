@@ -5,9 +5,7 @@
 
 $(function () {
 
-    var tempObj;
-    var tempEmpObj;
-    var num1;
+    var data_url;
     var new_seq;
     var new_seq_no;
     var new_num;
@@ -24,7 +22,7 @@ $(function () {
     $('.j_bubble').keypress(function (e) {
         e.stopPropagation();
     });
-    var accouat_id  = $('#login_account_id').val();
+    var account_id  = $('#login_account_id').val();
     debugger;
     function init() {
         debugger;
@@ -32,12 +30,12 @@ $(function () {
             name: $p_id.find('#name').val(),
             number: $p_id.find('#number').val(),
             data_type: $p_id.find('#data_type').val(),
-            accouat_id: $p_id.find('#accouat_id').val(),
+            account_id: $p_id.find('#account_id').val(),
             up_timeS: $p_id.find('#up_timeS').val(),
             up_timeE: $p_id.find('#up_timeE').val(),
         };
         var table_src = $('#personal_Table'); // 定义指向
-        var ajax_url = '/personal/list?accouat_id='+accouat_id; // 定义数据请求路径
+        var ajax_url = '/personal/list?account_id='+account_id; // 定义数据请求路径
         var pageSize = 10 ;// 定义每页长度默认为10
         var aoColumns = [
             {"col_id": "name"},
@@ -239,8 +237,8 @@ $(function () {
                 public:pub,
                 data_type: $p_id.find('#type_detail').val(),
                 name: $p_id.find('#name_detail').val(),
-                //number:new_number+1,
-                accouat_id:$('#login_account_id').val(),
+                data_url:data_url,
+                account_id:$('#login_account_id').val(),
                 status:1,
             };
             debugger;

@@ -24,8 +24,7 @@ $(function () {
     function init() {
         debugger;
         var params = { // 查询查询参数
-            name: $p_id.find('#audio_name').val(), // 编号
-            class_name: $p_id.find('#class_name').val(), // 名称
+            number: $p_id.find('#audio_name').val(), // 编号
             up_timeS: $p_id.find('#search_s').val(), // 时间起
             up_timeE: $p_id.find('#search_e').val(), // 时间止
         };

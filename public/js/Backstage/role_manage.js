@@ -259,7 +259,7 @@ $(function () {
             })
         });
     });
-    //添加用户弹窗
+    //添加角色弹窗
     $('#addStaffModal').on('click', function () {
         $('#newAccountModal').modal('show');
         $('#new_account').on('click', function () {

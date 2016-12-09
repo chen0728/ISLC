@@ -13,10 +13,10 @@ var filter = require('../lib/filter');
 module.exports = function (app) {
     app.use('/', router);
 
-    //查询角色权限列表
+    //查询个人资料列表
     router.get('/personal/list', function (req, res,next) {
-        var accouat_id = req.query.accouat_id
-        var sql = knex.select('*').from('data_info').where('status','!=',2).where('data_type','!=',4).where('accouat_id',accouat_id);
+        var account_id = req.query.account_id
+        var sql = knex.select('*').from('data_info').where('status','!=',2).where('data_type','!=',4).where('account_id',account_id);
         var params = req.query;
         if(params.name){
             sql = sql.where('name','like','%'+ params.name+'%');
@@ -27,8 +27,8 @@ module.exports = function (app) {
         if(params.data_type){
             sql = sql.where('tata_type',params.data_type);
         }
-        if(params.accouat_id){
-            sql = sql.where('accouat_id',params.accouat_id);
+        if(params.account_id){
+            sql = sql.where('account_id',params.account_id);
         }
         if(params.up_timeS){
             sql = sql.where('up_time','>=',params.up_timeS);

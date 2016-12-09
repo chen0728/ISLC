@@ -37,7 +37,7 @@ module.exports = function (app) {
     });
     //后台首页
     router.post('/login', function (req, res) {
-        userInfo = req.body;
+        var userInfo = req.body;
         knex.select('*').from('account').where('account_id', userInfo.username).where('password', userInfo.password).then(function (reply) {
            if(reply.length == 1){
                req.session.account_id = userInfo.username;
@@ -49,6 +49,22 @@ module.exports = function (app) {
             next(err);
         });
     });
+
+    //前台登录验证
+    router.post('/loginApp', function (req, res) {
+        var userInfo = req.body;
+        knex.select('*').from('account').where({account_id:userInfo.username,password:userInfo.password,part:userInfo.part}).then(function (reply) {
+            if(reply.length == 1){
+                req.session.account_id = userInfo.username;
+                res.send({user:reply[0],state:true});
+            }else{
+                res.send({user:null,state:false});
+            }
+        }).catch(function (err) {
+            next(err);
+        });
+    });
+
     //后台首页
     router.get('/index',filter.authorize, function (req, res) {
         res.render('Backstage/index',{username:'超级管理员',mm_dd:'10月26日',Week:'周三',role_name:'哈哈哈',_id:123});

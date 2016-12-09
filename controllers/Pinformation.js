@@ -13,7 +13,7 @@ var filter = require('../lib/filter');
 module.exports = function (app) {
     app.use('/', router);
 
-    //查询角色权限列表
+    //查询公共资料列表
     router.get('/Pinformation/list', function (req, res,next) {
         var sql = knex.select('*').from('data_info').where('status','!=',2).where('data_type','!=',4).where('public',1);
         var params = req.query;

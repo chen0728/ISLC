@@ -24,7 +24,7 @@ $(function () {
             var clas_seq = data[0].class.split(";");
             debugger;
             for(var i=0;i<clas_seq.length;i++){
-                var seq_noName = clas_seq[i+1];
+                var seq_noName = clas_seq[i];
                 $.ajax({
                     type: "post",
                     url: '/grouping/className?seq_no='+seq_noName,
@@ -82,12 +82,14 @@ $(function () {
                         }
                 });
                 //查询组内
+                debugger;
                 $.ajax({
                     type: "post",
                     url: '/grouping/name?seq_no_name='+seq_no_name,
                     dataType: "json",
                     data:{},
                     success: function (data) {
+                        debugger;
                         for(var i=0;i<data.length;i++){
                             $("#inGroup").append('<a class="name_out" href="javascript:void(0)" style="cursor:pointer" data_id="'+data[i].seq_no+
                                 '" name="'+data[i].name+'" >'+data[i].name+'</a><br name="'+data[i].name+'">')

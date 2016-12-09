@@ -140,7 +140,6 @@ $(function () {
                 $p_id.find("#idLab").val(data[0].num1);
                 $p_id.find("#keyLab").val(data[0].key_id);
                 $p_id.find("#nameLab").val(data[0].key_val_cn);
-
             },
             error: function (data) {
                 alert("系统错误");

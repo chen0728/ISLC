@@ -4,10 +4,7 @@
  */
 
 $(function () {
-
-    var tempObj;
-    var tempEmpObj;
-    var num1;
+    var data_url;
     var new_seq;
     var new_seq_no;
     var new_num;
@@ -206,7 +203,7 @@ $(function () {
             }
         })
     });
-    //添加字典弹窗
+    //添加弹窗
     $('#addData').on('click', function () {
         debugger;
         $("#areaLab").html('添加资料');
@@ -247,7 +244,7 @@ $(function () {
                 public:pub,
                 data_type: $p_id.find('#type_detail').val(),
                 name: $p_id.find('#name_detail').val(),
-                //number:new_number+1,
+                data_url:data_url,
                 accouat_id:$('#login_account_id').val(),
                 status:1,
             };
@@ -282,11 +279,11 @@ $(function () {
 
     //添加头部图片
     function add_top_img(top_img_url){
-        //add_top_num++;
+        add_top_num++;
         debugger;
         $p_id.find("#img_cover_ul").append('<li class="alert alert-dismissable"> ' +
             '<strong> ' +
-            '<img id="img_cover'+add_top_num+'" src="'+top_img_url+'" alt="" width="160" height="110"> ' +
+            '<img id="img_cover'+add_top_num+'" src="'+top_img_url+'" alt="" width="85" height="117"> ' +
                 //'<input id="add_img_cover'+add_top_num+'" name="img_cover" value="'+top_img_url+'"> ' +
             '</strong> ' +
             '</li>');
@@ -298,13 +295,31 @@ $(function () {
         setTimeout(function () {
             debugger;
             add_top_img('');
-            var filedata = JSON.parse(date2).date.split(".")[1];;
-            if('jpg,png,jpeg，JPG,PNG,JPEG'.indexOf() > -1){
-                //alert("找到");
-            }
-            $p_id.find('#img_cover'+add_top_num).attr('src','upload/'+JSON.parse(date2).date);
+            var format_url;
+            var filedata = JSON.parse(date2).date.split(".")[1];
+            if('avi,AVI'.indexOf(filedata) > -1){format_url = 'avi'
+            }else if('css,CSS'.indexOf(filedata) > -1){format_url = 'css'
+            }else if('csv,CSV'.indexOf(filedata) > -1){format_url = 'csv'
+            }else if('dov,DOC'.indexOf(filedata) > -1){format_url = 'doc'
+            }else if('eml,EML'.indexOf(filedata) > -1){format_url = 'eml'
+            }else if('eps,EPS'.indexOf(filedata) > -1){format_url = 'eps'
+            }else if('html,HTML'.indexOf(filedata) > -1){format_url = 'html'
+            }else if('jpg,JPG,jpeg,JPEG'.indexOf(filedata) > -1){format_url = 'jpg'
+            }else if('mov,MOV'.indexOf(filedata) > -1){format_url = 'mov'
+            }else if('mp3,MP3'.indexOf(filedata) > -1){format_url = 'mp3'
+            }else if('pdf,PDF'.indexOf(filedata) > -1){format_url = 'pdf'
+            }else if('png,PNG'.indexOf(filedata) > -1){format_url = 'png'
+            }else if('ppt,PPT'.indexOf(filedata) > -1){format_url = 'ppt'
+            }else if('rar,RAR'.indexOf(filedata) > -1){format_url = 'rar'
+            }else if('raw,RAW'.indexOf(filedata) > -1){format_url = 'raw'
+            }else if('ttf,TTF'.indexOf(filedata) > -1){format_url = 'ttf'
+            }else if('txt,TXT'.indexOf(filedata) > -1){format_url = 'txt'
+            }else if('wav,WAV'.indexOf(filedata) > -1){format_url = 'wav'
+            }else if('xls,XLS,xlsx,XLSX'.indexOf(filedata) > -1) {format_url = 'xls'
+            }else{format_url = 'unknow'};
+            $p_id.find('#img_cover'+add_top_num).attr('src','images/format_img/'+format_url+'.jpg');
             //$p_id.find("#add_img_cover"+add_top_num).val('upload/'+JSON.parse(date2).date);
-            $p_id.find("#img_url").val($p_id.find("#img_url").val()+';'+'upload/'+JSON.parse(date2).date);
+            data_url = 'upload/'+JSON.parse(date2).date;
             debugger;
         }, 1000);
     })
