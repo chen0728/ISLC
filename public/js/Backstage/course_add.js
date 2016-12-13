@@ -4,9 +4,10 @@
  */
 $(function () {
     var seq_class_arr = [];
-    var seq_data_chec;
+    var seq_chec;
     var seq_data_arrIn = [];
     var seq_data_arr = [];
+    var seq_question_arrIn = [];
     var seq_question_arr = [];
     var new_seq_no;
     var new_num;
@@ -14,7 +15,7 @@ $(function () {
     var $p_id = $("#course_add_page");
     //修改课程
     if($p_id.find("#seq_no").val() != ''){
-        seq_no = $p_id.find("#seq_no").val()
+        seq_no = $p_id.find("#seq_no").val();
         //查询详情 并自动填充
         $.ajax({
             type: "get",
@@ -60,15 +61,15 @@ $(function () {
                             alert("系统错误");
                         }
                     });
-                }
+                };
                 //填充关联资料
                 var seq_data = data[0].related_data.split(";");
                 for(var i=0;i<seq_data.length;i++){
                     seq_data_arr.push(seq_data[i]);
-                    var seq_nol=seq_data[i];
+                    var seq_no=seq_data[i];
                     $.ajax({
                         type: "get",
-                        url: "/course_info/getl?seq_nol="+seq_nol,
+                        url: "/course_info/getl?seq_no="+seq_no,
                         dataType: "json",
                         data: {},
                         success: function (data) {
@@ -107,7 +108,7 @@ $(function () {
                         dataType: "json",
                         data: {},
                         success: function (data) {
-                            $p_id.find("#question_tbody_").append('<div class="guanlian form-control alert-dismissable alert-policy-01 pull-left clearfix j_theme_choose" style="padding:6px 12px;width: auto; background: #e6e6e6;margin-right:10px;margin-bottom: 10px;"> ' +data[0].question_name+
+                            $p_id.find("#question_tbody").append('<div class="guanlian form-control alert-dismissable alert-policy-01 pull-left clearfix j_theme_choose" style="padding:6px 12px;width: auto; background: #e6e6e6;margin-right:10px;margin-bottom: 10px;"> ' +data[0].question_name+
                                 '<button type="button" class="close closefirst" data-dismiss="alert" data-id="'+data[0].seq_no+'" style="position: inherit;margin: -20px -25px 0px -13px;"></button></div>');
                             $(document).ready(function(){
                                 $(".guanlian").mouseenter(function(){
@@ -131,6 +132,12 @@ $(function () {
                         }
                     });
                 }
+                //填充课堂音频
+                if(data[0].class_audio){
+                    $p_id.find("#classAudio").html('<audio src="/upload/'+data[0].class_audio+'" style="margin-top: -6px;" controls="controls">您的浏览器不支持audio标签，请使用更新版本的浏览器。</audio>');
+                }else{
+                    $p_id.find("#classAudio").html('无');
+                }
             },
             error: function (data) {
                 alert("系统错误");
@@ -145,12 +152,9 @@ $(function () {
         $('.j_bubble').keypress(function (e) {
             e.stopPropagation();
         });
-        //创建课程
     }else{
-
+        $p_id.find("#classAudio").html('无');
     }
-
-
     $("select").select2({
         minimumResultsForSearch: Infinity   //隐藏下拉列表搜索框。Infinity可以数字替换，下拉列表项的最少条目数等于该数字时出现搜索框。
     });
@@ -180,7 +184,6 @@ $(function () {
                                 var option;
                                 for( var i=0;i<seq_class_arr.length;i++){
                                     if(data[0].num1 == seq_class_arr[i]){
-                                        debugger;
                                         option = 1;
                                     };
                                 }
@@ -205,39 +208,37 @@ $(function () {
     $p_id.find("#classelect").on('change',function(){
         var seq_class_no = $p_id.find("#classelect").val();
         seq_class_arr.push(seq_class_no);
-        debugger;
-            $.ajax({
-                type: "post",
-                url: '/grouping/className?seq_no='+seq_class_no,
-                dataType: "json",
-                data:{},
-                success: function (data) {
-                    if(data.length >0){
-                        $p_id.find("#class_tbody_").append('<div class="guanlian form-control alert-dismissable alert-policy-01 pull-left clearfix j_theme_choose" style="padding:6px 12px;width: auto; background: #e6e6e6;margin-right:10px;margin-bottom: 10px;"> ' +data[0].key_val_cn+
-                            '<button type="button" class="close closefirst" data-dismiss="alert" data-id="'+data[0].num1+'" style="position: inherit;margin: -20px -25px 0px -13px;"></button></div>');
-                        $(document).ready(function(){
-                            $(".guanlian").mouseenter(function(){
-                                $(this).find(".close").css("display","inherit");
-                            });
-                            $(".guanlian").mouseleave(function(){
-                                $(this).find(".close").css("display","none");
-                            });
-                            $(".close").on('click',function(){
-                                for( var i=0;i<seq_class_arr.length;i++){
-                                    if($(this).attr('data-id') == seq_class_arr[i]){
-                                        debugger;
-                                        seq_class_arr.splice(i,1);
-                                    }
-                                }
-                                $(this).parent().remove();
-                            });
+        $.ajax({
+            type: "post",
+            url: '/grouping/className?seq_no='+seq_class_no,
+            dataType: "json",
+            data:{},
+            success: function (data) {
+                if(data.length >0){
+                    $p_id.find("#class_tbody_").append('<div class="guanlian form-control alert-dismissable alert-policy-01 pull-left clearfix j_theme_choose" style="padding:6px 12px;width: auto; background: #e6e6e6;margin-right:10px;margin-bottom: 10px;"> ' +data[0].key_val_cn+
+                        '<button type="button" class="close closefirst" data-dismiss="alert" data-id="'+data[0].num1+'" style="position: inherit;margin: -20px -25px 0px -13px;"></button></div>');
+                    $(document).ready(function(){
+                        $(".guanlian").mouseenter(function(){
+                            $(this).find(".close").css("display","inherit");
                         });
-                    }
-                },
-                error: function (data) {
-                    alert("系统错误");
+                        $(".guanlian").mouseleave(function(){
+                            $(this).find(".close").css("display","none");
+                        });
+                        $(".close").on('click',function(){
+                            for( var i=0;i<seq_class_arr.length;i++){
+                                if($(this).attr('data-id') == seq_class_arr[i]){
+                                    seq_class_arr.splice(i,1);
+                                }
+                            }
+                            $(this).parent().remove();
+                        });
+                    });
                 }
-            });
+            },
+            error: function (data) {
+                alert("系统错误");
+            }
+        });
         $p_id.find("#addClassModal").modal('hide');
     });
     //点击确定
@@ -249,15 +250,15 @@ $(function () {
         //弹出框列表查询
         function init() {
             var params = { // 查询查询参数
-                accouat_id:$("#login_account_id").val(),
+                account_id:$("#login_account_id").val(),
                 name: $p_id.find('#nameIn_').val(),
-                public: $p_id.find('#public_').val(),
+                public: $p_id.find('#dataPub').val(),
                 up_timeS: $p_id.find('#search_s_').val(),
                 up_timeE: $p_id.find('#search_e_').val(),
                 seq_data_arr:seq_data_arr
             };
-            var table_src = $('#course_add_Table'); // 定义指向
-            var ajax_url = '/course_add/list'; // 定义数据请求路径
+            var table_src = $('#data_add_Table'); // 定义指向
+            var ajax_url = '/data_add/list'; // 定义数据请求路径
             var pageSize = 5 ;// 定义每页长度默认为10
             var aoColumns = [
                 {"col_id": "name"},
@@ -275,7 +276,6 @@ $(function () {
             }, {
                 "colIndex": 1,
                 "html": function (data, type, full) {
-                    debugger;
                     if (!data) {
                         return '';
                     }
@@ -333,12 +333,12 @@ $(function () {
             //列表checkbox点击事件
             $p_id.find(".add_zl").on('click',function(){
                 var seq_no = $(this).attr('value');
-                seq_data_chec = $(this).attr('checked');
+                seq_chec = $(this).attr('checked');
                 //勾选事件
-                if(seq_data_chec && seq_data_chec == 'checked'){
+                if(seq_chec && seq_chec == 'checked'){
                     seq_data_arrIn.push(seq_no);
                 }else{
-                //去勾选事件
+                    //去勾选事件
                     for( var i=0;i<seq_data_arrIn.length;i++){
                         if(seq_no == seq_data_arrIn[i]){
                             seq_data_arrIn.splice(i,1);
@@ -353,14 +353,16 @@ $(function () {
     });
     //弹窗确定
     $p_id.find("#new_data").on('click',function(){
+        debugger;
         for(var i=0;i<seq_data_arrIn.length;i++){
-            seq_nol=seq_data_arrIn[i];
+            var seq_no=seq_data_arrIn[i];
             $.ajax({
                 type: "get",
-                url: "/course_info/getl?seq_nol="+seq_nol,
+                url: "/course_info/getl?seq_no="+seq_no,
                 dataType: "json",
                 data: {},
                 success: function (data) {
+                    debugger;
                     $p_id.find("#data_tbody_").append('<div class="guanlian form-control alert-dismissable alert-policy-01 pull-left clearfix j_theme_choose" style="padding:6px 12px;width: auto; background: #e6e6e6;margin-right:10px;margin-bottom: 10px;"> ' +data[0].name+
                         '<button type="button" class="close closefirst" data-dismiss="alert" data-id="'+data[0].seq_no+'" style="position: inherit;margin: -20px -25px 0px -13px;"></button></div>');
                     $(document).ready(function(){
@@ -371,9 +373,9 @@ $(function () {
                             $(this).find(".close").css("display","none");
                         });
                         $(".close").on('click',function(){
-                            for( var i=0;i<seq_question_arr.length;i++){
-                                if($(this).attr('data-id') == seq_question_arr[i]){
-                                    seq_question_arr.splice(i,1);
+                            for( var i=0;i<seq_data_arr.length;i++){
+                                if($(this).attr('data-id') == seq_data_arr[i]){
+                                    seq_data_arr.splice(i,1);
                                 }
                             }
                             $(this).parent().remove();
@@ -385,7 +387,6 @@ $(function () {
                 }
             });
         }
-        debugger;
         seq_data_arr = seq_data_arr.concat(seq_data_arrIn);
         seq_data_arrIn = [];
         $p_id.find("#addDataModal").modal('hide');
@@ -395,20 +396,20 @@ $(function () {
         //弹出框列表查询
         function initS() {
             var params = { // 查询查询参数
-                accouat_id:$("#login_account_id").val(),
-                name: $p_id.find('#QnameIn').val(),
-                public: $p_id.find('#public_').val(),
-                up_timeS: $p_id.find('#search_s_').val(),
-                up_timeE: $p_id.find('#search_e_').val(),
-                seq_data_arr:seq_data_arr
+                account_id:$("#login_account_id").val(),
+                question_name: $p_id.find('#nameQue').val(),
+                public: $p_id.find('#questionsPub').val(),
+                up_timeS: $p_id.find('#search_se').val(),
+                up_timeE: $p_id.find('#search_se').val(),
+                seq_question_arr:seq_question_arr
             };
-            var table_src = $('#course_add_Table'); // 定义指向
-            var ajax_url = '/course_add/list'; // 定义数据请求路径
+            var table_src = $('#question_add_Table'); // 定义指向
+            var ajax_url = '/questions_add/list'; // 定义数据请求路径
             var pageSize = 5 ;// 定义每页长度默认为10
             var aoColumns = [
-                {"col_id": "name"},
+                {"col_id": "question_name"},
                 {"col_id": "public"},
-                {"col_id": "up_time"},
+                {"col_id": "date1"},
             ]; // 定义表格数据列id
             var aoColumnDefs = [{
                 "colIndex": 0,
@@ -444,15 +445,15 @@ $(function () {
                     var retHtml = '';
                     if (full.seq_no) {
                         var check;
-                        for( var i=0;i<seq_data_arrIn.length;i++){
-                            if(full.seq_no == seq_data_arrIn[i]){
+                        for( var i=0;i<seq_question_arrIn.length;i++){
+                            if(full.seq_no == seq_question_arrIn[i]){
                                 check = 1;
                             };
                         };
                         if(check == 1){
-                            retHtml = retHtml + "<td><div class='text-center' style='padding: 0px 5px;' data-id='"+full.seq_no+"'><input id='"+full.seq_no+"' name='related_data_qwe' type='checkbox' class='add_zl' value='"+full.seq_no+"'checked='checked'></div></td>";
+                            retHtml = retHtml + "<td><div class='text-center' style='padding: 0px 5px;' data-id='"+full.seq_no+"'><input id='"+full.seq_no+"' name='related_data_qwe' type='checkbox' class='add_tk' value='"+full.seq_no+"'checked='checked'></div></td>";
                         }else{
-                            retHtml = retHtml + "<td><div class='text-center' style='padding: 0px 5px;' data-id='"+full.seq_no+"'><input id='"+full.seq_no+"' name='related_data_qwe' type='checkbox' class='add_zl' value='"+full.seq_no+"'></div></td>";
+                            retHtml = retHtml + "<td><div class='text-center' style='padding: 0px 5px;' data-id='"+full.seq_no+"'><input id='"+full.seq_no+"' name='related_data_qwe' type='checkbox' class='add_tk' value='"+full.seq_no+"'></div></td>";
                         }
                     };
                     return retHtml;
@@ -466,7 +467,7 @@ $(function () {
             TableAjax.drawTable(table_src, ajax_url, pageSize, aoColumns, aoColumnDefs, params, sZeroRecords, fnChangeDataCallback,fnDrawCallback);
         };
         //搜索后列表重构
-        $("#SeatchBut").on('click',function(){
+        $("#SeatchButS").on('click',function(){
             initS();
         });
         //获取到数据的回调函数，需要更该时可定义
@@ -476,17 +477,17 @@ $(function () {
         //绘画完成之后的回调函数
         function fnDrawCallback(data){
             //列表checkbox点击事件
-            $p_id.find(".add_zl").on('click',function(){
+            $p_id.find(".add_tk").on('click',function(){
                 var seq_no = $(this).attr('value');
-                seq_data_chec = $(this).attr('checked');
+                seq_chec = $(this).attr('checked');
                 //勾选事件
-                if(seq_data_chec && seq_data_chec == 'checked'){
-                    seq_data_arrIn.push(seq_no);
+                if(seq_chec && seq_chec == 'checked'){
+                    seq_question_arrIn.push(seq_no);
                 }else{
                     //去勾选事件
-                    for( var i=0;i<seq_data_arrIn.length;i++){
-                        if(seq_no == seq_data_arrIn[i]){
-                            seq_data_arrIn.splice(i,1);
+                    for( var i=0;i<seq_question_arrIn.length;i++){
+                        if(seq_no == seq_question_arrIn[i]){
+                            seq_question_arrIn.splice(i,1);
                         }
                     }
                 }
@@ -494,12 +495,52 @@ $(function () {
             return data;
         }
         initS();
-        $p_id.find("#addDataModal").modal('show');
+        $p_id.find("#addQuestionsModal").modal('show');
+    });
+    //弹窗确定
+    $p_id.find("#new_questions").on('click',function(){
+        for(var i=0;i<seq_question_arrIn.length;i++){
+            seq_no=seq_question_arrIn[i];
+            $.ajax({
+                type: "get",
+                url: "/course_info/qusetion?seq_no="+seq_no,
+                dataType: "json",
+                data: {},
+                success: function (data) {
+                    $p_id.find("#question_tbody").append('<div class="guanlian form-control alert-dismissable alert-policy-01 pull-left clearfix j_theme_choose" style="padding:6px 12px;width: auto; background: #e6e6e6;margin-right:10px;margin-bottom: 10px;"> ' +data[0].question_name+
+                        '<button type="button" class="close closefirst" data-dismiss="alert" data-id="'+data[0].seq_no+'" style="position: inherit;margin: -20px -25px 0px -13px;"></button></div>');
+                    $(document).ready(function(){
+                        $(".guanlian").mouseenter(function(){
+                            $(this).find(".close").css("display","inherit");
+                        } );
+                        $(".guanlian").mouseleave(function(){
+                            $(this).find(".close").css("display","none");
+                        });
+                        $(".close").on('click',function(){
+                            for( var i=0;i<seq_question_arr.length;i++){
+                                if($(this).attr('data-id') == seq_question_arr[i]){
+                                    seq_question_arr.splice(i,1);
+                                }
+                            }
+                            $(this).parent().remove();
+                        });
+                    });
+                },
+                error: function (data) {
+                    alert("系统错误");
+                }
+            });
+        }
+        seq_question_arr = seq_question_arr.concat(seq_question_arrIn);
+        seq_question_arrIn = [];
+        $p_id.find("#addQuestionsModal").modal('hide');
     });
     //保存
     $p_id.find("#save_data").on('click',function(){
-        if($p_id.find("#seq_no").val() == ''){
-            //查询课堂seq_no
+        debugger;
+        //查询课堂seq_no
+        if($p_id.find('#seq_no').val() == ''){
+            debugger;
             $.ajax({
                 type: "get",
                 url: '/course_info/course_seq',
@@ -511,7 +552,7 @@ $(function () {
                     new_num = 'A'+(parseInt(data[0].number.split("A")[1])+1);//新建编号
                 },
                 error: function (data) {
-                    alert("系统错误");
+                    alert("系统错误1");
                 }
             });
             var data = {
@@ -519,27 +560,41 @@ $(function () {
                 name:$p_id.find('#class_name_').val(),
                 number:new_num,
                 class:seq_class_arr.join(";"),
+                related_data:seq_data_arr.join(";"),
+                related_question:seq_question_arr.join(";"),
                 class_status:2,
+                accouat_id:$("#login_account_id").val(),
                 class_time:$p_id.find('#class_Time_').val(),
                 status:1,
             };
-            //$.ajax({
-            //    type: "post",
-            //    url: '/grouping/newGroup',
-            //    dataType: "json",
-            //    data: data,
-            //    success: function (data) {
-            //        $("#scene").val('');
-            //        alert("提交成功！");
-            //    },
-            //    error: function (data) {
-            //        alert("系统错误");
-            //    }
-            //});
+        }else{
+            debugger;
+            var data = {
+                seq_no:$p_id.find("#seq_no").val(),
+                name:$p_id.find('#class_name_').val(),
+                class:seq_class_arr.join(";"),
+                related_data:seq_data_arr.join(";"),
+                related_question:seq_question_arr.join(";"),
+                class_time:$p_id.find('#class_Time_').val(),
+            };
         }
 
+        debugger;
+        $.ajax({
+            type: "post",
+            url: '/grouping/newGroup',
+            dataType: "json",
+            data: data,
+            success: function (data) {
+                debugger;
+                alert("提交成功！");
+                $(".nav-main ul .close-page").trigger("click");
+            },
+            error: function (data) {
+                alert("系统错误2");
+            }
+        });
     });
-
 });
 
 

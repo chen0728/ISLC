@@ -24,7 +24,6 @@ $(function () {
         var params = { // 查询查询参数
             name: $p_id.find('#nameIn').val(), // 课程名
             number: $p_id.find('#numIn').val(), // 编号
-            class: $p_id.find('#classIn').val(), // 班级
             creat_timeS: $p_id.find('#search_s').val(), // 班级
             creat_timeE: $p_id.find('#search_e').val(), // 班级
             class_timeS: $p_id.find('#class_s').val(), // 班级
@@ -37,7 +36,6 @@ $(function () {
         var aoColumns = [
             {"col_id": "name"},
             {"col_id": "number"},
-            {"col_id": "class"},
             {"col_id": "creat_time"},
             {"col_id": "class_time"},
             {"col_id": "class_status"},
@@ -80,21 +78,13 @@ $(function () {
                 if (!data) {
                     return '';
                 }
-                return '<td><div class="text-center">' + data + '</div></td>';
-            }
-        },{
-            "colIndex": 5,
-            "html": function (data, type, full) {
-                if (!data) {
-                    return '';
-                }
                 if(full.class_status == 1){
                     return '<td><div class="text-center">已上</div></td>';
                 }
                 return '<td><div class="text-center">未上</div></td>';
             }
         },{
-            "colIndex": 6,
+            "colIndex": 5,
             "html": function (data, type, full) {
                 var retHtml = '';
                 if (full.seq_no) {
