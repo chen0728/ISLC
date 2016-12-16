@@ -9,22 +9,22 @@
             <thead>
             <tr class="sch">
                 <td style="width: 15%;" align="center">
-                    <div class="t text-left" >音频编号
+                    <div class="t text-left" >课程编号
                     <span class="sort-ico" style="padding-right:98px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span>
                     </div>
                     <div class="form-group float-none j_bubble">
-                        <input class="form-control" type="text" name="" id="audio_name" placeholder="" maxlength="20">
+                        <input class="form-control" type="text" name="" id="audio_number" placeholder="" maxlength="20">
                     </div>
                 </td>
                 <td style="width: 15%;" align="center">
-                    <div class="t">课堂名<span class="sort-ico" style="padding-right:108px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+                    <div class="t">课程名<span class="sort-ico" style="padding-right:108px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
                     <div class="form-group float-none j_bubble">
                         <input class="form-control" type="text" name="" id="class_name" maxlength="20">
                     </div>
                 </td>
                 <td width="50%" align="center" class="sorting" tabindex="0" aria-controls="product_searchTab" rowspan="1" colspan="1" aria-label="
                 创建时间: activate to sort column ascending" style="width: 113px;">
-                    <div class="t" style="padding-right: 10px;">录制时间<span class="sort-ico" style="padding-right:78px"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+                    <div class="t" style="padding-right: 10px;">上课时间<span class="sort-ico" style="padding-right:78px"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
                     <div class="form-group j_bubble j_datebetween">
                         <input type="text" class="form-control input-xs j_datepicker" placeholder="开始" id="search_s">
                         <input type="text" class="form-control mt-1 input-xs j_datepicker" placeholder="结束" id="search_e">
@@ -59,8 +59,12 @@
                                 <div class="form-group ">
                                     <label id="audioAreaLab" class="control-label w-9" style="font-size: 29px;width: 135px;"></label>
                                 </div>
-                                <div class="form-group ">
-                                    <label class="control-label w-9">播放插件</label>
+                                <div id="dudio" class="form-group ">
+                                    <audio src="/upload/62f43900-c1b6-11e6-a829-d9a66601e202.mp3" style="margin: -18px 0px -8px 37px;width: 477px;" controls="controls">您的浏览器不支持audio标签，请使用更新版本的浏览器。</audio>
+                                </div>
+                                <div class="modal-footer text-center pb-2">
+                                    <button type="button" class="btn btn-default btn-default-green w-14 font-16 float-none" data-dismiss="modal" id="play_audio_cancel">关闭</button>
+                                    <button id="del_class" type="button" class="btn btn-success w-14 font-16 float-none ml-2">下载</button>
                                 </div>
                             </form>
                         </div>

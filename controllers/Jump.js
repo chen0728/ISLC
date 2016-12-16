@@ -23,9 +23,9 @@ module.exports = function (app) {
     //router.get('/', function (req, res) {
     //    res.render('Backstage/login',{code:0,text:""});
     //});
-        router.get('/', function (req, res) {
-            res.render('/index',{code:0,text:""});
-        });
+    //    router.get('/', function (req, res) {
+    //        res.render('/index',{code:0,text:""});
+    //    });
     //后台登陆页面
     router.get('/login', function (req, res) {
         res.render('Backstage/login',{code:0,text:""});
@@ -56,9 +56,11 @@ module.exports = function (app) {
         knex.select('*').from('account').where({account_id:userInfo.username,password:userInfo.password,part:userInfo.part}).then(function (reply) {
             if(reply.length == 1){
                 req.session.account_id = userInfo.username;
-                res.send({user:reply[0],state:true});
+                //res.send({user:reply[0],state:true});
+                res.json(reply[0]);
             }else{
-                res.send({user:null,state:false});
+                //res.send({user:null,state:false});
+                res.json({user:null,state:false});
             }
         }).catch(function (err) {
             next(err);

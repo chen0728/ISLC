@@ -24,16 +24,16 @@ $(function () {
         var params = { // 查询查询参数
             //name: $p_id.find('#nameIn').val(),
         };
-        var table_src = $('#course_Table'); // 定义指向
+        var table_src = $('#media_Table'); // 定义指向
         var ajax_url = '/course_manage/list'; // 定义数据请求路径
         var pageSize = 10 ;// 定义每页长度默认为10
         var aoColumns = [
             {"col_id": "name"},
             {"col_id": "number"},
             {"col_id": "class"},
-            {"col_id": "creat_time"},
+            {"col_id": "number"},
+            {"col_id": "name"},
             {"col_id": "class_time"},
-            {"col_id": "class_status"},
         ]; // 定义表格数据列id
         var aoColumnDefs = [{
             "colIndex": 0,
@@ -81,10 +81,7 @@ $(function () {
                 if (!data) {
                     return '';
                 }
-                if(full.class_status == 1){
-                    return '<td><div class="text-center">已上</div></td>';
-                }
-                return '<td><div class="text-center">未上</div></td>';
+                return '<td><div class="text-center">' + data + '</div></td>';
             }
         },{
             "colIndex": 6,
@@ -115,6 +112,42 @@ $(function () {
     });
     //获取到数据的回调函数，需要更该时可定义
     function fnChangeDataCallback(data){
+        //var dataAdd = 0;
+        //var join =[];
+        //for(var i=0;i<data.data.length;i++){
+        //    var seq_data = data.data[i].related_data.split(";");
+        //    for(var j=0;j<seq_data.length;j++){
+        //        $.ajax({
+        //            type: "get",
+        //            url: "/course_info/getl?seq_no="+seq_data[j],
+        //            dataType: "json",
+        //            async: false,
+        //            data: {},
+        //            success: function (dataOut) {
+        //                debugger;
+        //                dataAdd++;
+        //                 join.push({
+        //                     data_seq_no:dataOut[0].seq_no,
+        //                     data_number:dataOut[0].number,
+        //                     data_name:dataOut[0].name,
+        //                     data_type:dataOut[0].data_type,
+        //                     number:data.data[i].number,
+        //                     name:data.data[i].name,
+        //                     class_time:data.data[i].class_time
+        //                 })
+        //            },
+        //            error: function (data) {
+        //                alert("系统错误");
+        //            }
+        //        });
+        //    }
+        //}
+        //data = {
+        //    data:join,
+        //    draw:Math.ceil(dataAdd/10),
+        //    recordsFiltered:dataAdd,
+        //    recordsTotal:dataAdd,
+        //}
         return data;
     }
     //绘画完成之后的回调函数

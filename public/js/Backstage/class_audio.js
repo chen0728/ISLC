@@ -4,18 +4,11 @@
  */
 
 $(function () {
-
-    var tempObj;
-    var tempEmpObj;
-    var num1;
-    var new_num;
     var $p_id = $("#class_audio_page");
-
     //数据表格筛选处事件冒泡
     $('.j_bubble').click(function (event) {
         event.stopPropagation();
     });
-
     // 阻止回车触发表格填充事件
     $('.j_bubble').keypress(function (e) {
         e.stopPropagation();
@@ -24,7 +17,8 @@ $(function () {
     function init() {
         debugger;
         var params = { // 查询查询参数
-            number: $p_id.find('#audio_name').val(), // 编号
+            number: $p_id.find('#audio_number').val(), // 编号
+            name: $p_id.find('#class_name').val(), // 课程名
             up_timeS: $p_id.find('#search_s').val(), // 时间起
             up_timeE: $p_id.find('#search_e').val(), // 时间止
         };
@@ -33,7 +27,7 @@ $(function () {
         var pageSize = 10 ;// 定义每页长度默认为10
         var aoColumns = [
             {"col_id": "number"},
-            {"col_id": ""},
+            {"col_id": "name"},
             {"col_id": "up_time"},
         ]; // 定义表格数据列id
         debugger;
@@ -68,11 +62,7 @@ $(function () {
                 if (full.seq_no) {
                     if (full.seq_no) {
                         retHtml = retHtml + '<div class="drop-opt">' +
-                            '<a href="javascript:;" id="dropLabel-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">详情<span class="icon-chevron-down"></span></a>' +
-                            '<ul class="drop-cnt in" role="menu" aria-labelledby="dropLabel-1">' +
-                            '<li><a class="employee_edit" href="javascript:void(0)" data-id="'+full.seq_no+'" data-toggle="modal">打开</a></li>' +
-                            '<li><a class="employee_del" href="javascript:void(0)" data-id="'+full.seq_no+'" data-toggle="modal">下载</a></li>' +
-                            '</ul>' +
+                            '<a class="employee_edit" href="javascript:void(0)" id="dropLabel-2" data-id="'+full.seq_no+'">详情</a>' +
                             '</div>';
                     }
                 }
@@ -104,16 +94,17 @@ $(function () {
     // 动态绑定编辑事件
     $(document).on("click",".employee_edit", function () {
         debugger;
-        seq_no = $(this).attr('data-id');
         //查询详情 并自动填充
         $.ajax({
             type: "get",
-            url: "/class_audio/get?seq_no="+seq_no,
+            url: "/course_info/get?seq_no="+$(this).attr('data-id'),
             dataType: "json",
             data: {},
             success: function (data) {
                 debugger;
-                $p_id.find("#audioAreaLab").html(data[0].number);
+                $p_id.find("#audioAreaLab").html(data[0].name);
+                $p_id.find("#dudio").html('<audio src="/upload/'+data[0].class_audio+'" style="margin: -18px 0px -8px 37px;width: 477px;" controls="controls">您的浏览器不支持audio标签，请使用更新版本的浏览器。</audio>');
+                //$p_id.find("#class").html('<audio src="/upload/'+data[0].class_audio+'" style="margin-top: -6px;" controls="controls">您的浏览器不支持audio标签，请使用更新版本的浏览器。</audio>');
             },
             error: function (data) {
                 alert("系统错误");
@@ -122,7 +113,15 @@ $(function () {
         //填充标题
         //$("#areaLab").html('资料详情');
         // 显示成功对话框
+        debugger;
         $("#showAudioModal").modal('show');
+    });
+    //关闭
+    $p_id.find("#play_audio_cancel").on("click",function(){
+        $p_id.find("#dudio").html('');
+    });
+    $(".close").on('click',function(){
+        $p_id.find("#dudio").html('');
     });
 
     $("select").select2({

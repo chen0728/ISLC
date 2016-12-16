@@ -14,10 +14,13 @@ module.exports = function (app) {
     app.use('/', router);
     //资料列表查询
     router.get('/class_audio/list', function (req, res,next) {
-        var sql = knex.select('*').from('data_info').where('status','!=',2).where('data_type',4);
+        var sql = knex.select('*').from('course_info').where('status','!=',2).where('class_status',1);
         var params = req.query;
         if(params.number) {
             sql = sql.where('number', params.number);
+        }
+        if(params.name) {
+            sql = sql.where('name','like', '%'+params.name+'%');
         }
         if (params.up_timeS) {
             sql = sql.where('up_time', '>=', params.up_timeS);
@@ -32,7 +35,7 @@ module.exports = function (app) {
         }).then(function (reply) {
             if (reply) {
                 for(var i =0;i<reply.length;i++){
-                    reply[i].up_time = moment(reply[i].up_time).format('YYYY-MM-DD');
+                    reply[i].up_time = moment(reply[i].up_time).format('YYYY-MM-DD HH:MM');
                 }
                 infos.data = reply;
                 res.json(infos);

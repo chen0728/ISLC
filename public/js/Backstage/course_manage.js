@@ -14,14 +14,13 @@ $(function () {
     $('.j_bubble').click(function (event) {
         event.stopPropagation();
     });
-
     // 阻止回车触发表格填充事件
     $('.j_bubble').keypress(function (e) {
         e.stopPropagation();
     });
-
     function init() {
         var params = { // 查询查询参数
+            account_id:$("#login_account_id").val(),//账号
             name: $p_id.find('#nameIn').val(), // 课程名
             number: $p_id.find('#numIn').val(), // 编号
             creat_timeS: $p_id.find('#search_s').val(), // 班级
@@ -91,7 +90,8 @@ $(function () {
                     retHtml = retHtml + '<div class="drop-opt">' +
                         '<a href="javascript:;" id="dropLabel-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">详情<span class="icon-chevron-down"></span></a>' +
                         '<ul class="drop-cnt in" role="menu" aria-labelledby="dropLabel-1">' +
-                        '<li><a class="employee_edit" href="course_add?seq_no='+full.seq_no+'" target="_blank" data-title="编辑课程" data-toggle="modal">编辑</a></li>' +
+                        '<li><a class="classLimit" href="course_add?seq_no='+full.seq_no+'" target="_blank" data-title="编辑课程" data-toggle="modal">编辑</a></li>' +
+                        //'<li><a class="employee_edit" href="javascript:void(0)" data-toggle="modal">编辑</a></li>' +
                         '<li><a class="employee_del" href="javascript:void(0)" data-id="'+full.seq_no+'" data-toggle="modal">删除</a></li>' +
                         '</ul>' +
                         '</div>';
@@ -144,6 +144,15 @@ $(function () {
             })
         });
     });
+    //限制添加更改页面
+    $('.classLimit').on('click',function(){
+        debugger;
+        $(".nav-main ul li").each(function(){
+            if($(this).html().indexOf('新增课程') > -1 || $(this).html().indexOf('编辑课程') > -1){
+                $(this).find(".close-page").trigger("click");
+            }
+        });
+    });;
     //弹出框居中
     $('.modal').on('show.bs.modal', function () {
         $(this).addClass('modal-outer');

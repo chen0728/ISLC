@@ -22,7 +22,6 @@ $(function () {
     $('.j_bubble').keypress(function (e) {
         e.stopPropagation();
     });
-    var account_id  = $('#login_account_id').val();
     debugger;
     function init() {
         debugger;
@@ -30,12 +29,12 @@ $(function () {
             name: $p_id.find('#name').val(),
             number: $p_id.find('#number').val(),
             data_type: $p_id.find('#data_type').val(),
-            account_id: $p_id.find('#account_id').val(),
+            account_id: $('#login_account_id').val(),
             up_timeS: $p_id.find('#up_timeS').val(),
             up_timeE: $p_id.find('#up_timeE').val(),
         };
         var table_src = $('#personal_Table'); // 定义指向
-        var ajax_url = '/personal/list?account_id='+account_id; // 定义数据请求路径
+        var ajax_url = '/personal/list'; // 定义数据请求路径
         var pageSize = 10 ;// 定义每页长度默认为10
         var aoColumns = [
             {"col_id": "name"},
@@ -133,13 +132,48 @@ $(function () {
         //查询详情 并自动填充
         $.ajax({
             type: "get",
-            url: "/personal/get?seq_no="+seq_no,
+            url: "/Pinformation/get?seq_no="+seq_no,
             dataType: "json",
             data: {},
             success: function (data) {
                 debugger;
-                //$p_id.find("#type_detail").val(data[0].data_type);
+                var chosen;
+                var format_url;
+                var filedata
+                $p_id.find("#type_detail").empty();
+                $p_id.find("#img_cover_ul").empty();
+                if(data[0].data_type == 1){chosen = '文档'}else{$("#type_detail").append('<option value="1">文档</option>')};
+                if(data[0].data_type == 2){chosen = '音频'}else{$("#type_detail").append('<option value="2">音频</option>')};
+                if(data[0].data_type == 3){chosen = '视屏'}else{$("#type_detail").append('<option value="3">视屏</option>')};
+                $("#add_Pinforma_form .select2-chosen").html(chosen);
                 $p_id.find("#name_detail").val(data[0].name);
+                $("#add_top_img").hide();
+                filedata = data[0].data_url.split(".")[1];
+                if('avi,AVI'.indexOf(filedata) > -1){format_url = 'avi'
+                }else if('css,CSS'.indexOf(filedata) > -1){format_url = 'css'
+                }else if('csv,CSV'.indexOf(filedata) > -1){format_url = 'csv'
+                }else if('doc,DOC'.indexOf(filedata) > -1){format_url = 'doc'
+                }else if('eml,EML'.indexOf(filedata) > -1){format_url = 'eml'
+                }else if('eps,EPS'.indexOf(filedata) > -1){format_url = 'eps'
+                }else if('html,HTML'.indexOf(filedata) > -1){format_url = 'html'
+                }else if('jpg,JPG,jpeg,JPEG'.indexOf(filedata) > -1){format_url = 'jpg'
+                }else if('mov,MOV'.indexOf(filedata) > -1){format_url = 'mov'
+                }else if('mp3,MP3'.indexOf(filedata) > -1){format_url = 'mp3'
+                }else if('pdf,PDF'.indexOf(filedata) > -1){format_url = 'pdf'
+                }else if('png,PNG'.indexOf(filedata) > -1){format_url = 'png'
+                }else if('ppt,PPT'.indexOf(filedata) > -1){format_url = 'ppt'
+                }else if('rar,RAR'.indexOf(filedata) > -1){format_url = 'rar'
+                }else if('raw,RAW'.indexOf(filedata) > -1){format_url = 'raw'
+                }else if('ttf,TTF'.indexOf(filedata) > -1){format_url = 'ttf'
+                }else if('txt,TXT'.indexOf(filedata) > -1){format_url = 'txt'
+                }else if('wav,WAV'.indexOf(filedata) > -1){format_url = 'wav'
+                }else if('xls,XLS,xlsx,XLSX'.indexOf(filedata) > -1) {format_url = 'xls'
+                }else{format_url = 'unknow'};
+                $p_id.find("#img_cover_ul").append('<li class="alert alert-dismissable"> ' +
+                    '<strong> ' +
+                    '<img src="images/format_img/'+format_url+'.jpg" alt="" width="42" height="58"> ' +
+                    '</strong> ' +
+                    '</li>');
 
             },
             error: function (data) {
@@ -150,28 +184,6 @@ $(function () {
         $("#areaLab").html('资料详情');
         // 显示成功对话框
         $("#detail").modal('show');
-        //保存
-        //$('#save_map').on('click', function () {
-        //    var data = {
-        //        key_id:$p_id.find("#keyLab").val(),
-        //        key_val_cn:$p_id.find("#nameLab").val(),
-        //    };
-        //    debugger;
-        //    $.ajax({
-        //        type: "post",
-        //        url: '/value_mapping/update?num1='+num1,
-        //        dataType: "json",
-        //        data: data,
-        //        success: function (data) {
-        //            debugger;
-        //            alert("提交成功！");
-        //            window.location.reload();
-        //        },
-        //        error: function (data) {
-        //            alert("系统错误");
-        //        }
-        //    })
-        //});
     });
     //删除
     $(document).on("click", ".employee_del", function () {
@@ -183,7 +195,7 @@ $(function () {
         debugger
         $.ajax({
             type: "post",
-            url: '/personal/del?seq_no='+seq_no,
+            url: '/Pinformation/del?seq_no='+seq_no,
             dataType: "json",
             data:{},
             success: function (data) {
@@ -200,40 +212,55 @@ $(function () {
     $('#addData').on('click', function () {
         debugger;
         $("#areaLab").html('添加资料');
-        $('#detail').modal('show');
+        $p_id.find("#type_detail").empty();
+        $p_id.find("#name_detail").val('');
+        $p_id.find("#img_cover_ul").empty();
+        $p_id.find("#add_top_img").show();
+        $("#add_Pinforma_form .select2-chosen").html('请选择');
+        $p_id.find("#type_detail").append('<option value="1">文档</option>'+'<option value="2">音频</option>'+'<option value="3">视屏</option>');
+        $('#detail').modal('show');;
+    });
+//保存
+    $('#save_map').on('click', function () {
         debugger;
-        $.ajax({
-            type: "get",
-            url: '/personal/select',
-            dataType: "json",
-            data:{},
-            success: function (data) {
-                debugger;
-                new_seq=data[0].seq_no;
-                new_seq_no = parseInt(new_seq);
-                new_num=data[0].number;
-                new_numb=new_num.substring(1,new_num.length);
-                new_number = parseInt(new_numb);
-            },
-            error: function (data) {
-                debugger;
-                alert("系统错误");
-            }
-        });
-        $('#save_map').on('click', function () {
-            debugger;
-            var radio1 = document.getElementById('radio1');
-            var radio2 = document.getElementById('radio2');
-            if(radio1.checked == true){
-                pub = 2;
-            }
-            debugger;
-            if(radio2.checked == true){
-                pub = 1;
-            }
-            var A = A;
+        var pub;
+        var radio1 = document.getElementById('radio1');
+        var radio2 = document.getElementById('radio2');
+        if(radio1.checked == true){
+            pub = 2;
+        }
+        debugger;
+        if(radio2.checked == true){
+            pub = 1;
+        }
+        if($("#areaLab").html() == '资料详情'){
             var data = {
-                seq_no:new_seq_no+1,
+                seq_no:seq_no,
+                public:pub,
+                data_type: $p_id.find('#type_detail').val(),
+                name: $p_id.find('#name_detail').val(),
+            };
+
+        }else{
+            $.ajax({
+                type: "get",
+                url: '/Pinformation/select',
+                async: false,
+                dataType: "json",
+                data:{},
+                success: function (data) {
+                    debugger;
+                    new_seq_no = parseInt(data[0].seq_no)+1;//新建seq_no
+                    new_num = 'A'+(parseInt(data[0].number.split("A")[1])+1);//新建编号
+                },
+                error: function (data) {
+                    debugger;
+                    alert("系统错误");
+                }
+            });
+            var data = {
+                seq_no:new_seq_no,
+                number:new_num,
                 public:pub,
                 data_type: $p_id.find('#type_detail').val(),
                 name: $p_id.find('#name_detail').val(),
@@ -241,23 +268,23 @@ $(function () {
                 account_id:$('#login_account_id').val(),
                 status:1,
             };
-            debugger;
-            $.ajax({
-                type: "post",
-                url: '/personal/insert',
-                dataType: "json",
-                data: data,
-                success: function (data) {
-                    debugger;
-                    alert("提交成功！");
-                    window.location.reload();
-                },
-                error: function (data) {
-                    debugger;
-                    alert("系统错误1");
-                }
-            })
-        });
+        };
+        debugger;
+        $.ajax({
+            type: "post",
+            url: '/Pinformation/insert',
+            dataType: "json",
+            data: data,
+            success: function (data) {
+                debugger;
+                alert("提交成功！");
+                window.location.reload();
+            },
+            error: function (data) {
+                debugger;
+                alert("系统错误");
+            }
+        })
     });
     //弹出框居中
     $('.modal').on('show.bs.modal', function () {
@@ -265,6 +292,54 @@ $(function () {
     }).on('hidden.bs.modal', function () {
         $(this).removeClass('modal-outer');
     });
+
+    var picClient =new PicClient();
+    debugger;
+    //添加头部图片
+    function add_top_img(top_img_url){
+        debugger;
+        $p_id.find("#img_cover_ul").empty();
+        $p_id.find("#img_cover_ul").append('<li class="alert alert-dismissable"> ' +
+            '<strong> ' +
+            '<img id="img_cover" src="'+top_img_url+'" alt="" width="42" height="58"> ' +
+                //'<input id="add_img_cover'+add_top_num+'" name="img_cover" value="'+top_img_url+'"> ' +
+            '</strong> ' +
+            '</li>');
+        debugger;
+    }
+
+    picClient.addsingles(['add_top_img'],function callback(date1,date2,date3){
+        setTimeout(function () {
+            debugger;
+            add_top_img('');
+            var format_url;
+            var filedata = JSON.parse(date2).date.split(".")[1];
+            if('avi,AVI'.indexOf(filedata) > -1){format_url = 'avi'
+            }else if('css,CSS'.indexOf(filedata) > -1){format_url = 'css'
+            }else if('csv,CSV'.indexOf(filedata) > -1){format_url = 'csv'
+            }else if('doc,DOC'.indexOf(filedata) > -1){format_url = 'doc'
+            }else if('eml,EML'.indexOf(filedata) > -1){format_url = 'eml'
+            }else if('eps,EPS'.indexOf(filedata) > -1){format_url = 'eps'
+            }else if('html,HTML'.indexOf(filedata) > -1){format_url = 'html'
+            }else if('jpg,JPG,jpeg,JPEG'.indexOf(filedata) > -1){format_url = 'jpg'
+            }else if('mov,MOV'.indexOf(filedata) > -1){format_url = 'mov'
+            }else if('mp3,MP3'.indexOf(filedata) > -1){format_url = 'mp3'
+            }else if('pdf,PDF'.indexOf(filedata) > -1){format_url = 'pdf'
+            }else if('png,PNG'.indexOf(filedata) > -1){format_url = 'png'
+            }else if('ppt,PPT'.indexOf(filedata) > -1){format_url = 'ppt'
+            }else if('rar,RAR'.indexOf(filedata) > -1){format_url = 'rar'
+            }else if('raw,RAW'.indexOf(filedata) > -1){format_url = 'raw'
+            }else if('ttf,TTF'.indexOf(filedata) > -1){format_url = 'ttf'
+            }else if('txt,TXT'.indexOf(filedata) > -1){format_url = 'txt'
+            }else if('wav,WAV'.indexOf(filedata) > -1){format_url = 'wav'
+            }else if('xls,XLS,xlsx,XLSX'.indexOf(filedata) > -1) {format_url = 'xls'
+            }else{format_url = 'unknow'};
+            $p_id.find('#img_cover').attr('src','images/format_img/'+format_url+'.jpg');
+            //$p_id.find("#add_img_cover"+add_top_num).val('upload/'+JSON.parse(date2).date);
+            data_url = 'upload/'+JSON.parse(date2).date;
+            debugger;
+        }, 1000);
+    })
 
 })
 

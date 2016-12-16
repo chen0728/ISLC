@@ -24,7 +24,7 @@
                 </td>
                 <td style="width: 14%;" align="center">
                     <div class="t">资料类型<span class="sort-ico" style="padding-right:66px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
-                    <select class="form-control" id="tata_type" name="">
+                    <select class="form-control" id="data_type" name="">
                         <option value="">请选择</option>
                         <option value="1">文档</option>
                         <option value="2">音频</option>
@@ -68,17 +68,16 @@
                             <button type="button" class="close" data-dismiss="modal"></button>
                         </div>
                         <div class="modal-body p-1 pt-3 pl-5">
-                            <form class="form-horizontal" action="" method="post"   id="add_account_form">
-                                <input id="account_id" type="hidden" name="account_id">
+                            <form class="form-horizontal" action="" method="post"   id="add_Pinforma_form">
                                 <div class="form-group ">
                                     <label id="areaLab" class="control-label w-9" style="font-size: 29px;width: 135px;"></label>
                                 </div>
                                 <div class="form-group ">
                                     <label class="control-label w-9">资料公开：</label>
                                     <div class="w-40 relative">
-                                        <input id="radio1" type="radio" name="public">
+                                        <input id="radio1" type="radio" name="public" checked>
                                         <label style="font-size: 16px;font-weight: 500;margin-top: 7px;margin-right: 8px;">个人</label>
-                                        <input id="radio2" type="radio" name="public" checked>
+                                        <input id="radio2" type="radio" name="public">
                                         <label style="font-size: 16px;font-weight: 500;margin-top: 7px;margin-right: 8px;">公开</label>
                                     </div>
                                 </div>
@@ -86,10 +85,6 @@
                                     <label class="control-label w-9">资料类型：</label>
                                     <div class="w-40 relative">
                                         <select class="form-control" id="type_detail" name="type_detail" style="width: 80%;">
-                                            <option value="">请选择</option>
-                                            <option value="1">文档</option>
-                                            <option id="name1" value="2">音频</option>
-                                            <option value="3">视屏</option>
                                         </select>
                                     </div>
                                 </div>
@@ -101,9 +96,19 @@
                                 </div>
                                 <div class="form-group ">
                                     <label class="control-label w-9"></label>
-                                    <div class="w-40 relative">
-                                        <button type="button" class="btn btn-default btn-default-green w-14 font-16 float-none" id="">选择文件</button>
-                                    </div>
+                                    <tr>
+                                        <td align="left" class="style_or" style="padding: 0% 0% 1% 41%;"></td>
+                                        <td class="msg text-gray-lighter font-12 mt-0-5">
+                                            <div class="w-70 ml-9 float-none clearfix">
+                                                <ul class="alert-policy-01 pull-left clearfix" id="img_cover_ul">
+                                                </ul>
+                                                <div class="roompic-upload w-12">
+                                                    <textarea id="img_url" hidden></textarea>
+                                                    <a id="add_top_img" href="#" class="form-btn-upload"><i class="icon-plus-sign"></i>添加文件</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
                                 </div>
                                 <div class="modal-footer text-center pb-2">
                                     <button type="button" class="btn btn-default btn-default-green w-14 font-16 float-none" data-dismiss="modal" id="add_account_cancel">取消</button>
@@ -127,7 +132,6 @@
                         </div>
                         <div class="modal-body p-1 pt-3 pl-5" style="margin: -12px 19px 0px -23px;">
                             <form class="form-horizontal" action="" method="post"   id="add_account_form">
-                                <input id="account_id" type="hidden" name="account_id">
                                 <div class="form-group ">
                                     <label class="control-label w-9" style="font-size: 29px;width: 284px;">是否确定删除此资料</label>
                                 </div>

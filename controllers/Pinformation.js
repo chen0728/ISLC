@@ -15,7 +15,7 @@ module.exports = function (app) {
 
     //查询公共资料列表
     router.get('/Pinformation/list', function (req, res,next) {
-        var sql = knex.select('*').from('data_info').where('status','!=',2).where('data_type','!=',4).where('public',1);
+        var sql = knex.select('*').from('data_info').where('status','!=',2).where('public',1);
         var params = req.query;
         if(params.name){
             sql = sql.where('name','like','%'+ params.name+'%');
@@ -51,10 +51,47 @@ module.exports = function (app) {
             next(err);
         });
     });
+    //查询个人资料列表
+    router.get('/personal/list', function (req, res,next) {
+        var sql = knex.select('*').from('data_info').where('status','!=',2).where('public',2);
+        var params = req.query;
+        if(params.name){
+            sql = sql.where('name','like','%'+ params.name+'%');
+        }
+        if(params.number){
+            sql = sql.where('number',params.number);
+        }
+        if(params.data_type){
+            sql = sql.where('data_type',params.data_type);
+        }
+        if(params.account_id){
+            sql = sql.where('account_id',params.account_id);
+        }
+        if(params.up_timeS){
+            sql = sql.where('up_time','>=',params.up_timeS);
+        }
+        if(params.up_timeE){
+            sql = sql.where('up_time','<=',params.up_timeE);
+        }
+        var infos={};
+        sql.then(function (reply) {
+            infos.totalSize = reply.length;
+            return sql = util.queryAppend(req.query, sql)
+        }).then(function (reply) {
+            if (reply) {
+                for(var i =0;i<reply.length;i++){
+                    reply[i].up_time = moment(reply[i].up_time).format('YYYY-MM-DD');
+                }
+                infos.data = reply;
+                res.json(infos);
+            }
+        }).catch(function (err) {
+            next(err);
+        });
+    });
 
 //查询详情
     router.get('/Pinformation/get', function (req, res, next) {
-        var pro = req.body;
         var seq_no = req.query.seq_no;
         var sql = knex.select('*').from('data_info').where('seq_no',seq_no);
         // 执行sql
@@ -79,9 +116,12 @@ module.exports = function (app) {
     //新建
     router.post('/Pinformation/insert', function (req, res, next) {
         var pro = req.body;
-        mydate = moment().format('YYYY-MM-DD HH:mm:ss');
-        pro.up_time = mydate;
-        var sql = knex('data_info').insert(pro);
+        pro.up_time = moment().format('YYYY-MM-DD HH:mm:ss');
+        if(pro.number){
+            var sql = knex('data_info').insert(pro);
+        }else{
+            var sql = knex('data_info').update(pro).where('seq_no',pro.seq_no);
+        }
         // 执行sql
         sql.then(function (reply) {
             res.json({data: reply});

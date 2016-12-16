@@ -17,29 +17,29 @@ module.exports = function (app) {
     router.get('/course_manage/list', function (req, res,next) {
         var sql = knex.select('*').from('course_info').where('status','!=',2)
         var params = req.query;
-        if(params.seq_no){
-            sql = sql.where('seq_no', params.seq_no);
+        if(params.account_id){
+            sql = sql.where('account_id', params.account_id);
         }
-        if(params.role_name){
-            sql = sql.where('role_name','like','%'+params.role_name+'%');
+        if(params.name){
+            sql = sql.where('name','like','%'+params.name+'%');
         }
-        if(params.date1s){
-            sql = sql.where('date1','>=',params.date1s);
+        if(params.number){
+            sql = sql.where('number', params.number);
         }
-        if(params.date1e){
-            sql = sql.where('date1','<=',params.date1e);
+        if(params.creat_timeS){
+            sql = sql.where('creat_time','>=',params.creat_timeS);
         }
-        if(params.date2s){
-            sql = sql.where('date2','>=',params.date2s);
+        if(params.creat_timeE){
+            sql = sql.where('creat_time','<=',params.creat_timeE);
         }
-        if(params.date2e){
-            sql = sql.where('date2','<=',params.date2e);
+        if(params.class_timeS){
+            sql = sql.where('class_time','>=',params.class_timeS);
         }
-        if(params.menu_id == 1){
-            sql = sql.where('menu_id',';');
+        if(params.class_timeE){
+            sql = sql.where('class_time','<=',params.class_timeE);
         }
-        if(params.menu_id == 2){
-            sql = sql.where('menu_id','!=',';');
+        if(params.class_status){
+            sql = sql.where('class_status', params.class_status);
         }
         var infos={};
         sql.then(function (reply) {
@@ -49,7 +49,7 @@ module.exports = function (app) {
             if (reply) {
                 for(var i =0;i<reply.length;i++){
                     reply[i].creat_time = moment(reply[i].creat_time).format('YYYY-MM-DD');
-                    reply[i].class_time = moment(reply[i].class_time).format('YYYY-MM-DD');
+                    reply[i].class_time = moment(reply[i].class_time).format('YYYY-MM-DD HH:MM');
                 }
                 infos.data = reply;
                 res.json(infos);
@@ -242,6 +242,26 @@ module.exports = function (app) {
         // 执行sql
         sql.then(function (reply) {
             res.json(reply);
+        }).catch(function (err) {
+            next(err);
+        });
+    });
+    //关联查询课堂与资料
+    router.get('/course_manage/list', function (req, res,next) {
+        var sql = knex.select('*').from('course_info').where('status','!=',2)
+        var infos={};
+        sql.then(function (reply) {
+            infos.totalSize = reply.length;
+            return sql = util.queryAppend(req.query, sql)
+        }).then(function (reply) {
+            if (reply) {
+                for(var i =0;i<reply.length;i++){
+                    reply[i].creat_time = moment(reply[i].creat_time).format('YYYY-MM-DD');
+                    reply[i].class_time = moment(reply[i].class_time).format('YYYY-MM-DD HH:MM');
+                }
+                infos.data = reply;
+                res.json(infos);
+            }
         }).catch(function (err) {
             next(err);
         });
