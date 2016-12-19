@@ -23,8 +23,15 @@
                 </td>
                 <td align="center">
                     <div class="t">题库类型<span class="sort-ico" style="padding-right:18px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
-                    <div class="form-group float-none j_bubble">
-                        <input class="form-control" type="text" name="type_q" id="type_q" placeholder="题库类型" maxlength="20">
+                    <!--<div class="form-group float-none j_bubble">-->
+                    <!--<input class="form-control" type="text" name="type_q" id="type_q" placeholder="题库类型" maxlength="20">-->
+                    <!--</div>-->
+                    <div class="form-group float-none j_bubble text-left w-10">
+                        <select class="form-control" id="type_q" name="type_q">
+                            <option value="">全部</option>
+                            <option value="听说题">听说题</option>
+                            <option value="听力题">听力题</option>
+                        </select>
                     </div>
                 </td>
                 <td align="center">
@@ -66,7 +73,7 @@
         </table>
         <nav class="pagination-wrap clearfix h-5">
             <div class="ml-2 mt-1 mb-2">
-                <a class="form-btn-upload" href="TLquestions_manage?seq_no=0" data-title="听力试题" target="_blank" data-toggle="modal"><i class="icon-plus-sign"></i><p style="float: left;width: 150px">添加听力试题</p></a>
+                <a class="form-btn-upload newTLST" href="TLquestions_manage?seq_no=0" data-title="听力试题" target="_blank" data-toggle="modal"><i class="icon-plus-sign"></i><p style="float: left;width: 150px">添加听力试题</p></a>
                 <a class="form-btn-upload" id="addTS" data-toggle="modal"><i class="icon-plus-sign"></i><p style="float: left">添加听说试题</p></a>
             </div>
 
@@ -106,7 +113,7 @@
                                 <div class="form-group ">
                                     <label class="control-label w-9">试题文件：</label>
                                     <div class="w-40 relative">
-                                        <input class="form-control w-32" type="text" id="audio_url" name="audio_url" maxlength="20" placeholder="系统自动生成" disabled>
+                                        <input class="form-control w-32" type="text" id="audio_url" name="audio_url" maxlength="20" placeholder="文件上传后，系统自动生成" disabled>
                                         <a href="javascript:void(0);" class="btn btn-success font-14 ml-0-5" style="width: 75px" id="">自己上传</a>
                                     </div>
                                 </div>
@@ -169,7 +176,9 @@
                                     </td>
                                 </tr>
                                 </thead>
-                                <tbody></tbody>
+                                <tbody>
+
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -203,6 +212,7 @@
             </div>
         </div>
     </div>
+
     <!--    &lt;!&ndash; 表格共通&ndash;&gt;
         <script src="js/table-ajax.js"></script>-->
     <!--私有js-->

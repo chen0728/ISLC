@@ -56,11 +56,9 @@ module.exports = function (app) {
         knex.select('*').from('account').where({account_id:userInfo.username,password:userInfo.password,part:userInfo.part}).then(function (reply) {
             if(reply.length == 1){
                 req.session.account_id = userInfo.username;
-                //res.send({user:reply[0],state:true});
-                res.json(reply[0]);
+                res.send({user:reply[0],state:true});
             }else{
-                //res.send({user:null,state:false});
-                res.json({user:null,state:false});
+                res.send({user:null,state:false});
             }
         }).catch(function (err) {
             next(err);

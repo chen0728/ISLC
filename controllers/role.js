@@ -58,7 +58,7 @@ module.exports = function (app) {
             next(err);
         });
     });
-//查询详情
+    //查询详情
     router.get('/role_info/get', function (req, res, next) {
         var seq_no = req.query.seq_no;
         var sql = knex.select('*').from('role_info').where('seq_no',seq_no);

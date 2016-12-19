@@ -1,3 +1,4 @@
+
 <div id="TLquestions_manage_page">
     <!--start-->
     <ol class="breadcrumb">
@@ -7,13 +8,13 @@
     <div class="main-box p-1-5">
         <form class="form-horizontal ng-pristine ng-valid nice-validator n-yellow" style="margin: 20px 0px 0 30px" id="package_step1Form">
             <!-- 隐藏的题目id-->
-            <input type="" name="qusetion_seq_no" value="<%=seq_no%>">
+            <input type="" name="question_seq_no" value="<%=seq_no%>">
 
             <div class="form-group">
                 <label class="control-label w-9">试题名称：</label>
 
                 <div class="w-40 relative">
-                    <input id="product_name" class="form-control w-30" type="text" name="name" data-rule="required;" maxlength="256" placeholder="引用题库将自动填充整页">
+                    <input id="question_name" class="form-control w-30 required" type="text" name="name" data-rule="required;" maxlength="256" placeholder="引用题库将自动填充整页">
                     <a href="javascript:void(0);" class="btn btn-success font-14 ml-0-5" style="width: 78px" id="">引用题库</a>
                 </div>
             </div>
@@ -21,40 +22,48 @@
                 <label class="control-label w-9 relative">音频文件：</label>
 
                 <div class="w-40 relative">
-                    <input id="name_remarks" value="" class="form-control w-30" data-rule="required;" disabled type="text" maxlength="32" placeholder="请上传音频文件">
+                    <input id="audio_url" value="1" class="form-control w-30 required" data-rule="required;" disabled type="text" maxlength="32" placeholder="请上传音频文件">
                     <a href="javascript:void(0);" class="btn btn-success font-14 ml-0-5" style="width: 78px" id="">自己上传</a>
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label w-9 relative">试题说明：</label>
                 <div class="w-40 relative">
-                    <textarea id="name_remarks" class="form-control" data-rule="required;" style="height: 100px;" type="text" placeholder="对于本套试题的概述（如：《高考听力套卷一》）"></textarea>
+                    <textarea id="remarks" class="form-control required" data-rule="required;" style="height: 100px;" type="text" placeholder="对于本套试题的概述（如：《高考听力套卷一》）"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label w-9 relative">公开：</label>
+                <div class="w-40 relative">
+                    <input id="public" style="margin-top: 9px" type="checkbox" >
                 </div>
             </div>
             <div class="timu w-76 alert alert-dismissable alert-policy-01 pull-left clearfix clearfix form-group j_theme_choose">
-                <label class="control-label w-9">第 1 题：</label>
-                <input id="product_name" class="form-control w-40" data-rule="required;" type="text" maxlength="256" placeholder="问题">
+                <label class="control-label w-9">题目：</label>
+                <input name="Q_T" class="form-control w-40 required" data-rule="required;" type="text" maxlength="256" placeholder="问题描述">
+                <label class="control-label w-9">分值：</label>
+                <input name="Q_S" class="form-control w-12 required" data-rule="required;" type="text" maxlength="256" placeholder="不填则默认5分">
                 <br>
                 <br>
-                <button type="button" class="close closefirst" data-dismiss="alert" style="position: inherit;margin: -69px -28px 0 0;"></button>
+                <button type="button" class="close closefirst" data-dismiss="alert" data-id="1" style="position: inherit;margin: -69px -28px 0 0;"></button>
                 <div>
                     <ul class="y-theme-choose-list clearfix" id="themeChoose">
 
                         <li style="width: 310px;margin: 10px 0 0 90px">
-                            <label style="float: left"><input style="margin-top: 10px" type="checkbox" value="1" name="themes">A</label>
-                            <input id="product_name" class="form-control w-23 ml-1" type="text" placeholder="答案A，没有则不填">
+                            <label style="float: left"><input style="margin-top: 10px" type="checkbox" name="Q_CA">A</label>
+                            <input name="Q_A" class="form-control w-23 ml-1" type="text" placeholder="答案A，没有则不填">
                         </li>
                         <li style="width: 310px;margin-top: 10px">
-                            <label style="float: left"><input style="margin-top: 10px" type="checkbox" value="1" name="themes">B</label>
-                            <input id="product_name" class="form-control w-23 ml-1" type="text" placeholder="答案B，没有则不填">
+                            <label style="float: left"><input style="margin-top: 10px" type="checkbox" name="Q_CB">B</label>
+                            <input name="Q_B" class="form-control w-23 ml-1" type="text" placeholder="答案B，没有则不填">
                         </li>
                         <li style="width: 310px;margin: 10px 0 0 90px">
-                            <label style="float: left"><input style="margin-top: 10px" type="checkbox" value="1" name="themes">C</label>
-                            <input id="product_name" class="form-control w-23 ml-1" type="text" placeholder="答案C，没有则不填">
+                            <label style="float: left"><input style="margin-top: 10px" type="checkbox" name="Q_CC">C</label>
+                            <input name="Q_C" class="form-control w-23 ml-1" type="text" placeholder="答案C，没有则不填">
                         </li>
                         <li style="width: 310px;margin-top: 10px">
-                            <label style="float: left"><input style="margin-top: 10px" type="checkbox" value="1" name="themes">D</label>
-                            <input id="product_name" class="form-control w-23 ml-1" type="text" placeholder="答案D，没有则不填">
+                            <label style="float: left"><input style="margin-top: 10px" type="checkbox" name="Q_CD">D</label>
+                            <input name="Q_D" class="form-control w-23 ml-1" type="text" placeholder="答案D，没有则不填">
                         </li>
                     </ul>
                 </div>
@@ -62,9 +71,13 @@
 
         </form>
         <div class="text-center mt-5 mb-2">
-            <button class="btn btn-success w-12 float-none" id="to_step2">下一步</button>
+            <button class="btn btn-success w-12 float-none" style="margin: 0 50px 0 0 " id="add_question">添加题目</button>
+            <button class="btn btn-success w-12 float-none" id="save_question">提交</button>
         </div>
+
+
     </div>
+
 
 
 

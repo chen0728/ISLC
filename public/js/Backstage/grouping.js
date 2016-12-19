@@ -22,7 +22,6 @@ $(function () {
         data:{},
         success: function (data) {
             var clas_seq = data[0].class.split(";");
-            debugger;
             for(var i=0;i<clas_seq.length;i++){
                 var seq_noName = clas_seq[i];
                 $.ajax({
@@ -53,7 +52,6 @@ $(function () {
 
         in_group = [];
         out_group = [];
-        debugger;
         var seq_no = $p_id.find('#slc_class').val();
         $.ajax({
             type: "post",
@@ -82,14 +80,12 @@ $(function () {
                         }
                 });
                 //查询组内
-                debugger;
                 $.ajax({
                     type: "post",
                     url: '/grouping/name?seq_no_name='+seq_no_name,
                     dataType: "json",
                     data:{},
                     success: function (data) {
-                        debugger;
                         for(var i=0;i<data.length;i++){
                             $("#inGroup").append('<a class="name_out" href="javascript:void(0)" style="cursor:pointer" data_id="'+data[i].seq_no+
                                 '" name="'+data[i].name+'" >'+data[i].name+'</a><br name="'+data[i].name+'">')
@@ -135,7 +131,6 @@ $(function () {
         if(Sin != -1){
             in_group.splice(Sin,1)
         };
-        debugger;
     });
 
     // 动态绑定添加组员事件
@@ -150,14 +145,12 @@ $(function () {
         if(Sout != -1){
             out_group.splice(Sout,1)
         };
-        debugger;
     });
 
 //动态绑定组下拉菜单change事件
     $p_id.find('#slc_group').on("change",function (){
         in_group = [];
         out_group = [];
-        debugger;
         if($("#slc_group").val() == 9999){
             $p_id.find("#addGroup").modal('show');
         }else{
@@ -197,7 +190,6 @@ $(function () {
         $("#slc_group").empty();
         in_group = [];
         out_group = [];
-        debugger;
         var seq_no = $p_id.find('#slc_class').val();
         $.ajax({
             type: "post",
@@ -244,14 +236,12 @@ $(function () {
         in_group = [];
         out_group = [];
         $("#inGroup").empty();
-        debugger;
         var data = {
             seq_no:seq_no_name,
             class:$p_id.find('#slc_class').val(),
             group:$p_id.find('#groupName').val(),
             status:1,
         };
-        debugger;
         $.ajax({
             type: "post",
             url: '/grouping/newGroup',
@@ -268,11 +258,9 @@ $(function () {
     });
     //删除组
     $("#delGroup") .on("click",function (){
-        debugger;
         if($("#slc_group").val()){
             $p_id.find("#SureDelGroup").modal('show');
             $("#sureDel") .on("click",function (){
-                debugger;
                 var seq_no = $p_id.find('#slc_group').val()
                 $.ajax({
                     type: "post",
@@ -280,7 +268,6 @@ $(function () {
                     dataType: "json",
                     data:{},
                     success: function (data) {
-                        debugger;
                         alert("删除成功");
                         window.location.reload();
                     },
@@ -302,7 +289,6 @@ $(function () {
         if(in_group.length == 0 && out_group.length == 0 && remarksB == $p_id.find('#scene').val()){
             alert("您未做任何分组操作！");
         }else{
-            debugger;
             var obj = {
                 seq_no_name:seq_no_name,
                 in_group:in_group,
@@ -318,7 +304,6 @@ $(function () {
                 success: function (data) {
                     in_group = [];
                     out_group = [];
-                    debugger;
                     alert("保存成功");
                 },
                 error: function (data) {
