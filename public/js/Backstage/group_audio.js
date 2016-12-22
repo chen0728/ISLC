@@ -4,153 +4,69 @@
  */
 
 $(function () {
-
-    var tempObj;
-    var tempEmpObj;
-    var num1;
-    var new_num;
     var $p_id = $("#group_audio_page");
-
-    //数据表格筛选处事件冒泡
-    $('.j_bubble').click(function (event) {
-        event.stopPropagation();
+    //填充班级下拉菜单
+    seq_no = $('#login_account_id').val();
+    $.ajax({
+        type: "post",
+        url: '/grouping/class?seq_no='+seq_no,
+        dataType: "json",
+        data:{},
+        success: function (data) {
+            var clas_seq = data[0].class.split(";");
+            for(var i=0;i<clas_seq.length;i++){
+                var seq_noName = clas_seq[i];
+                $.ajax({
+                    type: "post",
+                    url: '/grouping/className?seq_no='+seq_noName,
+                    dataType: "json",
+                    data:{},
+                    success: function (data) {
+                        debugger;
+                        if(data.length >0){
+                            $("#slc_class").append('<option value="'+data[0].key_id+'">'+data[0].key_val_cn+'</option>')
+                        }
+                    },
+                    error: function (data) {
+                        alert("系统错误");
+                    }
+                });
+            }
+        },
+        error: function (data) {
+            alert("系统错误");
+        }
     });
-
-    // 阻止回车触发表格填充事件
-    $('.j_bubble').keypress(function (e) {
-        e.stopPropagation();
-    });
-
-    function init() {
-        debugger;
-        var params = { // 查询查询参数
-            //name: $p_id.find('#audio_name').val(),
-        };
-        var table_src = $('#audio_Table'); // 定义指向
-        var ajax_url = '/group_audio/list'; // 定义数据请求路径
-        var pageSize = 10 ;// 定义每页长度默认为10
-        var aoColumns = [
-            {"col_id": "number"},
-            {"col_id": ""},
-            {"col_id": ""},
-            {"col_id": ""},
-            {"col_id": ""},
-        ]; // 定义表格数据列id
-        debugger;
-        var aoColumnDefs = [{
-            "colIndex": 0,
-            "html": function (data, type, full) {
-                if (!data) {
-                    return '';
-                }
-                return '<td><div class="text-center">' + data + '</div></td>';
-            }
-        }, {
-            "colIndex": 1,
-            "html": function (data, type, full) {
-                if (!data) {
-                    return '';
-                }
-                return '<td><div class="text-center">' + data + '</div></td>';
-            }
-        }, {
-            "colIndex": 2,
-            "html": function (data, type, full) {
-                if (!data) {
-                    return '';
-                }
-                return '<td><div class="text-center">' + data + '</div></td>';
-            }
-        },{
-            "colIndex": 3,
-            "html": function (data, type, full) {
-                if (!data) {
-                    return '';
-                }
-                return '<td><div class="text-center">' + data + '</div></td>';
-            }
-        },{
-            "colIndex": 4,
-            "html": function (data, type, full) {
-                if (!data) {
-                    return '';
-                }
-                return '<td><div class="text-center">' + data + '</div></td>';
-            }
-        },{
-            "colIndex": 5,
-            "html": function (data, type, full) {
-                var retHtml = '';
-                if (full.seq_no) {
-                    retHtml = retHtml + '<div class="drop-opt">' +
-                        '<a href="javascript:;" id="dropLabel-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">详情<span class="icon-chevron-down"></span></a>' +
-                        '<ul class="drop-cnt in" role="menu" aria-labelledby="dropLabel-1">' +
-                        '<li><a class="employee_edit" href="javascript:void(0)" data-id="'+full.seq_no+'" data-toggle="modal">打开</a></li>' +
-                        '<li><a class="employee_del" href="javascript:void(0)" data-id="'+full.seq_no+'" data-toggle="modal">下载</a></li>' +
-                        '</ul>' +
-                        '</div>';
-                }
-                return retHtml;
-            }
-
-        }]; // 定义需要改变的列
-
-        // 列表为空时的数据
-        var sZeroRecords = '<p class="text-gray-light ml-2 font-18">没有满足搜索条件的结果</p>';
-        // 绘画表格
-        TableAjax.drawTable(table_src, ajax_url, pageSize, aoColumns, aoColumnDefs, params, sZeroRecords, fnChangeDataCallback,fnDrawCallback);
-    };
-    //搜索后列表重构
-    $("#employeeSeatchBut").on('click',function(){
-        init();
-    });
-    //获取到数据的回调函数，需要更该时可定义
-    function fnChangeDataCallback(data){
-        debugger;
-        return data;
-    }
-    //绘画完成之后的回调函数
-    function fnDrawCallback(data){
-        return data;
-    }
-    init();
-
-    // 动态绑定编辑事件
-    $(document).on("click",".employee_edit", function () {
-        debugger;
-        seq_no = $(this).attr('data-id');
-        //查询详情 并自动填充
+    // 查询组下拉框
+    $p_id.find('#slc_class').on("change",function (){
+        $("#group_audio_form").empty();
+        var seq_no = $p_id.find('#slc_class').val();
         $.ajax({
-            type: "get",
-            url: "/group_audio/get?seq_no="+seq_no,
+            type: "post",
+            url: '/grouping/group?seq_no='+seq_no,
             dataType: "json",
-            data: {},
+            data:{},
             success: function (data) {
-                debugger;
-                $p_id.find("#playerNumLab").html(data[0].number);
+                for(var i=0;i<data.length;i++){
+                    $("#group_audio_form").append('<div class="form-group " style="float: left;margin: -49px 0px 60px 92px;">'+
+                        '<label class="control-label w-9">'+data[i].group+'</label>'+
+                        '<div class="w-40 relative">'+
+                        '<audio src="/upload/'+data[i].audio+'" style="margin:0px 0px -18px -8px;width: 510px;" controls="controls">您的浏览器不支持audio标签，请使用更新版本的浏览器。</audio>'+
+                        '</div>'+
+                        '<button data_url="'+data[i].audio+'" type="button" class="btn btn-success w-14 font-16 float-none ml-2 download" style="margin: 1px 0px 0px 110px;height: 32px;width: 80px;">下载</button>'+
+                        '</div><br>');
+                }
+                $(".download").on("click",function(){
+                    debugger;
+                    var spid = $p_id.find(this).attr('data_url');
+                    window.open("/upload/"+spid);
+                })
             },
             error: function (data) {
                 alert("系统错误");
             }
         });
-        //填充标题
-        //$("#areaLab").html('资料详情');
-        // 显示成功对话框
-        $("#groupAudioPlayer").modal('show');
     });
-
-
-    $("select").select2({
-        minimumResultsForSearch: Infinity   //隐藏下拉列表搜索框。Infinity可以数字替换，下拉列表项的最少条目数等于该数字时出现搜索框。
-    }); // 美化下拉列表
-
-    //弹出框居中
-    $('.modal').on('show.bs.modal', function () {
-        $(this).addClass('modal-outer');
-    }).on('hidden.bs.modal', function () {
-        $(this).removeClass('modal-outer');
-    });
-
 })
 
 

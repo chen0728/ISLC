@@ -5,55 +5,50 @@
         <li class="active">课堂多媒体资料回顾</li>
     </ol>
     <div class="main-box main-box-noborder overflow-hidden" style="padding-top: 12px">
-        <table class="table-style-1 table-style-1-a table-hover mb-0-5" id="media_Table">
+        <table class="table-style-1 table-style-1-a table-hover mb-0-5" id="class_media_Table">
             <thead>
             <tr class="sch">
-                <td style="width: 13%;" align="center">
-                    <div class="t text-left" >资料编号
-                    <span class="sort-ico" style="padding-right:33px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span>
+                <td style="width: 15%;" align="center">
+                    <div class="t text-left" >课程名
+                        <span class="sort-ico" style="padding-right:57px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span>
                     </div>
                     <div class="form-group float-none j_bubble">
-                        <input class="form-control" type="text" name="" id="" placeholder="" maxlength="20">
+                        <input class="form-control" type="text" name="nameIn" id="nameIn" placeholder="" maxlength="20">
                     </div>
                 </td>
-                <td style="width: 13%;" align="center">
-                    <div class="t">资料名<span class="sort-ico" style="padding-right:42px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+                <td style="width: 15%;" align="center">
+                    <div class="t">课程编号<span class="sort-ico" style="padding-right:50px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
                     <div class="form-group float-none j_bubble">
-                        <input class="form-control" type="text" name="" id="" maxlength="20">
+                        <input class="form-control" type="text" name="numIn" id="numIn" maxlength="20">
                     </div>
                 </td>
-                <td style="width: 13%;" align="center">
-                    <div class="t text-left" >资料类型
-                        <span class="sort-ico" style="padding-right:35px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span>
-                    </div>
-                    <select class="form-control" id="" name="">
-                        <option value="">全部</option>
-                        <option value="1">已上</option>
-                        <option value="2">未上</option>
-                    </select>
-                </td>
-                <td style="width: 13%;" align="center">
-                    <div class="t">课程编号<span class="sort-ico" style="padding-right:34px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
-                    <div class="form-group float-none j_bubble">
-                        <input class="form-control" type="text" name="" id="" maxlength="20">
+                <td width="15%" align="center" class="sorting" tabindex="0" aria-controls="product_searchTab" rowspan="1" colspan="1" aria-label="
+                创建时间: activate to sort column ascending">
+                    <div class="t" style="padding-right: 10px;">创建时间<span class="sort-ico" style="padding-right:56px"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+                    <div class="form-group j_bubble j_datebetween">
+                        <input type="text" class="form-control input-xs j_datepicker" placeholder="开始" id="search_s">
+                        <input type="text" class="form-control mt-1 input-xs j_datepicker" placeholder="结束" id="search_e">
                     </div>
                 </td>
-                <td style="width: 13%;" align="center">
-                    <div class="t">课程名<span class="sort-ico" style="padding-right:43px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
-                    <div class="form-group float-none j_bubble">
-                        <input class="form-control" type="text" name="" id="" maxlength="20">
-                    </div>
-                </td>
-                <td width="13%" align="center" class="sorting" tabindex="0" aria-controls="product_searchTab" rowspan="1" colspan="1" aria-label="
+                <td width="15%" align="center" class="sorting" tabindex="0" aria-controls="product_searchTab" rowspan="1" colspan="1" aria-label="
                 创建时间: activate to sort column ascending" >
-                    <div class="t" style="padding-right: 10px;">上课时间<span class="sort-ico" style="padding-right:40px"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
+                    <div class="t" style="padding-right: 10px;">上课时间<span class="sort-ico" style="padding-right:56px"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
                     <div class="form-group j_bubble j_datebetween">
                         <input type="text" class="form-control input-xs j_datepicker" placeholder="开始" id="class_s">
                         <input type="text" class="form-control mt-1 input-xs j_datepicker" placeholder="结束" id="class_e">
                     </div>
                 </td>
-
-                <td style="width: 12%;" align="center">
+                <td style="width: 10%;" align="center">
+                    <div class="t text-left" >课程状态
+                        <span class="sort-ico" style="padding-right:21px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span>
+                    </div>
+                    <select class="form-control" id="status_q" name="status_q">
+                        <option value="">全部</option>
+                        <option value="1">已上</option>
+                        <option value="2">未上</option>
+                    </select>
+                </td>
+                <td style="width: 15%;" align="center">
                     <div class="t">操作</div>
                     <button class="btn btn-success float-none j_bubble" type="button" id="employeeSeatchBut">搜索
                     </button>
@@ -64,33 +59,6 @@
         </table>
         <nav class="pagination-wrap clearfix" style="height: 20px;margin-top:-22px">
         </nav>
-    </div>
-    <!-- 确定框 -->
-    <div class="modal modal-noline fade" id="" tabindex="-1" role="dialog" aria-labelledby="addAccountModalLabel" aria-hidden="true">
-        <div class="modal-outer">
-            <div class="modal-middle">
-                <div class="modal-dialog modal-inner w-65 float-none">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal"></button>
-                        </div>
-                        <div class="modal-body p-1 pt-3 pl-5" style="margin: -12px 19px 0px -23px;">
-                            <form class="form-horizontal" action="" method="post"   id="add_account_form">
-                                <input id="account_id" type="hidden" name="account_id">
-                                <div class="form-group ">
-                                    <label class="control-label w-9" style="font-size: 29px;width: 284px;">是否确定删除此课程</label>
-                                </div>
-                                <div class="modal-footer text-center pb-2">
-                                    <button type="button" class="btn btn-default btn-default-green w-14 font-16 float-none" data-dismiss="modal" id="add_account_cancel">取消</button>
-                                    <button id="del_class" type="button" class="btn btn-success w-14 font-16 float-none ml-2">确定</button>
-                                </div>
-                            </form>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
     <!--    &lt;!&ndash; 表格共通&ndash;&gt;
         <script src="js/table-ajax.js"></script>-->

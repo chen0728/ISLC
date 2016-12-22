@@ -4,11 +4,6 @@
  */
 
 $(function () {
-
-    var tempObj;
-    var tempEmpObj;
-    var num1;
-    var new_num;
     var $p_id = $("#course_manage_page");
     //数据表格筛选处事件冒泡
     $('.j_bubble').click(function (event) {

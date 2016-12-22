@@ -46,7 +46,7 @@ module.exports = function (app) {
                 return;
             }
 debugger;
-            var extName =files.Filedata.name.split(".")[1];  //后缀名.
+            var extName =files.Filedata.name.split(".")[files.Filedata.name.split(".").length-1];  //后缀名.
             var avatarName = uuid.v1() + '.' + extName;
             var newPath = form.uploadDir + avatarName;
 

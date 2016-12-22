@@ -103,7 +103,6 @@ $(function () {
                 }
                 return retHtml;
             }
-
         }]; // 定义需要改变的列
 
         // 列表为空时的数据
@@ -154,11 +153,13 @@ $(function () {
                 $("#add_Pinforma_form .select2-chosen").html(chosen);
                 $p_id.find("#name_detail").val(data[0].name);
                 $("#add_top_img").hide();
-                filedata = data[0].data_url.split(".")[1];
+                $p_id.find("#unknow").empty();
+                filedata = data[0].data_url.split(".")[data[0].data_url.split(".").length-1];
+                debugger;
                 if('avi,AVI'.indexOf(filedata) > -1){format_url = 'avi'
                 }else if('css,CSS'.indexOf(filedata) > -1){format_url = 'css'
                 }else if('csv,CSV'.indexOf(filedata) > -1){format_url = 'csv'
-                }else if('doc,DOC'.indexOf(filedata) > -1){format_url = 'doc'
+                }else if('doc,DOC,docx,DOCX'.indexOf(filedata) > -1){format_url = 'doc'
                 }else if('eml,EML'.indexOf(filedata) > -1){format_url = 'eml'
                 }else if('eps,EPS'.indexOf(filedata) > -1){format_url = 'eps'
                 }else if('html,HTML'.indexOf(filedata) > -1){format_url = 'html'
@@ -176,8 +177,10 @@ $(function () {
                 }else if('xls,XLS,xlsx,XLSX'.indexOf(filedata) > -1) {format_url = 'xls'
                 }else{
                     format_url = 'unknow';
+                    $p_id.find("#unknow").css('margin','-14px 0px 0px -56px');
                     $p_id.find("#unknow").html(filedata);
                     $p_id.find("#unknow").show();
+                    debugger;
                 };
                 $p_id.find("#img_cover_ul").append('<li class="alert alert-dismissable"> ' +
                     '<strong> ' +
@@ -321,11 +324,12 @@ $(function () {
             debugger;
             add_top_img('');
             var format_url;
-            var filedata = JSON.parse(date2).date.split(".")[1];
+            var filedata = JSON.parse(date2).date.split(".")[JSON.parse(date2).date.split(".").length-1];
+            debugger;
             if('avi,AVI'.indexOf(filedata) > -1){format_url = 'avi'
             }else if('css,CSS'.indexOf(filedata) > -1){format_url = 'css'
             }else if('csv,CSV'.indexOf(filedata) > -1){format_url = 'csv'
-            }else if('doc,DOC'.indexOf(filedata) > -1){format_url = 'doc'
+            }else if('doc,DOC,docx,DOCX'.indexOf(filedata) > -1){format_url = 'doc'
             }else if('eml,EML'.indexOf(filedata) > -1){format_url = 'eml'
             }else if('eps,EPS'.indexOf(filedata) > -1){format_url = 'eps'
             }else if('html,HTML'.indexOf(filedata) > -1){format_url = 'html'
@@ -343,6 +347,7 @@ $(function () {
             }else if('xls,XLS,xlsx,XLSX'.indexOf(filedata) > -1) {format_url = 'xls'
             }else{
                 format_url = 'unknow';
+                $p_id.find("#unknow").css('margin','-44px 0px 0px -56px');
                 $p_id.find("#unknow").html(filedata);
                 $p_id.find("#unknow").show();
             };

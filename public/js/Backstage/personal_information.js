@@ -148,11 +148,12 @@ $(function () {
                 $("#add_Pinforma_form .select2-chosen").html(chosen);
                 $p_id.find("#name_detail").val(data[0].name);
                 $("#add_top_img").hide();
-                filedata = data[0].data_url.split(".")[1];
+                $p_id.find("#unknow").empty();
+                filedata = data[0].data_url.split(".")[data[0].data_url.split(".").length-1];
                 if('avi,AVI'.indexOf(filedata) > -1){format_url = 'avi'
                 }else if('css,CSS'.indexOf(filedata) > -1){format_url = 'css'
                 }else if('csv,CSV'.indexOf(filedata) > -1){format_url = 'csv'
-                }else if('doc,DOC'.indexOf(filedata) > -1){format_url = 'doc'
+                }else if('doc,DOC,docx,DOCX'.indexOf(filedata) > -1){format_url = 'doc'
                 }else if('eml,EML'.indexOf(filedata) > -1){format_url = 'eml'
                 }else if('eps,EPS'.indexOf(filedata) > -1){format_url = 'eps'
                 }else if('html,HTML'.indexOf(filedata) > -1){format_url = 'html'
@@ -168,7 +169,12 @@ $(function () {
                 }else if('txt,TXT'.indexOf(filedata) > -1){format_url = 'txt'
                 }else if('wav,WAV'.indexOf(filedata) > -1){format_url = 'wav'
                 }else if('xls,XLS,xlsx,XLSX'.indexOf(filedata) > -1) {format_url = 'xls'
-                }else{format_url = 'unknow'};
+                }else{
+                    format_url = 'unknow';
+                    $p_id.find("#unknow").css('margin','-14px 0px 0px -56px');
+                    $p_id.find("#unknow").html(filedata);
+                    $p_id.find("#unknow").show();
+                };
                 $p_id.find("#img_cover_ul").append('<li class="alert alert-dismissable"> ' +
                     '<strong> ' +
                     '<img src="images/format_img/'+format_url+'.jpg" alt="" width="42" height="58"> ' +
@@ -313,11 +319,11 @@ $(function () {
             debugger;
             add_top_img('');
             var format_url;
-            var filedata = JSON.parse(date2).date.split(".")[1];
+            var filedata = JSON.parse(date2).date.split(".")[JSON.parse(date2).date.split(".").length-1];
             if('avi,AVI'.indexOf(filedata) > -1){format_url = 'avi'
             }else if('css,CSS'.indexOf(filedata) > -1){format_url = 'css'
             }else if('csv,CSV'.indexOf(filedata) > -1){format_url = 'csv'
-            }else if('doc,DOC'.indexOf(filedata) > -1){format_url = 'doc'
+            }else if('doc,DOC,docx,DOCX'.indexOf(filedata) > -1){format_url = 'doc'
             }else if('eml,EML'.indexOf(filedata) > -1){format_url = 'eml'
             }else if('eps,EPS'.indexOf(filedata) > -1){format_url = 'eps'
             }else if('html,HTML'.indexOf(filedata) > -1){format_url = 'html'
@@ -333,7 +339,12 @@ $(function () {
             }else if('txt,TXT'.indexOf(filedata) > -1){format_url = 'txt'
             }else if('wav,WAV'.indexOf(filedata) > -1){format_url = 'wav'
             }else if('xls,XLS,xlsx,XLSX'.indexOf(filedata) > -1) {format_url = 'xls'
-            }else{format_url = 'unknow'};
+            }else{
+                format_url = 'unknow';
+                $p_id.find("#unknow").css('margin','-44px 0px 0px -56px');
+                $p_id.find("#unknow").html(filedata);
+                $p_id.find("#unknow").show();
+            };
             $p_id.find('#img_cover').attr('src','images/format_img/'+format_url+'.jpg');
             //$p_id.find("#add_img_cover"+add_top_num).val('upload/'+JSON.parse(date2).date);
             data_url = 'upload/'+JSON.parse(date2).date;

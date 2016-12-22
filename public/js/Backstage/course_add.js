@@ -15,6 +15,7 @@ $(function () {
     var $p_id = $("#course_add_page");
     //修改课程
     if($p_id.find("#seq_no").val() != ''){
+        $p_id.find("#class_title").html('编辑课程');
         seq_no = $p_id.find("#seq_no").val();
         //查询详情 并自动填充
         $.ajax({
@@ -153,6 +154,7 @@ $(function () {
             e.stopPropagation();
         });
     }else{
+        $p_id.find("#class_title").html('新增课程');
         $p_id.find("#classAudio").html('无');
     }
     $("select").select2({
@@ -331,11 +333,14 @@ $(function () {
         //绘画完成之后的回调函数
         function fnDrawCallback(data){
             //列表checkbox点击事件
+            debugger;
             $p_id.find(".add_zl").on('click',function(){
+                debugger;
                 var seq_no = $(this).attr('value');
                 seq_chec = $(this).attr('checked');
                 //勾选事件
                 if(seq_chec && seq_chec == 'checked'){
+                    debugger;
                     seq_data_arrIn.push(seq_no);
                 }else{
                     //去勾选事件

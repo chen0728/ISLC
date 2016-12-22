@@ -7,40 +7,31 @@
     <div class="main-box main-box-noborder overflow-hidden" style="padding-top: 12px">
         <div class="modal-body p-1 pt-3 pl-5">
             <form class="form-horizontal" action="" method="post"   id="add_account_form" style="margin-top: -28px">
-                <input id="seq_no" type="" name="seq_no" value="<%=seq_no%>">
-                <div class="form-group ">
-                    <label id="areaLab" class="control-label w-9" style="font-size: 29px;width: 135px;"></label>
-                </div>
-                <div class="form-group ">
-                    <label class="control-label w-9">播放插件</label>
+                <input id="seq_no" type="" name="seq_no" value="<%=seq_no%>" hidden>
+                <div id="play_table" style="margin:15px 46px 0px 10px;" class="form-group ">
                 </div>
             </form>
         </div>
-        <nav class="pagination-wrap clearfix" style="height: 20px;margin-top:-22px">
-        </nav>
-    </div>
-
-    <div class="modal modal-noline fade" id="" tabindex="-1" role="dialog" aria-labelledby="addAccountModalLabel" aria-hidden="true">
-        <div class="modal-outer">
-            <div class="modal-middle">
+        <nav class="pagination-wrap clearfix" style="height: 20px;margin-top:-22px">`
                 <div class="modal-dialog modal-inner w-65 float-none">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal"></button>
                         </div>
                         <div class="modal-body p-1 pt-3 pl-5">
-                            <form class="form-horizontal" action="" method="post"   id="add_account_form" style="margin: -28px -9px 0px -49px;">
-                                <input id="account_id" type="hidden" name="account_id">
-                                <div class="form-group ">
-                                    <label class="control-label w-9" style="font-size: 29px;width: 135px;">添加资料</label>
+                            <form class="form-horizontal" action="" method="post"   id="add_account_form">
+                                <div class="form-group">
+                                    <label id="mediaAreaLab" class="control-label w-9" style="margin:0px 0px 0px 0px;font-size: 29px;width:80%;text-align: left;;white-space: nowrap;overflow: hidden;text-overflow: ellipsis"></label>
                                 </div>
-                                <div class="modal-footer text-center pb-2">
-                                    <button type="button" class="btn btn-default btn-default-green w-14 font-16 float-none" data-dismiss="modal" id="add_account_cancel">取消</button>
-                                    <button id="new_data" type="button" class="btn btn-success w-14 font-16 float-none ml-2">保存</button>
+                                <div id="media" class="form-group ">
+                                    <!--<audio src="/upload/62f43900-c1b6-11e6-a829-d9a66601e202.mp3" style="margin: -18px 0px -8px 37px;width: 477px;" controls="controls">您的浏览器不支持audio标签，请使用更新版本的浏览器。</audio>-->
+                                </div>
+                                <div id="videoButton" class="modal-footer text-center pb-2" style="margin: auto">
+                                    <button type="button" class="btn btn-default btn-default-green w-14 font-16 float-none" data-dismiss="modal" id="play_media_cancel">关闭</button>
+                                    <button id="del_class" type="button" class="btn btn-success w-14 font-16 float-none ml-2">下载</button>
                                 </div>
                             </form>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -49,6 +40,5 @@
     <!--    &lt;!&ndash; 表格共通&ndash;&gt;
         <script src="js/table-ajax.js"></script>-->
     <!--私有js-->
-    <!--<script src="js/backstage/course_add.js"></script>-->
-    <!--end-->
+    <script src="js/backstage/media_player.js"></script>
 </div>

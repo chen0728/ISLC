@@ -5,84 +5,27 @@
         <li class="active">分组语音对话回顾</li>
     </ol>
     <div class="main-box main-box-noborder overflow-hidden" style="padding-top: 12px">
-        <table class="table-style-1 table-style-1-a table-hover mb-0-5" id="audio_Table">
-            <thead>
-            <tr class="sch">
-                <td style="width: 15%;" align="center">
-                    <div class="t text-left" >对话编号
-                    <span class="sort-ico" style="padding-right:45px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span>
-                    </div>
-                    <div class="form-group float-none j_bubble">
-                        <input class="form-control" type="text" name="" id="audio_name" placeholder="" maxlength="20">
-                    </div>
-                </td>
-                <td style="width: 15%;" align="center">
-                    <div class="t">分组编号<span class="sort-ico" style="padding-right:48px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
-                    <div class="form-group float-none j_bubble">
-                        <input class="form-control" type="text" name="" id="class_name" maxlength="20">
-                    </div>
-                </td>
-                <td style="width: 15%;" align="center">
-                    <div class="t">课程编号<span class="sort-ico" style="padding-right:48px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
-                    <div class="form-group float-none j_bubble">
-                        <input class="form-control" type="text" name="" id="class_name" maxlength="20">
-                    </div>
-                </td>
-                <td style="width: 15%;" align="center">
-                    <div class="t">课程名<span class="sort-ico" style="padding-right:56px;"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
-                    <div class="form-group float-none j_bubble">
-                        <input class="form-control" type="text" name="" id="class_name" maxlength="20">
-                    </div>
-                </td>
-                <td width="25%" align="center" class="sorting" tabindex="0" aria-controls="product_searchTab" rowspan="1" colspan="1" aria-label="
-                创建时间: activate to sort column ascending" style="width: 113px;">
-                    <div class="t" style="padding-right: 10px;">上课时间<span class="sort-ico" style="padding-right:38px"><i class="icon-caret-up"></i><i class="icon-caret-down"></i></span></div>
-                    <div class="form-group j_bubble j_datebetween">
-                        <input type="text" class="form-control input-xs j_datepicker" placeholder="开始" id="search_s">
-                        <input type="text" class="form-control mt-1 input-xs j_datepicker" placeholder="结束" id="search_e">
-                    </div>
-                </td>
-                <td style="width: 15%;" align="center">
-                    <div class="t">操作</div>
-                    <button class="btn btn-success float-none j_bubble" type="button" id="employeeSeatchBut">搜索
-                    </button>
-                </td>
-            </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+        <div class="modal-body p-1 pt-3 pl-5">
+            <div class="form-group ">
+                <select class="form-control" id="slc_class" name="" style="width: 15%;margin: -21px 0px 14px -26px;float: left">
+                    <option value="9999">请选择班级</option>
+                </select>
+            </div>
+            <form class="form-horizontal" action="" method="post"   id="group_audio_form" style="margin-top: -28px">
+                <a  class="ceshi_" href="javascript:void(0);">1235</a>
+            </form>
+        </div>
         <nav class="pagination-wrap clearfix" style="height: 20px;margin-top:-22px">
         </nav>
     </div>
-
-
-    <!--分组对话播放-->
-    <div class="modal modal-noline fade" id="groupAudioPlayer" tabindex="-1" role="dialog" aria-labelledby="addAccountModalLabel" aria-hidden="true">
-        <div class="modal-outer">
-            <div class="modal-middle">
-                <div class="modal-dialog modal-inner w-65 float-none">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal"></button>
-                        </div>
-                        <div class="modal-body p-1 pt-3 pl-5">
-                            <form class="form-horizontal" action="" method="post"   id="add_account_form">
-                                <input id="account_id" type="hidden" name="account_id">
-                                <div class="form-group ">
-                                    <label id="playerNumLab" class="control-label w-9" style="font-size: 29px;width: 135px;"></label>
-                                </div>
-                                <div class="form-group ">
-                                    <label class="control-label w-9">播放插件</label>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--    &lt;!&ndash; 表格共通&ndash;&gt;
-        <script src="js/table-ajax.js"></script>-->
+    <script>
+        $(".ceshi_").on("click",function(){
+            debugger;
+            window.open("/upload/d01c0e00-c741-11e6-bbce-ef207f59fdb2.txt");
+        })
+    </script>
+     <!--&lt;!&ndash; 表格共通&ndash;&gt;-->
+        <script src="js/table-ajax.js"></script>
     <!--私有js-->
     <script src="js/backstage/group_audio.js"></script>
     <!--end-->
