@@ -10,6 +10,7 @@ $(function () {
     var num1;
     var new_num;
     var $p_id = $("#questions_manage_page");
+    var login_account_id = $('#login_account_id').val();
     //数据表格筛选处事件冒泡
     $('.j_bubble').click(function (event) {
         event.stopPropagation();
@@ -31,7 +32,7 @@ $(function () {
             status: $p_id.find('#status_q').val(), // 状态
             login_account_id: login_account_id // 登录帐号
         };
-        var table_src = $('#questions_Table'); // 定义指向
+        var table_src = $p_id.find('#questions_Table'); // 定义指向
         var ajax_url = '/questions/list'; // 定义数据请求路径
         var pageSize = 10 ;// 定义每页长度默认为10
         var aoColumns = [
@@ -154,11 +155,10 @@ $(function () {
             seq_no: $p_id.find('#seq_no_xq').val(), // 编号
             question_name: $p_id.find('#question_xq').val(), // 题库名
             account_id: $p_id.find('#account_id_xq').val(), // 上传帐号
-            login_account_id: $('#login_account_id').val(), // 上传帐号
             status:1,
             type:'听说题'
         };
-        var table_src = $('#TSquestion_Table'); // 定义指向
+        var table_src = $p_id.find('#TSquestion_Table'); // 定义指向
         var ajax_url = '/questions/list'; // 定义数据请求路径
         var pageSize = 5 ;// 定义每页长度默认为10
         var aoColumns = [
@@ -194,7 +194,7 @@ $(function () {
             "colIndex": 3,
             "html": function (data, type, full) {
                 var retHtml = '<div class="drop-opt">' +
-                    '<a class="yinyong" href="javascript:void(0)" data-id="'+full.seq_no+'" data-toggle="modal">引用</a>' +
+                    '<a class="yinyongTS" href="javascript:void(0)" data-id="'+full.seq_no+'" data-toggle="modal">引用</a>' +
                     '</div>';
 
                 return retHtml;
@@ -212,7 +212,7 @@ $(function () {
     init();
 
     //搜索后列表重构
-    $("#employeeSeatchBut").on('click',function(){
+    $p_id.find("#employeeSeatchBut").on('click',function(){
         init();
     });
 
@@ -233,23 +233,24 @@ $(function () {
     });
 
     //添加听说试题弹窗
-    $('#addTS').on('click', function () {
-        $("input[name='public']:eq(1)").attr("checked",'checked');
-        $('#seq_no').val('0');
-        $("#question_name").val('');
-        $("#remarks").val('');
-        $("#audio_url").val('');
-        $('#addTSdiv').modal('show');
+    $p_id.find('#addTS').on('click', function () {
+        $p_id.find("input[name='public']:eq(1)").attr("checked",'checked');
+        $p_id.find('#seq_no').val('0');
+        $p_id.find("#question_name").val('');
+        $p_id.find("#remarks").val('');
+        $p_id.find("#audio_url").val('');
+        $p_id.find('#addTSdiv').modal('show');
     });
 
     //添加听说题库引用弹窗
-    $('#TSTKYY').on('click', function () {
-        $('#TSTKdiv').modal('show');
+    $p_id.find('#TSTKYY').on('click', function () {
+        $p_id.find('#TSTKdiv').modal('show');
         quote_question();   //填充引用题库
     });
 
     // 绑定引用事件
-    $(document).on("click",'.yinyong', function () {
+    $(document).on("click",'.yinyongTS', function () {
+        debugger;
         $.ajax({
             "dataType": 'json',
             "type": "get",
@@ -258,9 +259,9 @@ $(function () {
             "data": {},
             "success": function (data) {
 
-                $('#remarks').val(data.data[0].remarks);
-                $('#audio_url').val(data.data[0].audio_url);
-                $('#TSTKdiv').modal('hide');
+                $p_id.find('#remarks').val(data.data[0].remarks);
+                $p_id.find('#audio_url').val(data.data[0].audio_url);
+                $p_id.find('#TSTKdiv').modal('hide');
 
             },
             "error": function (data) {
@@ -270,30 +271,30 @@ $(function () {
     });
 
     //保存听说题目按钮
-    $('#save_TSquestion').on('click', function () {
+    $p_id.find('#save_TSquestion').on('click', function () {
         // 默认允许提交
         debugger;
         var holdSubmit = true;
-        if ($('#add_account_form').isValid()) {
+        if ($p_id.find('#add_account_form').isValid()) {
             if (holdSubmit) {
                 // 只提交一次
                 holdSubmit = false;
                 var params = {
-                    question_name:$("#question_name").val(),    //题库名
-                    remarks:$("#remarks").val(),    //题库说明
-                    audio_url:$("#audio_url").val(),    //音频地址
-                    public:$("input[name='public']:checked").val(),   //公开？
+                    question_name:$p_id.find("#question_name").val(),    //题库名
+                    remarks:$p_id.find("#remarks").val(),    //题库说明
+                    audio_url:$p_id.find("#audio_url").val(),    //音频地址
+                    public:$p_id.find("input[name='public']:checked").val(),   //公开？
                     type:'听说题',  //类型为听说题
                     account_id:login_account_id  //登录帐号
                 };
                 //新建
-                if($('#seq_no').val() == 0){
+                if($p_id.find('#seq_no').val() == 0){
                     params.status = 1;
                     $.ajax({
                         "dataType": 'json',
                         "type": "get",
                         "timeout": 20000,
-                        "url": '/questions/new',
+                        "url": '/questions/TSnew',
                         "data": {params:params},
                         "success": function (data) {
                             window.location.reload();
@@ -303,12 +304,12 @@ $(function () {
                         }
                     });
                 }else{   //更新
-                    params.seq_no = $('#seq_no').val();
+                    params.seq_no = $p_id.find('#seq_no').val();
                     $.ajax({
                         "dataType": 'json',
                         "type": "get",
                         "timeout": 20000,
-                        "url": '/questions/new',
+                        "url": '/questions/TSnew',
                         "data": {params:params},
                         "success": function (data) {
                             window.location.reload();
@@ -326,20 +327,20 @@ $(function () {
 
     // 动态绑定删除事件
     $(document).on("click", ".employee_del", function () {
-        $('#seq_no').val($(this).attr('data-id'));
+        $p_id.find('#seq_no').val($(this).attr('data-id'));
         // 显示成功对话框
-        $("#sureDel").modal('show');
+        $p_id.find("#sureDel").modal('show');
         //if(confirm("确认要删除该员工信息吗？")){
         //    fnemployeePage.delEmployee($(this));
         //}
     });
     // 确认删除
-    $("#confirmDialog").click(function () {
+    $p_id.find("#confirmDialog").click(function () {
         $.ajax({
             "dataType": 'json',
             "type": "get",
             "timeout": 20000,
-            "url": '/questions/del?seq_no=' + $('#seq_no').val(),
+            "url": '/questions/del?seq_no=' + $p_id.find('#seq_no').val(),
             "data": {},
             "success": function (data) {
                 window.location.reload();
@@ -352,7 +353,7 @@ $(function () {
 
     // 动态绑定编辑-查看事件
     $(document).on("click", ".employee_edit", function () {
-        $('#seq_no').val($(this).attr('data-id'));
+        $p_id.find('#seq_no').val($(this).attr('data-id'));
         //请求数据自动填充
         $.ajax({
             "dataType": 'json',
@@ -363,26 +364,23 @@ $(function () {
             "success": function (data) {
                 //听说题弹窗
                 if(data.data[0].type == '听说题'){
-                    $("input[name='public']:eq("+(data.data[0].public-1)+")").attr("checked",'checked');
-                    $("#question_name").val(data.data[0].question_name);
-                    $("#remarks").val(data.data[0].remarks);
-                    $("#audio_url").val(data.data[0].audio_url);
+                    $p_id.find("input[name='public']:eq("+(data.data[0].public-1)+")").attr("checked",'checked');
+                    $p_id.find("#question_name").val(data.data[0].question_name);
+                    $p_id.find("#remarks").val(data.data[0].remarks);
+                    $p_id.find("#audio_url").val(data.data[0].audio_url);
                     debugger;
                     if(data.data[0].account_id == $('#login_account_id').val()){
                         $(document).ready(function(){
-                            $("#add_account_form").find("*").remove('disabled');
+                            $p_id.find("#add_account_form").find("*").remove('disabled');
                         });
                     } else {//他人的题目不可编辑
                         $(document).ready(function(){
-                            $("#add_account_form").find("*").attr('disabled','true');
+                            $p_id.find("#add_account_form").find("*").attr('disabled','true');
                         });
                     }
                     // 显示成功对话框
-                    $('#addTSdiv').modal('show');
-                }else{
-
+                    $p_id.find('#addTSdiv').modal('show');
                 }
-
             },
             "error": function (data) {
                 console.log(data);

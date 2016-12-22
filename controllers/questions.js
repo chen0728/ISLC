@@ -81,7 +81,7 @@ module.exports = function (app) {
         });
     });
 
-    //修改或新建听力题目
+    //修改或新建听说题目
     router.get('/questions/new', function (req, res,next) {
         var params = req.query.params;
         var sql = knex('questions_bank');
@@ -111,24 +111,58 @@ module.exports = function (app) {
         });
     });
 
-    //新建听力试题
+    //修改或新建听力试题
     router.get('/questions/TLNew', function (req, res,next) {
         var question = req.query.question;
         var question_list = req.query.question_list;
 
         question.account_id = req.session.account_id;
-        question.data1 = new data();
-        var sql = knex('questions_bank').insert(qusetion);
-        sql.then(function (reply) {
+        question.date1 = new Date();
+        question.date1 = moment().format('YYYY-MM-DD HH:mm:ss');
 
-            var sql_ = knex('questions_info');
-            for(var i =0;i<qusetion_list.length;i++){
-                question_list[i].related_bank = reply[0];
-                question_list[i].account_id = req.session.account_id;
-                sql_ = sql_.insert(question_list[i]);
+        if(question.seq_no){//更新
+            var sql = knex('questions_bank').where('seq_no',question.seq_no).update(question);
+        }else{ //新增
+            var sql = knex('questions_bank').insert(question);
+        }
+
+        sql.then(function (reply) {
+            if(question.seq_no){
+                return knex('questions_info').where('related_bank',question.seq_no).delete();
+            }else{
+                return Promise;
             }
-            return sql_;
         }).then(function (reply) {
+
+            var related_bank = reply[0];
+            return Promise.map(question_list, function (question_info) {
+                if(question.seq_no){
+                    question_info.related_bank = question.seq_no;
+                }else{
+                    question_info.related_bank = related_bank;
+                }
+                question_info.account_id = req.session.account_id;
+                return knex('questions_info').insert(question_info);
+            });
+            if(question.seq_no){
+                return knex('questions_info').where('related_bank',question.seq_no);
+            }else{
+
+            }
+
+
+        }).then(function (reply) {
+            res.json(reply);
+        }).catch(function (err) {
+            next(err);
+        });
+    });
+
+    //根据听力题目id查询附表小题内容
+    router.get('/questions_info/select', function (req, res,next) {
+        var related_bank = req.query.related_bank;
+
+        knex('questions_info').select('*').where('related_bank',related_bank).then(function (reply) {
             res.json(reply);
         }).catch(function (err) {
             next(err);
