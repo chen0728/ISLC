@@ -129,7 +129,7 @@ module.exports = function (app) {
     });
 
     //新建组
-    router.post('/grouping/newGroup', function (req, res, next) {
+    router.post('/grouping/new', function (req, res, next) {
         var pro = req.body;
         mydate = moment().format('YYYY-MM-DD HH:mm:ss');
         pro.date1 = mydate;

@@ -4,9 +4,7 @@
  */
 
 $(function () {
-
-    var tempObj;
-    var tempEmpObj;
+    debugger;
     var num1;
     var new_num;
     var $p_id = $("#value_mapping_page");

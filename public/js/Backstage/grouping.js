@@ -242,9 +242,10 @@ $(function () {
             group:$p_id.find('#groupName').val(),
             status:1,
         };
+        debugger;
         $.ajax({
             type: "post",
-            url: '/grouping/newGroup',
+            url: '/grouping/new',
             dataType: "json",
             data: data,
             success: function (data) {

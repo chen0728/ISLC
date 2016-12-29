@@ -5,6 +5,13 @@
 
 $(function () {
     var $p_id = $("#class_media_page");
+    var part = $("#menu_id").val();
+    debugger;
+    if(part.indexOf("5")> -1){
+        var ajax_url_ = '/course_manage/list'
+    }else if(part.indexOf("6")> -1){
+        var ajax_url_ = '/course_manage/media'
+    }
     //数据表格筛选处事件冒泡
     $('.j_bubble').click(function (event) {
         event.stopPropagation();
@@ -18,14 +25,14 @@ $(function () {
             account_id:$("#login_account_id").val(),//账号
             name: $p_id.find('#nameIn').val(), // 课程名
             number: $p_id.find('#numIn').val(), // 编号
-            creat_timeS: $p_id.find('#search_s').val(), // 班级
-            creat_timeE: $p_id.find('#search_e').val(), // 班级
-            class_timeS: $p_id.find('#class_s').val(), // 班级
-            class_timeE: $p_id.find('#class_e').val(), // 班级
-            class_status: $p_id.find('#status_q').val(), // 班级
+            creat_timeS: $p_id.find('#search_s').val(), // 创建时间起
+            creat_timeE: $p_id.find('#search_e').val(), // 创建时间止
+            class_timeS: $p_id.find('#class_s').val(), // 上课时间起
+            class_timeE: $p_id.find('#class_e').val(), // 上课时间止
+            class_status: $p_id.find('#status_q').val(), // 已上
         };
         var table_src = $('#class_media_Table'); // 定义指向
-        var ajax_url = '/course_manage/list'; // 定义数据请求路径
+        var ajax_url = ajax_url_; // 定义数据请求路径
         var pageSize = 10 ;// 定义每页长度默认为10
         var aoColumns = [
             {"col_id": "name"},

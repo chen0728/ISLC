@@ -5,6 +5,8 @@
 $(function () {
     var seq_class_arr = [];
     var seq_chec;
+    var format_url;
+    var filedata;
     var seq_data_arrIn = [];
     var seq_data_arr = [];
     var seq_question_arrIn = [];
@@ -74,8 +76,41 @@ $(function () {
                         dataType: "json",
                         data: {},
                         success: function (data) {
-                            $p_id.find("#data_tbody_").append('<div class="guanlian form-control alert-dismissable alert-policy-01 pull-left clearfix j_theme_choose" style="padding:6px 12px;width: auto; background: #e6e6e6;margin-right:10px;margin-bottom: 10px;"> ' +data[0].name+
-                                '<button type="button" class="close closefirst" data-dismiss="alert" data-id="'+data[0].seq_no+'" style="position: inherit;margin: -20px -25px 0px -13px;"></button></div>');
+                            filedata = data[0].data_url.split(".")[data[0].data_url.split(".").length-1];
+                            if('avi,AVI'.indexOf(filedata) > -1){format_url = 'avi'
+                            }else if('css,CSS'.indexOf(filedata) > -1){format_url = 'css'
+                            }else if('csv,CSV'.indexOf(filedata) > -1){format_url = 'csv'
+                            }else if('doc,DOC,docx,DOCX'.indexOf(filedata) > -1){format_url = 'doc'
+                            }else if('eml,EML'.indexOf(filedata) > -1){format_url = 'eml'
+                            }else if('eps,EPS'.indexOf(filedata) > -1){format_url = 'eps'
+                            }else if('html,HTML'.indexOf(filedata) > -1){format_url = 'html'
+                            }else if('jpg,JPG,jpeg,JPEG'.indexOf(filedata) > -1){format_url = 'jpg'
+                            }else if('mov,MOV'.indexOf(filedata) > -1){format_url = 'mov'
+                            }else if('mp3,MP3'.indexOf(filedata) > -1){format_url = 'mp3'
+                            }else if('pdf,PDF'.indexOf(filedata) > -1){format_url = 'pdf'
+                            }else if('png,PNG'.indexOf(filedata) > -1){format_url = 'png'
+                            }else if('ppt,PPT'.indexOf(filedata) > -1){format_url = 'ppt'
+                            }else if('rar,RAR'.indexOf(filedata) > -1){format_url = 'rar'
+                            }else if('raw,RAW'.indexOf(filedata) > -1){format_url = 'raw'
+                            }else if('ttf,TTF'.indexOf(filedata) > -1){format_url = 'ttf'
+                            }else if('txt,TXT'.indexOf(filedata) > -1){format_url = 'txt'
+                            }else if('wav,WAV'.indexOf(filedata) > -1){format_url = 'wav'
+                            }else if('xls,XLS,xlsx,XLSX'.indexOf(filedata) > -1) {format_url = 'xls'
+                            }else{format_url = 'unknow'};
+                            if(format_url == 'unknow'){
+                                $p_id.find("#data_tbody_").append('<div class="guanlian alert-dismissable alert-policy-01 pull-left clearfix j_theme_choose" style="width:12%;float: left;margin-bottom: 10px" class="">'+
+                                    '<div style="text-align: center;margin:0px 0px 0px 34px;background-image:url(images/format_img/'+format_url+'.jpg);background-size: 100% 100%;width: 42px;height: 58px; " class="sstj1" data-id="'+data[0].seq_no+'"></div>'+
+                                    '<div style="width: 23px;height: 19px;position: absolute;z-index: 1;margin: -58px 0 0 35px;font-size: 12px;overflow: hidden;color: #ffffff;font-family: fantasy;">'+filedata+'</div>'+
+                                    '<div style="width: 160%;text-align: center;margin:4px 0px 6px 18px;font-size:12px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis" class="sstj1" data-id="'+data[0].seq_no+'">'+data[0].name+'</div>'+
+                                    '<button type="button" class="close closefirst" data-dismiss="alert" data-id="'+data[0].seq_no+'" style="position: inherit;margin:-94px -36px 0px 0px;"></button> '+
+                                    '</div>');
+                            }else{
+                                $p_id.find("#data_tbody_").append('<div class="guanlian alert-dismissable alert-policy-01 pull-left clearfix j_theme_choose" style="width:12%;float: left;margin-bottom: 10px" class="">'+
+                                    '<div style="text-align: center;margin:0px 0px 0px 34px;background-image:url(images/format_img/'+format_url+'.jpg);background-size: 100% 100%;width: 42px;height: 58px; " class="sstj1" data-id="'+data[0].seq_no+'"></div>'+
+                                    '<div style="width: 160%;text-align: center;margin:4px 0px 6px 18px;font-size:12px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis" class="sstj1" data-id="'+data[0].seq_no+'">'+data[0].name+'</div>'+
+                                    '<button type="button" class="close closefirst" data-dismiss="alert" data-id="'+data[0].seq_no+'" style="position: inherit;margin:-94px -36px 0px 0px;"></button>'+
+                                    '</div>');
+                            };
                             $(document).ready(function(){
                                 $(".guanlian").mouseenter(function(){
                                     $(this).find(".close").css("display","inherit");
@@ -85,6 +120,8 @@ $(function () {
                                 });
                                 $(".close").on('click',function(){
                                     for( var i=0;i<seq_data_arr.length;i++){
+                                        var accd = $(this).attr('data-id');
+                                        debugger;
                                         if($(this).attr('data-id') == seq_data_arr[i]){
                                             seq_data_arr.splice(i,1);
                                         }
@@ -367,18 +404,52 @@ $(function () {
                 dataType: "json",
                 data: {},
                 success: function (data) {
-                    debugger;
-                    $p_id.find("#data_tbody_").append('<div class="guanlian form-control alert-dismissable alert-policy-01 pull-left clearfix j_theme_choose" style="padding:6px 12px;width: auto; background: #e6e6e6;margin-right:10px;margin-bottom: 10px;"> ' +data[0].name+
-                        '<button type="button" class="close closefirst" data-dismiss="alert" data-id="'+data[0].seq_no+'" style="position: inherit;margin: -20px -25px 0px -13px;"></button></div>');
+                    filedata = data[0].data_url.split(".")[data[0].data_url.split(".").length-1];
+                    if('avi,AVI'.indexOf(filedata) > -1){format_url = 'avi'
+                    }else if('css,CSS'.indexOf(filedata) > -1){format_url = 'css'
+                    }else if('csv,CSV'.indexOf(filedata) > -1){format_url = 'csv'
+                    }else if('doc,DOC,docx,DOCX'.indexOf(filedata) > -1){format_url = 'doc'
+                    }else if('eml,EML'.indexOf(filedata) > -1){format_url = 'eml'
+                    }else if('eps,EPS'.indexOf(filedata) > -1){format_url = 'eps'
+                    }else if('html,HTML'.indexOf(filedata) > -1){format_url = 'html'
+                    }else if('jpg,JPG,jpeg,JPEG'.indexOf(filedata) > -1){format_url = 'jpg'
+                    }else if('mov,MOV'.indexOf(filedata) > -1){format_url = 'mov'
+                    }else if('mp3,MP3'.indexOf(filedata) > -1){format_url = 'mp3'
+                    }else if('pdf,PDF'.indexOf(filedata) > -1){format_url = 'pdf'
+                    }else if('png,PNG'.indexOf(filedata) > -1){format_url = 'png'
+                    }else if('ppt,PPT'.indexOf(filedata) > -1){format_url = 'ppt'
+                    }else if('rar,RAR'.indexOf(filedata) > -1){format_url = 'rar'
+                    }else if('raw,RAW'.indexOf(filedata) > -1){format_url = 'raw'
+                    }else if('ttf,TTF'.indexOf(filedata) > -1){format_url = 'ttf'
+                    }else if('txt,TXT'.indexOf(filedata) > -1){format_url = 'txt'
+                    }else if('wav,WAV'.indexOf(filedata) > -1){format_url = 'wav'
+                    }else if('xls,XLS,xlsx,XLSX'.indexOf(filedata) > -1) {format_url = 'xls'
+                    }else{format_url = 'unknow'};
+                    if(format_url == 'unknow'){
+                        $p_id.find("#data_tbody_").append('<div class="guanlian alert-dismissable alert-policy-01 pull-left clearfix j_theme_choose" style="width:12%;float: left;margin-bottom: 10px" class="">'+
+                            '<div style="text-align: center;margin:0px 0px 0px 34px;background-image:url(images/format_img/'+format_url+'.jpg);background-size: 100% 100%;width: 42px;height: 58px; " class="sstj1" data-id="'+data[0].seq_no+'"></div>'+
+                            '<div style="width: 23px;height: 19px;position: absolute;z-index: 1;margin: -58px 0 0 35px;font-size: 12px;overflow: hidden;color: #ffffff;font-family: fantasy;">'+filedata+'</div>'+
+                            '<div style="width: 160%;text-align: center;margin:4px 0px 6px 18px;font-size:12px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis" class="sstj1" data-id="'+data[0].seq_no+'">'+data[0].name+'</div>'+
+                            '<button type="button" class="close closefirst" data-dismiss="alert" data-id="'+data[0].seq_no+'" style="position: inherit;margin:-94px -36px 0px 0px;"></button> '+
+                            '</div>');
+                    }else{
+                        $p_id.find("#data_tbody_").append('<div class="guanlian alert-dismissable alert-policy-01 pull-left clearfix j_theme_choose" style="width:12%;float: left;margin-bottom: 10px" class="">'+
+                            '<div style="text-align: center;margin:0px 0px 0px 34px;background-image:url(images/format_img/'+format_url+'.jpg);background-size: 100% 100%;width: 42px;height: 58px; " class="sstj1" data-id="'+data[0].seq_no+'"></div>'+
+                            '<div style="width: 160%;text-align: center;margin:4px 0px 6px 18px;font-size:12px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis" class="sstj1" data-id="'+data[0].seq_no+'">'+data[0].name+'</div>'+
+                            '<button type="button" class="close closefirst" data-dismiss="alert" data-id="'+data[0].seq_no+'" style="position: inherit;margin:-94px -36px 0px 0px;"></button>'+
+                            '</div>');
+                    };
                     $(document).ready(function(){
                         $(".guanlian").mouseenter(function(){
                             $(this).find(".close").css("display","inherit");
-                        } );
+                        });
                         $(".guanlian").mouseleave(function(){
                             $(this).find(".close").css("display","none");
                         });
                         $(".close").on('click',function(){
                             for( var i=0;i<seq_data_arr.length;i++){
+                                var accd = $(this).attr('data-id');
+                                debugger;
                                 if($(this).attr('data-id') == seq_data_arr[i]){
                                     seq_data_arr.splice(i,1);
                                 }

@@ -47,14 +47,29 @@ $(function () {
             dataType: "json",
             data:{},
             success: function (data) {
-                for(var i=0;i<data.length;i++){
-                    $("#group_audio_form").append('<div class="form-group " style="float: left;margin: -49px 0px 60px 92px;">'+
-                        '<label class="control-label w-9">'+data[i].group+'</label>'+
-                        '<div class="w-40 relative">'+
-                        '<audio src="/upload/'+data[i].audio+'" style="margin:0px 0px -18px -8px;width: 510px;" controls="controls">您的浏览器不支持audio标签，请使用更新版本的浏览器。</audio>'+
-                        '</div>'+
-                        '<button data_url="'+data[i].audio+'" type="button" class="btn btn-success w-14 font-16 float-none ml-2 download" style="margin: 1px 0px 0px 110px;height: 32px;width: 80px;">下载</button>'+
-                        '</div><br>');
+                debugger;
+                if(data && data.length>0){
+                    $p_id.find("#remide").html('如遇下载失败，请优先尝试IE浏览器');
+                    $p_id.find("#remide").css({'float':'right','margin':'-8px 103px 10px 0px'});
+                    for(var i=0;i<data.length;i++){
+                        if(data[i].audio){
+                            $("#group_audio_form").append('<div class="form-group " style="float: left;margin: -49px 0px 60px 92px;">'+
+                                '<label class="control-label w-9">'+data[i].group+'</label>'+
+                                '<div class="w-40 relative">'+
+                                '<audio src="/upload/'+data[i].audio+'" style="margin:0px 0px -18px -8px;width: 510px;" controls="controls">您的浏览器不支持audio标签，请使用更新版本的浏览器。</audio>'+
+                                '</div>'+
+                                '<button data_url="'+data[i].audio+'" type="button" class="btn btn-success w-14 font-16 float-none ml-2 download" style="margin: 1px 0px 0px 110px;height: 32px;width: 80px;">下载</button>'+
+                                '</div><br>');
+                        }else{
+                            $("#group_audio_form").append('<div class="form-group " style="float: left;margin: -49px 0px 60px 92px;">'+
+                                '<label class="control-label w-9">'+data[i].group+'</label>'+
+                                '<div class="w-40 relative" style="margin-top: 7px" >无</div>'+
+                                '</div><br>');
+                        };
+                    }
+                }else{
+                    $p_id.find("#remide").html('该班级未添加任何分组');
+                    $p_id.find("#remide").css({'float':'left','margin':'-5px 0px 0px 10px'});
                 }
                 $(".download").on("click",function(){
                     debugger;

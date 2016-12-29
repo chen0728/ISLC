@@ -214,7 +214,7 @@ $(function () {
             }
         })
     });
-    //添加字典弹窗
+    //添加资料弹窗
     $('#addData').on('click', function () {
         debugger;
         $("#areaLab").html('添加资料');
@@ -347,7 +347,7 @@ $(function () {
             };
             $p_id.find('#img_cover').attr('src','images/format_img/'+format_url+'.jpg');
             //$p_id.find("#add_img_cover"+add_top_num).val('upload/'+JSON.parse(date2).date);
-            data_url = 'upload/'+JSON.parse(date2).date;
+            data_url =JSON.parse(date2).date;
             debugger;
         }, 1000);
     })

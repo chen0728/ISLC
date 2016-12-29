@@ -13,7 +13,7 @@ var filter = require('../lib/filter');
 module.exports = function (app) {
     app.use('/', router);
 
-    //查询课堂列表
+    //查询课堂列表(教师）
     router.get('/course_manage/list', function (req, res,next) {
         var sql = knex.select('*').from('course_info').where('status','!=',2)
         var params = req.query;
@@ -43,6 +43,51 @@ module.exports = function (app) {
         }
         var infos={};
         sql.then(function (reply) {
+            infos.totalSize = reply.length;
+            return sql = util.queryAppend(req.query, sql)
+        }).then(function (reply) {
+            if (reply) {
+                for(var i =0;i<reply.length;i++){
+                    reply[i].creat_time = moment(reply[i].creat_time).format('YYYY-MM-DD');
+                    reply[i].class_time = moment(reply[i].class_time).format('YYYY-MM-DD HH:MM');
+                }
+                infos.data = reply;
+                res.json(infos);
+            }
+        }).catch(function (err) {
+            next(err);
+        });
+    });
+    //查询课堂列表(学生）
+    router.get('/course_manage/media', function (req, res,next) {
+        var params = req.query;
+        var infos={};
+        knex.select('*').from('account').where('account_id',params.account_id).then(function (reply) {
+            var sql = knex.select('*').from('course_info').where('status','!=',2)
+            if(reply[0].class){
+                sql = sql.where('class','like','%'+ reply[0].class+'%');
+            }
+            if(params.name){
+                sql = sql.where('name','like','%'+params.name+'%');
+            }
+            if(params.number){
+                sql = sql.where('number', params.number);
+            }
+            if(params.creat_timeS){
+                sql = sql.where('creat_time','>=',params.creat_timeS);
+            }
+            if(params.creat_timeE){
+                sql = sql.where('creat_time','<=',params.creat_timeE);
+            }
+            if(params.class_timeS){
+                sql = sql.where('class_time','>=',params.class_timeS);
+            }
+            if(params.class_timeE){
+                sql = sql.where('class_time','<=',params.class_timeE);
+            }
+            if(params.class_status){
+                sql = sql.where('class_status', params.class_status);
+            }
             infos.totalSize = reply.length;
             return sql = util.queryAppend(req.query, sql)
         }).then(function (reply) {

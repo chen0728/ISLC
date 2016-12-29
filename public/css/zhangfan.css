@@ -2159,7 +2159,7 @@ header .user-hello{
 }
 /*OTP.运营系统.首页*/
 .main-box-index{
-    background:url("../images/index-background.png") #fcfbf7;
+    /*background:url("../images/index-background.png") #fcfbf7;*/
   box-shadow:4px 4px 8px #c2c2c2;
 }
 .dropdown-menu>li>a:hover .bg-link{

@@ -246,7 +246,7 @@ header .logo a{
   padding-left:100px;
   padding-top:16px;
   color:#fff;
-  background:url(../images/logo.png) left center no-repeat;
+  /*background:url(../images/logo.png) left center no-repeat;*/
   background-size:70px 70px;
   
 }

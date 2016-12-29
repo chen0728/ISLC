@@ -5,6 +5,13 @@
 
 $(function () {
     var $p_id = $("#class_audio_page");
+    var part = $("#menu_id").val();
+    debugger;
+    if(part.indexOf("5")> -1){
+        var ajax_url_ = '/class_audio/list'
+    }else if(part.indexOf("6")> -1){
+        var ajax_url_ = '/class_audio/media'
+    }
     //数据表格筛选处事件冒泡
     $('.j_bubble').click(function (event) {
         event.stopPropagation();
@@ -17,13 +24,14 @@ $(function () {
     function init() {
         debugger;
         var params = { // 查询查询参数
+            account_id:$("#login_account_id").val(),//账号
             number: $p_id.find('#audio_number').val(), // 编号
             name: $p_id.find('#class_name').val(), // 课程名
             up_timeS: $p_id.find('#search_s').val(), // 时间起
             up_timeE: $p_id.find('#search_e').val(), // 时间止
         };
         var table_src = $('#audio_Table'); // 定义指向
-        var ajax_url = '/class_audio/list'; // 定义数据请求路径
+        var ajax_url = ajax_url_; // 定义数据请求路径
         var pageSize = 10 ;// 定义每页长度默认为10
         var aoColumns = [
             {"col_id": "number"},

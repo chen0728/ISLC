@@ -4,8 +4,6 @@
  */
 
 $(function () {
-    var tempObj;
-    var tempEmpObj;
     var seq_no;
     var new_seq_no;
     var $p_id = $("#role_manage_page");
@@ -88,28 +86,14 @@ $(function () {
         }, {
             "colIndex": 5,
             "html": function (data, type, full) {
-                var html = '<li><a class="change_stauts_up" href="javascript:void(0)">解禁</a></li>';
-                if (full.status == 0) { // 正常
-                    html = '<li><a class="change_stauts_down" href="javascript:void(0)">禁用</a></li>';
-                }
                 var retHtml = '';
-                if (full.seq_no == '10000'|| full.seq_no == '10001'||full.seq_no == '10002') {
-                    retHtml = retHtml + '<div class="drop-opt">' +
-                        '<a href="javascript:;" id="dropLabel-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">详情<span class="icon-chevron-down"></span></a>' +
-                        '<ul class="drop-cnt in" role="menu" aria-labelledby="dropLabel-1">' +
-                        '<li><a class="employee_edit" href="javascript:void(0)" data-id="'+full.seq_no+'" data-toggle="modal">编辑</a></li>' +
-                        '</ul>' +
-                        '</div>';
-                } else {
-                    retHtml = retHtml + '<div class="drop-opt">' +
-                        '<a href="javascript:;" id="dropLabel-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">详情<span class="icon-chevron-down"></span></a>' +
-                        '<ul class="drop-cnt in" role="menu" aria-labelledby="dropLabel-1">' +
-                        '<li><a class="employee_edit" href="javascript:void(0)" data-id="'+full.seq_no+'" data-toggle="modal">编辑</a></li>' +
-                        '<li><a class="employee_del" href="javascript:void(0)" data-id="'+full.seq_no+'" data-toggle="modal">删除</a></li>' +
-                        '</ul>' +
-                        '</div>';
-
-                }
+                retHtml = retHtml + '<div class="drop-opt">' +
+                    '<a href="javascript:;" id="dropLabel-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">详情<span class="icon-chevron-down"></span></a>' +
+                    '<ul class="drop-cnt in" role="menu" aria-labelledby="dropLabel-1">' +
+                    '<li><a class="employee_edit" href="javascript:void(0)" data-id="'+full.seq_no+'" data-toggle="modal">编辑</a></li>' +
+                    '<li><a class="employee_del" href="javascript:void(0)" data-id="'+full.seq_no+'" data-toggle="modal">删除</a></li>' +
+                    '</ul>' +
+                    '</div>';
                 return retHtml;
             }
 
@@ -184,6 +168,12 @@ $(function () {
                 }else{
                     chk5.checked = false;
                 }
+                var chk6 = document.getElementById('check6');
+                if(data[0].menu_id.indexOf(';6;') >= 0){
+                    chk6.checked = true;
+                }else{
+                    chk6.checked = false;
+                }
 
             },
             error: function (data) {
@@ -194,28 +184,31 @@ $(function () {
         $("#addAccountModal").modal('show');
         //保存
         $('#save_account').on('click', function () {
-            var chk6 = document.getElementById('check1');
-            var chk7 = document.getElementById('check2');
-            var chk8 = document.getElementById('check3');
-            var chk9 = document.getElementById('check4');
-            var chk10 = document.getElementById('check5');
+            var chk7 = document.getElementById('check1');
+            var chk8 = document.getElementById('check2');
+            var chk9 = document.getElementById('check3');
+            var chk10 = document.getElementById('check4');
+            var chk11 = document.getElementById('check5');
+            var chk12 = document.getElementById('check6');
             debugger;
             var menu_id = ';';
-            if(chk6.checked == true){
+            if(chk7.checked == true){
                 menu_id += 1+';';
             }
-            debugger;
-            if(chk7.checked == true){
+            if(chk8.checked == true){
                 menu_id += 2+';';
             }
-            if(chk8.checked == true){
+            if(chk9.checked == true){
                 menu_id += 3+';';
             }
-            if(chk9.checked == true){
+            if(chk10.checked == true){
                 menu_id += 4+';';
             }
-            if(chk10.checked == true){
+            if(chk11.checked == true){
                 menu_id += 5+';';
+            }
+            if(chk12.checked == true){
+                menu_id += 6+';';
             }
             debugger;
             var data = {
@@ -268,6 +261,7 @@ $(function () {
             var chkc = document.getElementById('Ncheck3');
             var chkd = document.getElementById('Ncheck4');
             var chke = document.getElementById('Ncheck5');
+            var chkf = document.getElementById('Ncheck6');
             debugger;
             var menu_id = ';';
             if(chka.checked == true){
@@ -286,16 +280,19 @@ $(function () {
             if(chke.checked == true){
                 menu_id += 5+';';
             }
+            if(chkf.checked == true){
+                menu_id += 6+';';
+            }
             debugger;
             $.ajax({
                 type: "get",
                 url: '/role_info/select',
                 dataType: "json",
+                async: false,
                 data:{},
                 success: function (data) {
                     debugger;
-                    new_seq_no=data[0].seq_no;
-                    new_seq = parseInt(new_seq_no);
+                    new_seq_no = parseInt(data[0].seq_no);
                 },
                 error: function (data) {
                     debugger;
@@ -305,7 +302,7 @@ $(function () {
             var data = {
                 menu_id:menu_id,
                 role_name:$("#newnameLab").val(),
-                seq_no:new_seq+1,
+                seq_no:new_seq_no+1,
                 status:1,
             };
             debugger;
