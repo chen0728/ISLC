@@ -164,11 +164,13 @@ $(function () {
     //获取到数据的回调函数，需要更该时可定义
     function fnChangeDataCallback(data){
         //定义new_account_id为最新唯一ID
-        new_account_id = data.data[0].account_id;
-        var str = new_account_id.split("P");
-        str = parseInt(str[1])+1;
-        new_account_id = 'P' + str;
-        debugger;
+        if(new_account_id){
+            new_account_id = data.data[0].account_id;
+            var str = new_account_id.split("P");
+            str = parseInt(str[1])+1;
+            new_account_id = 'P' + str;
+        }
+
         return data;
     }
     //绘画完成之后的回调函数
