@@ -13,7 +13,7 @@ var filter = require('../lib/filter');
 module.exports = function (app) {
     app.use('/', router);
 
-    //查询角色权限列表
+    //查询数据字典列表
     router.get('/value_mapping/list', function (req, res,next) {
         var sql = knex.select('*').from('value_mapping').where('data_status','!=',2)
         var params = req.query;

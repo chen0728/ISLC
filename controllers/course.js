@@ -103,6 +103,48 @@ module.exports = function (app) {
             next(err);
         });
     });
+    //查询课堂列表(其他）
+    router.get('/course_manage/other', function (req, res,next) {
+        var sql = knex.select('*').from('course_info').where('status','!=',2)
+        var params = req.query;
+        if(params.name){
+            sql = sql.where('name','like','%'+params.name+'%');
+        }
+        if(params.number){
+            sql = sql.where('number', params.number);
+        }
+        if(params.creat_timeS){
+            sql = sql.where('creat_time','>=',params.creat_timeS);
+        }
+        if(params.creat_timeE){
+            sql = sql.where('creat_time','<=',params.creat_timeE);
+        }
+        if(params.class_timeS){
+            sql = sql.where('class_time','>=',params.class_timeS);
+        }
+        if(params.class_timeE){
+            sql = sql.where('class_time','<=',params.class_timeE);
+        }
+        if(params.class_status){
+            sql = sql.where('class_status', params.class_status);
+        }
+        var infos={};
+        sql.then(function (reply) {
+            infos.totalSize = reply.length;
+            return sql = util.queryAppend(req.query, sql)
+        }).then(function (reply) {
+            if (reply) {
+                for(var i =0;i<reply.length;i++){
+                    reply[i].creat_time = moment(reply[i].creat_time).format('YYYY-MM-DD');
+                    reply[i].class_time = moment(reply[i].class_time).format('YYYY-MM-DD HH:MM');
+                }
+                infos.data = reply;
+                res.json(infos);
+            }
+        }).catch(function (err) {
+            next(err);
+        });
+    });
     //删除
     router.post('/course_info/del', function (req, res, next) {
         var seq_no = req.query.seq_no;

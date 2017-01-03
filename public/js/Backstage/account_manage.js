@@ -164,7 +164,7 @@ $(function () {
     //获取到数据的回调函数，需要更该时可定义
     function fnChangeDataCallback(data){
         //定义new_account_id为最新唯一ID
-        if(new_account_id){
+        if(!new_account_id){
             new_account_id = data.data[0].account_id;
             var str = new_account_id.split("P");
             str = parseInt(str[1])+1;
@@ -203,11 +203,11 @@ $(function () {
     //根据添加用户类型，来显示（隐藏）班级信息
     $("input[name='part']").change(function() {
         var addpart = $("input[name='part']:checked").val();
-        if (addpart == 2) { //学生
+        if (addpart == 10002) { //学生
             $('#addclass').show();
-        } else if (addpart == 1) {  //教师
+        } else if (addpart == 10001) {  //教师
             $('#addclass').hide();
-        } else if (addpart == 3) {  //管理员
+        } else if (addpart == 10000) {  //管理员
             $('#addclass').hide();
         }
     });
@@ -230,7 +230,7 @@ $(function () {
                 };
                 //新建
                 if($('#seq_no').val() == 0){
-                    if(params.part == 2){//学生
+                    if(params.part == 10002){//学生
                         params.year = $("#year").val();
                         params.class = $("#class").val();
                     }
@@ -251,7 +251,7 @@ $(function () {
                     });
                 }else{   //更新
                     params.seq_no = $('#seq_no').val();
-                    if(params.part == 2){//学生
+                    if(params.part == 10002){//学生
                         params.year = $("#year").val();
                         params.class = $("#class").val();
                     }else{
@@ -316,14 +316,14 @@ $(function () {
             "url": '/account/list?seq_no=' + $('#seq_no').val(),
             "data": {},
             "success": function (data) {
-                $("input[name='part']:eq("+(data.data[0].part-1)+")").attr("checked",'checked');
+                $("input[name='part']:eq("+(data.data[0].part-10001)+")").attr("checked",'checked');
                 $("#account_id").val(data.data[0].account_id);
                 $("#name").val(data.data[0].name);
                 $("#sex").val(data.data[0].sex);
                 $("#password").val(data.data[0].password);
                 $("#class").val(data.data[0].class);
                 $("#year").val(data.data[0].year);
-                if(data.data[0].part == 2){ //学生
+                if(data.data[0].part == 10002){ //学生
                     $('#addclass').show();
                 } else {
                     $('#addclass').hide();

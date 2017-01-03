@@ -11,6 +11,8 @@ $(function () {
         var ajax_url_ = '/course_manage/list'
     }else if(part.indexOf("6")> -1){
         var ajax_url_ = '/course_manage/media'
+    }else{
+        var ajax_url_ = '/course_manage/other'
     }
     //数据表格筛选处事件冒泡
     $('.j_bubble').click(function (event) {

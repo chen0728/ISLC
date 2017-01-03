@@ -35,7 +35,6 @@ module.exports = function (app) {
             next(err);
         });
     });
-
     //关联查询组名
     router.post('/grouping/group', function (req, res, next) {
         var seq_no = req.query.seq_no;
@@ -47,7 +46,6 @@ module.exports = function (app) {
             next(err);
         });
     });
-
     //查询seq_no
     router.get('/grouping/group_seq', function (req, res, next) {
         var sql = knex.select('*').from('grouping_info').orderBy('seq_no','desc');
@@ -58,7 +56,6 @@ module.exports = function (app) {
             next(err);
         });
     });
-
     //关联查询学生
     router.post('/grouping/name', function (req, res, next) {
         var seq_no = req.query.seq_no_name;
@@ -81,7 +78,6 @@ module.exports = function (app) {
             next(err);
         });
     });
-
     //查询未分组学生
     router.post('/grouping/groupOut', function (req, res, next) {
         var seq_no = req.query.seq_no;
@@ -94,8 +90,7 @@ module.exports = function (app) {
             next(err);
         });
     });
-
-    //查询未分组学生
+    //保存
     router.get('/grouping/save', function (req, res, next) {
         var in_group = req.query.in_group;
         var out_group = req.query.out_group;
@@ -127,7 +122,6 @@ module.exports = function (app) {
             next(err);
         });
     });
-
     //新建组
     router.post('/grouping/new', function (req, res, next) {
         var pro = req.body;

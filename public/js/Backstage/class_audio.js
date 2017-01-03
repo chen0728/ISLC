@@ -7,10 +7,13 @@ $(function () {
     var $p_id = $("#class_audio_page");
     var part = $("#menu_id").val();
     debugger;
+    //根据账号角色得ajax请求
     if(part.indexOf("5")> -1){
-        var ajax_url_ = '/class_audio/list'
+        var ajax_url_ = '/class_audio/list'//教师
     }else if(part.indexOf("6")> -1){
-        var ajax_url_ = '/class_audio/media'
+        var ajax_url_ = '/class_audio/media'//学生
+    }else{
+        var ajax_url_ = '/class_audio/other'//其他
     }
     //数据表格筛选处事件冒泡
     $('.j_bubble').click(function (event) {
