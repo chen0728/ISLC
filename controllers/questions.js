@@ -82,7 +82,7 @@ module.exports = function (app) {
     });
 
     //修改或新建听说题目
-    router.get('/questions/new', function (req, res,next) {
+    router.get('/questions/TSnew', function (req, res,next) {
         var params = req.query.params;
         var sql = knex('questions_bank');
 

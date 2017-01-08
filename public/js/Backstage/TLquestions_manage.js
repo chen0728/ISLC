@@ -9,6 +9,7 @@ $(function () {
     var tempEmpObj;
     var new_num;
     var question_list = [];
+    var audio_url;
     var $p_id = $("#TLquestions_manage_page");
     $(document).ready(function(){
         $p_id.find(".timu").mouseenter(function(){
@@ -176,9 +177,9 @@ $(function () {
             "success": function (data) {
                 //填充题目数据
                 release_person_id = data.data[0].account_id;
-
+                audio_url = data.data[0].audio_url;
                 $p_id.find('#question_name').val(data.data[0].question_name);
-                $p_id.find('#audio_url').val(data.data[0].audio_url);
+                $p_id.find('#audio_name').val(data.data[0].audio_name);
                 $p_id.find('#remarks').val(data.data[0].remarks);
                 if(data.data[0].public == 1){
                     $p_id.find("#public").attr('checked',true);
@@ -320,7 +321,7 @@ $(function () {
                 alert('请至少编写一道题目');
                 return;
             }
-            if($p_id.find("#audio_url").val() == ''){
+            if(!audio_url){
                 alert('请上传音频文件');
                 return;
             }
@@ -328,7 +329,8 @@ $(function () {
                 question_list:question_list,
                 question:{
                     question_name: $p_id.find("#question_name").val(),
-                    audio_url: $p_id.find("#audio_url").val(),
+                    audio_url:audio_url,
+                    audio_name:$p_id.find("#audio_name").val(),
                     status:1,
                     type:'听力题',
                     remarks: $p_id.find("#remarks").val()
@@ -371,4 +373,28 @@ $(function () {
             }
         });
     });
+
+    //音频上传
+    var picClient =new PicClient();
+    //添加头部图片
+    picClient.addsingles(['add_top_img'],function callback(date1,date2,date3){
+        setTimeout(function () {
+            if('|mp3|wma|MP3|WMA|'.indexOf(JSON.parse(date2).extName) > -1){
+                $p_id.find("#img_cover_ul").empty();
+                $p_id.find("#img_cover_ul").append('<li class="alert alert-dismissable"> ' +
+                    '<strong> ' +
+                    '<img src="images/format_img/mp3.jpg" alt="" width="63" height="87"> ' +
+                    '</strong> ' +
+                    '</li>');
+                debugger;
+                $p_id.find('#audio_name').val(JSON.parse(date2).file_name);
+                audio_url = JSON.parse(date2).date;
+                debugger;
+
+            }else{
+                alert('请上传mp3、wma格式的音频文件');
+            }
+
+        }, 1000);
+    })
 });

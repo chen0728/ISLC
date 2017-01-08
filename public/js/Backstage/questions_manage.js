@@ -9,6 +9,7 @@ $(function () {
     var tempEmpObj;
     var num1;
     var new_num;
+    var audio_url;//储存音频文件地址
     var $p_id = $("#questions_manage_page");
     var login_account_id = $('#login_account_id').val();
     //数据表格筛选处事件冒泡
@@ -239,6 +240,7 @@ $(function () {
         $p_id.find("#question_name").val('');
         $p_id.find("#remarks").val('');
         $p_id.find("#audio_url").val('');
+        audio_url = '';
         $p_id.find('#addTSdiv').modal('show');
     });
 
@@ -260,7 +262,8 @@ $(function () {
             "success": function (data) {
 
                 $p_id.find('#remarks').val(data.data[0].remarks);
-                $p_id.find('#audio_url').val(data.data[0].audio_url);
+                $p_id.find('#audio_name').val(data.data[0].audio_name);
+                audio_url = data.data[0].audio_url;
                 $p_id.find('#TSTKdiv').modal('hide');
 
             },
@@ -275,6 +278,10 @@ $(function () {
         // 默认允许提交
         debugger;
         var holdSubmit = true;
+        if(!audio_url){
+            alert('请上传音频文件');
+            return;
+        }
         if ($p_id.find('#add_account_form').isValid()) {
             if (holdSubmit) {
                 // 只提交一次
@@ -282,7 +289,8 @@ $(function () {
                 var params = {
                     question_name:$p_id.find("#question_name").val(),    //题库名
                     remarks:$p_id.find("#remarks").val(),    //题库说明
-                    audio_url:$p_id.find("#audio_url").val(),    //音频地址
+                    audio_url:audio_url,    //音频地址
+                    audio_name:$p_id.find("#audio_name").val(),    //音频地址
                     public:$p_id.find("input[name='public']:checked").val(),   //公开？
                     type:'听说题',  //类型为听说题
                     account_id:login_account_id  //登录帐号
@@ -367,7 +375,8 @@ $(function () {
                     $p_id.find("input[name='public']:eq("+(data.data[0].public-1)+")").attr("checked",'checked');
                     $p_id.find("#question_name").val(data.data[0].question_name);
                     $p_id.find("#remarks").val(data.data[0].remarks);
-                    $p_id.find("#audio_url").val(data.data[0].audio_url);
+                    $p_id.find("#audio_name").val(data.data[0].audio_name);
+                    audio_url = data.data[0].audio_url;
                     debugger;
                     if(data.data[0].account_id == $('#login_account_id').val()){
                         $(document).ready(function(){
@@ -397,7 +406,29 @@ $(function () {
         });
     });
 
+    //音频上传
+    var picClient_T =new PicClient();
+    //音频
+    picClient_T.addsingles(['asdasdj'],function callback(date1,date2,date3){
+        setTimeout(function () {
+            if('|mp3|wma|MP3|WMA|'.indexOf(JSON.parse(date2).extName) > -1){
+                $p_id.find("#img_cover_ul").empty();
+                $p_id.find("#img_cover_ul").append('<li class="alert alert-dismissable"> ' +
+                    '<strong> ' +
+                    '<img src="images/format_img/mp3.jpg" alt="" width="63" height="87"> ' +
+                    '</strong> ' +
+                    '</li>');
+                debugger;
+                $p_id.find('#audio_name').val(JSON.parse(date2).file_name);
+                audio_url = JSON.parse(date2).date;
+                debugger;
 
+            }else{
+                alert('请上传mp3、wma格式的音频文件');
+            }
+
+        }, 1000);
+    });
     //// 动态绑定重置密码事件
     //$(document).on("click", ".employee_resetpass", function () {
     //    $('#seq_no').val($(this).attr('data-id'));

@@ -22,9 +22,25 @@
                 <label class="control-label w-9 relative">音频文件：</label>
 
                 <div class="w-40 relative">
-                    <input id="audio_url" class="form-control w-30" data-rule="required;" disabled type="text" maxlength="32" placeholder="请上传音频文件">
-                    <a href="javascript:void(0);" class="btn btn-success font-14 ml-0-5" style="width: 78px" id="">自己上传</a>
+                    <input id="audio_name" class="form-control w-30" data-rule="required;" disabled type="text" maxlength="32" placeholder="上传文件后自动生成">
                 </div>
+            </div>
+            <div class="form-group">
+                <tr>
+                    <td align="left" class="style_or" style="padding: 0% 0% 1% 41%;"></td>
+                    <td class="msg text-gray-lighter font-12 mt-0-5">
+                        <div class="w-70 ml-9 float-none clearfix">
+                            <ul class="alert-policy-01 pull-left clearfix" id="img_cover_ul">
+                            </ul>
+                            <div class="roompic-upload w-12">
+                                <a id="add_top_img" href="#" class="btn btn-success font-14 ml-0-5 form-btn-upload"><i class="icon-plus-sign"></i>添加文件</a>
+                                <div id="unknow" style="width:24px;height:18px;position: fixed;z-index: 999;margin: -44px 0 0 -56px;font-size:12px;overflow:hidden;color: white" hidden></div>
+
+                            </div>
+
+                        </div>
+                    </td>
+                </tr>
             </div>
             <div class="form-group">
                 <label class="control-label w-9 relative">试题说明：</label>

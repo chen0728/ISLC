@@ -38,8 +38,6 @@ $(function () {
             {"col_id": "name"},
             {"col_id": "sex"},
             {"col_id": "part"},
-            {"col_id": "year"},
-            {"col_id": "class"},
             {"col_id": "status"}
         ]; // 定义表格数据列id
         var aoColumnDefs = [{
@@ -72,38 +70,18 @@ $(function () {
                 if (!data) {
                     return '';
                 }
-                return '<td><div class="text-center">' + data + '</div></td>';
+                if(data == 10000){
+                    return '<td><div class="text-center">管理员</div></td>';
+                }
+                if(data == 10001){
+                    return '<td><div class="text-center">教师</div></td>';
+                }
+                if(data == 10002){
+                    return '<td><div class="text-center">学生</div></td>';
+                }
             }
-        }, {
+        },{
             "colIndex": 4,
-            "html": function (data, type, full) {
-                if (!data) {
-                    return '';
-                }
-                var text = '';
-                /*for (var i = 0; i < fnemployeePage.stautss.length; i++) {
-                 if (fnemployeePage.stautss[i].key_id == data) {
-                 text = fnemployeePage.stautss[i].key_val_cn;
-                 }
-                 }*/
-                return '<td><div class="text-center">' + data + '</div></td>';
-            }
-        }, {
-            "colIndex": 5,
-            "html": function (data, type, full) {
-                if (!data) {
-                    return '';
-                }
-                var text = '';
-                /*for (var i = 0; i < fnemployeePage.stautss.length; i++) {
-                 if (fnemployeePage.stautss[i].key_id == data) {
-                 text = fnemployeePage.stautss[i].key_val_cn;
-                 }
-                 }*/
-                return '<td><div class="text-center">' + data + '</div></td>';
-            }
-        }, {
-            "colIndex": 6,
             "html": function (data, type, full) {
                 if (!data) {
                     return '';
@@ -122,7 +100,7 @@ $(function () {
                  }*/
             }
         }, {
-            "colIndex": 7,
+            "colIndex": 5,
             "html": function (data, type, full) {
                 var retHtml = '';
                 if (full.account_id == 'P10000') {
@@ -188,7 +166,7 @@ $(function () {
         $("#class").val('');
         $("#year").val('');
         $('#addclass').show();
-
+        $p_id.find("#img_url").val('');
         $('#addAccountModal').modal('show');
         $('#seq_no').val('0');
     });
@@ -216,12 +194,16 @@ $(function () {
     $('#save_account').on('click', function () {
         // 默认允许提交
         var holdSubmit = true;
-        debugger;
+        if(!$p_id.find("#img_url").val()){
+            alert('请上传头像');
+            return;
+        }
         if ($('#add_account_form').isValid()) {
             if (holdSubmit) {
                 // 只提交一次
                 holdSubmit = false;
                 var params = {
+                    img_url:$p_id.find("#img_url").val(),
                     part:$("input[name='part']:checked").val(),
                     account_id:$("#account_id").val(),
                     name:$("#name").val(),
@@ -316,6 +298,8 @@ $(function () {
             "url": '/account/list?seq_no=' + $('#seq_no').val(),
             "data": {},
             "success": function (data) {
+                add_top_img(data.data[0].img_url);
+                $p_id.find("#img_url").val(data.data[0].img_url);
                 $("input[name='part']:eq("+(data.data[0].part-10001)+")").attr("checked",'checked');
                 $("#account_id").val(data.data[0].account_id);
                 $("#name").val(data.data[0].name);
@@ -360,6 +344,29 @@ $(function () {
             }
         });
     });
+
+    var picClient =new PicClient();
+
+    //添加头部图片
+    function add_top_img(top_img_url){
+        $p_id.find("#img_cover_ul").empty();
+        $p_id.find("#img_cover_ul").append('<li class="alert alert-dismissable"> ' +
+            '<strong> ' +
+            '<img id="img_cover1" src="'+top_img_url+'" alt="" width="120" height="160"> ' +
+            '</strong> ' +
+            '</li>');
+    }
+
+    picClient.addsingles(['add_top_img'],function callback(date1,date2,date3){
+        setTimeout(function () {
+            add_top_img('');
+            $p_id.find('#img_cover1').attr('src','upload/'+JSON.parse(date2).date);
+            $p_id.find("#img_url").val('upload/'+JSON.parse(date2).date);
+        }, 1000);
+    });
+
+    $(".uploadify-button-text").attr("style","margin:0");
+    $("#add_top_img-queue").attr("id","add_top__img-queue");
 
 });
 

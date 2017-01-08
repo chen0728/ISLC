@@ -45,14 +45,14 @@ module.exports = function (app) {
                 res.render('index', { title: TITLE });
                 return;
             }
-debugger;
+            debugger;
             var extName =files.Filedata.name.split(".")[files.Filedata.name.split(".").length-1];  //后缀名.
             var avatarName = uuid.v1() + '.' + extName;
             var newPath = form.uploadDir + avatarName;
 
             console.log(newPath);
             fs.renameSync(files.Filedata.path, newPath);  //重命名
-            res.json({date:avatarName})
+            res.json({date:avatarName,file_name:files.Filedata.name,extName:extName})
         });
 
         /*var busboy = new Busboy({headers: req.headers, limits: {fileSize: 10000000}});
