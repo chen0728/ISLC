@@ -8,7 +8,7 @@ var Busboy = require('busboy');
 var uuid = require('node-uuid');
 var  formidable = require('formidable');
 var  fs = require('fs');
-var  TITLE = 'formidableÉÏ´«Ê¾Àý';
+var  TITLE = 'formidableï¿½Ï´ï¿½Ê¾ï¿½ï¿½';
 var  AVATAR_UPLOAD_FOLDER = '/upload/';
 //var gfs = Grid(mongoClient.connection.db, mongoClient.mongoose.mongo);
 module.exports = function (app) {
@@ -32,11 +32,11 @@ module.exports = function (app) {
 
     router.post("/upload", function (req, res, next) {
         debugger;
-        var form = new formidable.IncomingForm();   //´´½¨ÉÏ´«±íµ¥
-        form.encoding = 'utf-8';		//ÉèÖÃ±à¼­
-        form.uploadDir = 'public' + AVATAR_UPLOAD_FOLDER;	 //ÉèÖÃÉÏ´«Ä¿Â¼
-        form.keepExtensions = true;	 //±£Áôºó×º
-        form.maxFieldsSize = 512 * 1024 * 1024;   //ÎÄ¼þ´óÐ¡
+        var form = new formidable.IncomingForm();   //ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ï¿½ï¿½
+        form.encoding = 'utf-8';		//ï¿½ï¿½ï¿½Ã±à¼­
+        form.uploadDir = 'public' + AVATAR_UPLOAD_FOLDER;	 //ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½Ä¿Â¼
+        form.keepExtensions = true;	 //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×º
+        form.maxFieldsSize = 512 * 1024 * 1024;   //ï¿½Ä¼ï¿½ï¿½ï¿½Ð¡
 
         form.parse(req, function(err, fields, files) {
 
@@ -46,12 +46,12 @@ module.exports = function (app) {
                 return;
             }
             debugger;
-            var extName =files.Filedata.name.split(".")[files.Filedata.name.split(".").length-1];  //ºó×ºÃû.
+            var extName =files.Filedata.name.split(".")[files.Filedata.name.split(".").length-1];  //ï¿½ï¿½×ºï¿½ï¿½.
             var avatarName = uuid.v1() + '.' + extName;
             var newPath = form.uploadDir + avatarName;
 
             console.log(newPath);
-            fs.renameSync(files.Filedata.path, newPath);  //ÖØÃüÃû
+            fs.renameSync(files.Filedata.path, newPath);  //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             res.json({date:avatarName,file_name:files.Filedata.name,extName:extName})
         });
 

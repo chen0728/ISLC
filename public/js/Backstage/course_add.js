@@ -658,7 +658,7 @@ $(function () {
         debugger;
         $.ajax({
             type: "post",
-            url: '/grouping/newGroup',
+            url: '/grouping/newCourse',
             dataType: "json",
             data: data,
             success: function (data) {

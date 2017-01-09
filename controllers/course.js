@@ -317,7 +317,7 @@ module.exports = function (app) {
         });
     });
     //新建课程
-    router.post('/grouping/newGroup', function (req, res, next) {
+    router.post('/grouping/newCourse', function (req, res, next) {
         var pro = req.body;
         mydate = moment().format('YYYY-MM-DD HH:mm:ss');
         if(pro.number){

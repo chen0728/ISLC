@@ -59,7 +59,7 @@
         <nav class="pagination-wrap clearfix" style="height: 20px;margin-top:-22px">
         </nav>
         <nav class="pagination-wrap clearfix">
-            <div class="ml-2 mt-1 mb-2">
+            <div class="ml-2 mt-1 mb-2" hidden>
                 <a class="form-btn-upload" id="addStaffModal" data-toggle="modal"><i class="icon-plus-sign"></i>添加新角色</a>
             </div>
         </nav>
@@ -79,7 +79,7 @@
                             <form class="form-horizontal" action="" method="post"   id="add_account_form">
                                 <input id="account_id" type="hidden" name="account_id">
                                 <div class="form-group ">
-                                    <label class="control-label w-9" style="font-size: 29px;width: 135px;">编辑权限</label>
+                                    <label class="control-label w-9" style="font-size: 29px;width: 135px;">权限查看</label>
                                 </div>
                                 <div class="form-group ">
                                     <label class="control-label w-9">角色编号：</label>
@@ -90,24 +90,24 @@
                                 <div class="form-group ">
                                     <label class="control-label w-9">角色名称：</label>
                                     <div class="w-40 relative">
-                                        <input id="nameLab" class="form-control w-32" type="text" name="account_id" maxlength="20" >
+                                        <input id="nameLab" class="form-control w-32" type="text" name="account_id" maxlength="20" disabled>
                                     </div>
                                 </div>
                                 <div class="form-group ">
                                     <label class="control-label w-9">权限：</label>
                                     <div class="w-40 relative">
-                                        <input id="check1" type="checkbox">
+                                        <input id="check1" type="checkbox" disabled>
                                         <label style="font-size: 16px;font-weight: 500;margin-top: 7px;margin-right: 8px;">用户管理</label>
-                                        <input id="check2" type="checkbox">
+                                        <input id="check2" type="checkbox" disabled>
                                         <label style="font-size: 16px;font-weight: 500;margin-top: 7px;margin-right: 8px;">权限管理</label>
-                                        <input id="check3" type="checkbox">
+                                        <input id="check3" type="checkbox" disabled>
                                         <label style="font-size: 16px;font-weight: 500;margin-top: 7px;margin-right: 8px;">数据字典</label>
                                         <br>
-                                        <input id="check4" type="checkbox">
+                                        <input id="check4" type="checkbox" disabled>
                                         <label style="font-size: 16px;font-weight: 500;margin-top: 7px;margin-right: 8px;">操作日志</label>
-                                        <input id="check5" type="checkbox">
+                                        <input id="check5" type="checkbox" disabled>
                                         <label style="font-size: 16px;font-weight: 500;margin-top: 7px;margin-right: 8px;">教师权限</label>
-                                        <input id="check6" type="checkbox">
+                                        <input id="check6" type="checkbox" disabled>
                                         <label style="font-size: 16px;font-weight: 500;margin-top: 7px;margin-right: 8px;">学生权限</label>
                                     </div>
                                 </div>

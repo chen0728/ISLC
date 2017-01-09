@@ -35,8 +35,46 @@ module.exports = function (app) {
             next(err);
         });
     });
-    //关联查询组名
+    //查询所有班级
+    router.get('/grouping/classOther', function (req, res, next) {
+        var sql = knex.select('*').from('value_mapping');
+        // 执行sql
+        sql.then(function (reply) {
+            res.json(reply);
+        }).catch(function (err) {
+            next(err);
+        });
+    });
+    //查询班级下拉列表
+    router.get('/grouping/select', function (req, res, next) {
+        var account_id = req.query.account_id;
+        var sql = knex.select('class').from('account').where('account_id',account_id);
+        sql.then(function (reply) {
+            var list =[];
+            if(reply.length>0){
+                list = reply[0].class.split(";");
+            }
+            return knex.select('key_val_cn','num1').from('value_mapping').whereIn('num1', list);
+        }).then(function (reply) {
+            res.json(reply);
+        }).catch(function (err) {
+            next(err);
+        });
+    });
+    //关联查询组名(教师）
     router.post('/grouping/group', function (req, res, next) {
+        var seq_no = req.query.seq_no;
+        var account_id = req.query.account_id;
+        var sql = knex.select('*').from('grouping_info').where('class',seq_no).where('account_id',account_id);
+        // 执行sql
+        sql.then(function (reply) {
+            res.json(reply);
+        }).catch(function (err) {
+            next(err);
+        });
+    });
+    //关联class查询组
+    router.post('/grouping/group_seq', function (req, res, next) {
         var seq_no = req.query.seq_no;
         var sql = knex.select('*').from('grouping_info').where('class',seq_no);
         // 执行sql
@@ -46,20 +84,11 @@ module.exports = function (app) {
             next(err);
         });
     });
-    //查询seq_no
-    router.get('/grouping/group_seq', function (req, res, next) {
-        var sql = knex.select('*').from('grouping_info').orderBy('seq_no','desc');
-        // 执行sql
-        sql.then(function (reply) {
-            res.json(reply);
-        }).catch(function (err) {
-            next(err);
-        });
-    });
     //关联查询学生
     router.post('/grouping/name', function (req, res, next) {
-        var seq_no = req.query.seq_no_name;
-        var sql = knex.select('*').from('account').where('grouping',seq_no);
+        var seq_no_name =[];
+        seq_no_name = req.query.seq_no_name.split(',')
+        var sql = knex.select('*').from('account').whereIn('seq_no',seq_no_name);
         // 执行sql
         sql.then(function (reply) {
             res.json(reply);
@@ -67,7 +96,7 @@ module.exports = function (app) {
             next(err);
         });
     });
-    //查询场景
+    //关联查询组
     router.post('/grouping/remarks', function (req, res, next) {
         var seq_no = req.query.seq_no;
         var sql = knex.select('*').from('grouping_info').where('seq_no',seq_no);
@@ -81,41 +110,16 @@ module.exports = function (app) {
     //查询未分组学生
     router.post('/grouping/groupOut', function (req, res, next) {
         var seq_no = req.query.seq_no;
-        var sql = knex.select('*').from('account')
-            .where('class',seq_no).whereNull('grouping').orWhere('grouping','').where('class',seq_no);
-        // 执行sql
+        var account_id = req.query.account_id;
+        var sql = knex.select('student').from('grouping_info').where('class',seq_no).where('account_id',account_id);
         sql.then(function (reply) {
-            res.json(reply);
-        }).catch(function (err) {
-            next(err);
-        });
-    });
-    //保存
-    router.get('/grouping/save', function (req, res, next) {
-        var in_group = req.query.in_group;
-        var out_group = req.query.out_group;
-        var seq_no_name = req.query.seq_no_name;
-        var remarks = req.query.remarks;
-        var sql = knex.select('*').from('account');
-        var sql_ = knex.select('*').from('account');
-        var sql_gro = knex.select('*').from('grouping_info').update('remarks',remarks).where('seq_no',seq_no_name);
-        if(in_group){
-            for(var i = 0; i<in_group.length; i++ ){
-                sql = sql.orWhere('seq_no',in_group[i]);
-            };
-            sql = sql.update('grouping',seq_no_name);
-        };
-        if(out_group){
-            for(var i = 0; i<out_group.length; i++ ){
-                sql_ = sql_.orWhere('seq_no',out_group[i]);
-            };
-            sql_ = sql_.update('grouping','');
-        }
-        // 执行sql
-        sql.then(function (reply) {
-            return sql_;
-        }).then(function (reply) {
-            return sql_gro;
+            var list =[];
+            if(reply.length>0){
+                for(var i=0;i<reply.length;i++){
+                    list = list.concat(reply[i].student.split(",")) ;
+                }
+            }
+            return knex.select('*').from('account').where('class',seq_no).whereNotIn('seq_no',list);
         }).then(function (reply) {
             res.json(reply);
         }).catch(function (err) {
@@ -138,13 +142,22 @@ module.exports = function (app) {
     //删除组
     router.post('/grouping/delGroup', function (req, res, next) {
         var seq_no = req.query.seq_no;
-        var sql = knex('grouping_info').update('class','').where('seq_no',seq_no);
-        var sql_ = knex('account').update('grouping','').where('grouping',seq_no);
-        // 执行sql
-        // 执行sql
+        var sql = knex('grouping_info').where('seq_no',seq_no).del();
         sql.then(function (reply) {
-            return sql_;
-        }).then(function (reply) {
+            res.json(reply);
+        }).catch(function (err) {
+            next(err);
+        });
+    });
+    //保存
+    router.get('/grouping/save', function (req, res, next) {
+        var pro = req.query;
+        if(pro.in_group){
+            var sql = knex('grouping_info').update({student:pro.in_group,remarks:pro.remarks}).where('seq_no',pro.seq_no);
+        }else{
+            var sql = knex('grouping_info').update('remarks',pro.remarks).where('seq_no',pro.seq_no);
+        }
+        sql.then(function (reply) {
             res.json(reply);
         }).catch(function (err) {
             next(err);

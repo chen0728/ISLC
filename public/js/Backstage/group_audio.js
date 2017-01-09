@@ -5,45 +5,44 @@
 
 $(function () {
     var $p_id = $("#group_audio_page");
+    var account_id = $('#login_account_id').val();
+    var part = $("#menu_id").val();
+    debugger;
+    if(part.indexOf("5")> -1 || part.indexOf("6")> -1){
+        var ajax_url = '/grouping/select?account_id='+account_id;
+    }else{
+        var ajax_url = '/grouping/classOther';
+    }
     //填充班级下拉菜单
-    seq_no = $('#login_account_id').val();
     $.ajax({
-        type: "post",
-        url: '/grouping/class?seq_no='+seq_no,
+        type: "get",
+        url: ajax_url,
         dataType: "json",
         data:{},
         success: function (data) {
-            var clas_seq = data[0].class.split(";");
-            for(var i=0;i<clas_seq.length;i++){
-                var seq_noName = clas_seq[i];
-                $.ajax({
-                    type: "post",
-                    url: '/grouping/className?seq_no='+seq_noName,
-                    dataType: "json",
-                    data:{},
-                    success: function (data) {
-                        debugger;
-                        if(data.length >0){
-                            $("#slc_class").append('<option value="'+data[0].key_id+'">'+data[0].key_val_cn+'</option>')
-                        }
-                    },
-                    error: function (data) {
-                        alert("系统错误");
-                    }
-                });
-            }
+            debugger;
+            if(data.length >0){
+                for(var i=0;i<data.length;i++){
+                    $("#slc_class").append('<option value="'+data[i].num1+'">'+data[i].key_val_cn+'</option>')
+                }
+            };
         },
         error: function (data) {
-            alert("系统错误");
+            alert("系统错误6");
         }
     });
-    // 查询组下拉框
+    // 查询组音频列表
     $p_id.find('#slc_class').on("change",function (){
         $("#group_audio_form").empty();
         var seq_no = $p_id.find('#slc_class').val();
+        if(part.indexOf("5")> -1){
+            var ajax_url_ = '/grouping/group?seq_no='+seq_no+'&account_id='+account_id;
+        }else{
+            var ajax_url_ = '/grouping/group_seq?seq_no='+seq_no;
+        }
         $.ajax({
             type: "post",
-            url: '/grouping/group?seq_no='+seq_no,
+            url:ajax_url_,
             dataType: "json",
             data:{},
             success: function (data) {
@@ -78,7 +77,7 @@ $(function () {
                 })
             },
             error: function (data) {
-                alert("系统错误");
+                alert("系统错误3");
             }
         });
     });

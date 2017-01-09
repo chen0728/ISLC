@@ -155,31 +155,30 @@
     var menu_data = [];
     $(function () {
         var result = '<%=menu_id%>';
-        debugger;
         if(result.indexOf("1")> -1){
             for( var i=0;i<menu_data.length;i++){
                 if(menu_data[i].id == 1){menu_data.splice(i,1);};
+                if(menu_data[i].id == 11){menu_data.splice(i,1);};
+                if(menu_data[i].id == 13){menu_data.splice(i,1);};
+                if(menu_data[i].id == 14){menu_data.splice(i,1);};
+                if(menu_data[i].id == 2){menu_data.splice(i,1);};
+                if(menu_data[i].id == 162){menu_data.splice(i,1);};
+                if(menu_data[i].id == 31){menu_data.splice(i,1);};
+                if(menu_data[i].id == 2){menu_data.splice(i,1);};
+                if(menu_data[i].id ==16){menu_data.splice(i,1);};
+                if(menu_data[i].id ==15){menu_data.splice(i,1);};
             }
             menu_data.push({id: 1, pid:0, name: "用户管理", open: true,link: '/account_manage'});
-        };
-        if(result.indexOf("2")> -1){
-            for( var i=0;i<menu_data.length;i++){
-                if(menu_data[i].id == 11){menu_data.splice(i,1);};
-            }
             menu_data.push({id: 11, pid:0, name: "权限管理",open: true,link: '/role_manage'});
-        };
-        if(result.indexOf("3")> -1){
-            for( var i=0;i<menu_data.length;i++){
-                if(menu_data[i].id == 13){menu_data.splice(i,1);};
-            }
             menu_data.push({id: 13, pid:0, name: "数据字典",open: true,link: '/value_mapping'});
-        };
-        if(result.indexOf("4")> -1){
-            for( var i=0;i<menu_data.length;i++){
-                if(menu_data[i].id == 14){menu_data.splice(i,1);};
-            }
             menu_data.push({id: 14, pid:0, name: "操作日志维护",open: true,link: '/operation_record'});
-        }
+            menu_data.push({id: 2, pid:0, name: "语言课堂管理",open: true,link: '/course_manage'});
+            menu_data.push({id: 162, pid:0, name: "试题管理",open:true,link: '/questions_manage'});
+            menu_data.push({id: 31, pid:0, name: "课堂语音回顾",open:true,link: '/class_audio'});
+            menu_data.push({id: 2, pid:0, name: "公共资料管理",open: true,link: '/public_information'});
+            menu_data.push({id: 16, pid:0, name: "分组语音对话回顾",open: true,link: '/group_audio'});
+            menu_data.push({id: 15, pid:0, name: "课堂多媒体资料回顾",open: true,link: '/class_media'});
+        };
         if(result.indexOf("5")> -1){
             for( var i=0;i<menu_data.length;i++){
                 if(menu_data[i].id == 2){menu_data.splice(i,1);};

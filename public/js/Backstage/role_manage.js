@@ -88,11 +88,11 @@ $(function () {
             "html": function (data, type, full) {
                 var retHtml = '';
                 retHtml = retHtml + '<div class="drop-opt">' +
-                    '<a href="javascript:;" id="dropLabel-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">详情<span class="icon-chevron-down"></span></a>' +
-                    '<ul class="drop-cnt in" role="menu" aria-labelledby="dropLabel-1">' +
-                    '<li><a class="employee_edit" href="javascript:void(0)" data-id="'+full.seq_no+'" data-toggle="modal">编辑</a></li>' +
-                    '<li><a class="employee_del" href="javascript:void(0)" data-id="'+full.seq_no+'" data-toggle="modal">删除</a></li>' +
-                    '</ul>' +
+                    '<a href="javascript:void(0)" class="employee_edit" id="dropLabel-2" data-id="'+full.seq_no+'" aria-haspopup="true" aria-expanded="false">查看</a>' +
+                    //'<ul class="drop-cnt in" role="menu" aria-labelledby="dropLabel-1">' +
+                    //'<li><a class="employee_edit" href="javascript:void(0)" data-id="'+full.seq_no+'" data-toggle="modal">编辑</a></li>' +
+                    //'<li><a class="employee_del" href="javascript:void(0)" data-id="'+full.seq_no+'" data-toggle="modal">删除</a></li>' +
+                    //'</ul>' +
                     '</div>';
                 return retHtml;
             }
@@ -183,53 +183,53 @@ $(function () {
         // 显示成功对话框
         $("#addAccountModal").modal('show');
         //保存
-        $('#save_account').on('click', function () {
-            var chk7 = document.getElementById('check1');
-            var chk8 = document.getElementById('check2');
-            var chk9 = document.getElementById('check3');
-            var chk10 = document.getElementById('check4');
-            var chk11 = document.getElementById('check5');
-            var chk12 = document.getElementById('check6');
-            debugger;
-            var menu_id = ';';
-            if(chk7.checked == true){
-                menu_id += 1+';';
-            }
-            if(chk8.checked == true){
-                menu_id += 2+';';
-            }
-            if(chk9.checked == true){
-                menu_id += 3+';';
-            }
-            if(chk10.checked == true){
-                menu_id += 4+';';
-            }
-            if(chk11.checked == true){
-                menu_id += 5+';';
-            }
-            if(chk12.checked == true){
-                menu_id += 6+';';
-            }
-            debugger;
-            var data = {
-                menu_id:menu_id,
-                role_name:$("#nameLab").val(),
-            };
-            $.ajax({
-                type: "post",
-                url: '/role_info/insert?seq_no='+seq_no,
-                dataType: "json",
-                data: data,
-                success: function (data) {
-                    debugger;
-                    alert("提交成功！");
-                    window.location.reload();
-                },
-                error: function (data) {
-                    alert("系统错误");
-                }
-            })
-        });
+        //$('#save_account').on('click', function () {
+        //    var chk7 = document.getElementById('check1');
+        //    var chk8 = document.getElementById('check2');
+        //    var chk9 = document.getElementById('check3');
+        //    var chk10 = document.getElementById('check4');
+        //    var chk11 = document.getElementById('check5');
+        //    var chk12 = document.getElementById('check6');
+        //    debugger;
+        //    var menu_id = ';';
+        //    if(chk7.checked == true){
+        //        menu_id += 1+';';
+        //    }
+        //    if(chk8.checked == true){
+        //        menu_id += 2+';';
+        //    }
+        //    if(chk9.checked == true){
+        //        menu_id += 3+';';
+        //    }
+        //    if(chk10.checked == true){
+        //        menu_id += 4+';';
+        //    }
+        //    if(chk11.checked == true){
+        //        menu_id += 5+';';
+        //    }
+        //    if(chk12.checked == true){
+        //        menu_id += 6+';';
+        //    }
+        //    debugger;
+        //    var data = {
+        //        menu_id:menu_id,
+        //        role_name:$("#nameLab").val(),
+        //    };
+        //    $.ajax({
+        //        type: "post",
+        //        url: '/role_info/insert?seq_no='+seq_no,
+        //        dataType: "json",
+        //        data: data,
+        //        success: function (data) {
+        //            debugger;
+        //            alert("提交成功！");
+        //            window.location.reload();
+        //        },
+        //        error: function (data) {
+        //            alert("系统错误");
+        //        }
+        //    })
+        //});
     });
     //删除
     $(document).on("click", ".employee_del", function () {

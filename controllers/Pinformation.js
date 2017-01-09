@@ -24,7 +24,7 @@ module.exports = function (app) {
             sql = sql.where('number',params.number);
         }
         if(params.data_type){
-            sql = sql.where('tata_type',params.data_type);
+            sql = sql.where('data_type',params.data_type);
         }
         if(params.accouat_id){
             sql = sql.where('accouat_id',params.accouat_id);
