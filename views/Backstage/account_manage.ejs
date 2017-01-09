@@ -85,16 +85,15 @@
                                 <div class="form-group ">
                                     <label class="control-label w-9">用户角色：</label>
                                     <div class="w-40 relative">
-                                        <label class="radio-inline pr-1"><input type="radio" name="part" value="10001" data-rule="角色:required;">教师</label>
-                                        <label class="radio-inline pr-1"><input type="radio" name="part" value="10002" data-rule="角色:required;" checked>学生</label>
-                                        <label class="radio-inline pr-1"><input type="radio" name="part" value="10000" data-rule="角色:required;">管理员</label>
+                                        <label class="radio-inline pr-1"><input type="radio" name="part" value="1" data-rule="角色:required;">教师</label>
+                                        <label class="radio-inline pr-1"><input type="radio" name="part" value="2" data-rule="角色:required;" checked>学生</label>
+                                        <label class="radio-inline pr-1"><input type="radio" name="part" value="3" data-rule="角色:required;">管理员</label>
                                     </div>
                                 </div>
                                 <div class="form-group ">
                                     <label class="control-label w-9">用户编号：</label>
                                     <div class="w-40 relative">
                                         <input id="account_id" class="form-control w-32" type="text" name="account_id" maxlength="20" placeholder="系统自动生成" disabled>
-                                        <a href="javascript:void(0);" class="btn btn-success font-14 ml-0-5" style="width: 70px" id="get_user_no" disabled>生成</a>
                                     </div>
                                 </div>
                                 <tr>
@@ -133,27 +132,14 @@
                                 </div>
                                 <div class="form-group " id="addclass">
                                     <label class="control-label w-9">班级：</label>
+                                    <div class="w-18 relative" id="class">
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <label class="control-label w-9"></label>
                                     <div class="w-18 relative">
-                                        <select class="form-control" name="year" id="year" data-rule="年级:required;">
-                                            <option value="">请选择</option>
-                                            <option value="1">一年级</option>
-                                            <option value="2">二年级</option>
-                                            <option value="3">三年级</option>
-                                        </select>
-
+                                        <a href="javascript:void(0);" class="btn btn-success font-14 ml-0-5" style="width: 70px" id="addclassbtn">添加</a>
                                     </div>
-                                    <div class="w-4 relative">
-                                        -
-                                    </div>
-                                    <div class="w-18 relative">
-                                        <select class="form-control" name="class" id="class" data-rule="班级:required;">
-                                            <option value="">请选择</option>
-                                            <option value="1">一班</option>
-                                            <option value="2">二班</option>
-                                            <option value="3">三班</option>
-                                        </select>
-                                    </div>
-
                                 </div>
                                 <div class="modal-footer text-center pb-2">
                                     <button type="button" class="btn btn-default btn-default-green w-14 font-16 float-none" data-dismiss="modal" id="add_account_cancel">取消</button>

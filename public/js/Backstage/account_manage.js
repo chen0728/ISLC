@@ -16,6 +16,7 @@ $(function () {
     var tempObj;
     var tempEmpObj;
     var new_account_id;//新数据的编号（最大+1)
+    var classOption = '';
     var $p_id = $("#account_manage_page");
 
 
@@ -25,8 +26,6 @@ $(function () {
             sex: $p_id.find('#sex_q').val(), // 性别
             account_id: $p_id.find('#account_id_q').val(), // 帐号
             part: $p_id.find('#part_q').val(), // 角色
-            year: $p_id.find('#year_q').val(), // 年级
-            class: $p_id.find('#class_q').val(), // 班级
             status: $p_id.find('#status_q').val(), // 状态
         };
 
@@ -70,13 +69,13 @@ $(function () {
                 if (!data) {
                     return '';
                 }
-                if(data == 10000){
+                if(data == 3){
                     return '<td><div class="text-center">管理员</div></td>';
                 }
-                if(data == 10001){
+                if(data == 1){
                     return '<td><div class="text-center">教师</div></td>';
                 }
-                if(data == 10002){
+                if(data == 2){
                     return '<td><div class="text-center">学生</div></td>';
                 }
             }
@@ -163,12 +162,11 @@ $(function () {
         $("#name").val('');
         $("#sex").val('男');
         $("#password").val(new_account_id);
-        $("#class").val('');
-        $("#year").val('');
         $('#addclass').show();
         $p_id.find("#img_url").val('');
         $('#addAccountModal').modal('show');
         $('#seq_no').val('0');
+        $('#addclassbtn').hide();
     });
 
     //弹出框居中
@@ -181,12 +179,20 @@ $(function () {
     //根据添加用户类型，来显示（隐藏）班级信息
     $("input[name='part']").change(function() {
         var addpart = $("input[name='part']:checked").val();
-        if (addpart == 10002) { //学生
+        if (addpart == 2) { //学生
             $('#addclass').show();
-        } else if (addpart == 10001) {  //教师
+            $('#addclassbtn').hide();
+            $('#class').empty();
+            add_class();
+        } else if (addpart == 1) {  //教师
+            $('#addclass').show();
+            $('#addclassbtn').show();
+            $('#class').empty();
+            add_class();
+        } else if (addpart == 3) {  //管理员
             $('#addclass').hide();
-        } else if (addpart == 10000) {  //管理员
-            $('#addclass').hide();
+            $('#addclassbtn').hide();
+            $('#class').empty();
         }
     });
 
@@ -210,12 +216,14 @@ $(function () {
                     sex:$("#sex").val(),
                     password:$("#password").val()
                 };
+                params.class = '';
+                $p_id.find('#class [name="class"]').each(function(){
+                    params.class += $(this).val()+';';
+                });
+                params.class = params.class.substring(0,(params.class.length-1));
                 //新建
                 if($('#seq_no').val() == 0){
-                    if(params.part == 10002){//学生
-                        params.year = $("#year").val();
-                        params.class = $("#class").val();
-                    }
+
                     params.status = 1;
                     params.regTime = new Date();
                     $.ajax({
@@ -233,14 +241,6 @@ $(function () {
                     });
                 }else{   //更新
                     params.seq_no = $('#seq_no').val();
-                    if(params.part == 10002){//学生
-                        params.year = $("#year").val();
-                        params.class = $("#class").val();
-                    }else{
-                        debugger;
-                        params.year = '';
-                        params.class = '';
-                    }
                     $.ajax({
                         "dataType": 'json',
                         "type": "get",
@@ -288,7 +288,6 @@ $(function () {
     });
     // 动态绑定编辑事件
     $(document).on("click", ".employee_edit", function () {
-        debugger;
         $('#seq_no').val($(this).attr('data-id'));
         //请求数据自动填充
         $.ajax({
@@ -300,17 +299,26 @@ $(function () {
             "success": function (data) {
                 add_top_img(data.data[0].img_url);
                 $p_id.find("#img_url").val(data.data[0].img_url);
-                $("input[name='part']:eq("+(data.data[0].part-10001)+")").attr("checked",'checked');
+                $("input[name='part']:eq("+(data.data[0].part-1)+")").attr("checked",'checked');
                 $("#account_id").val(data.data[0].account_id);
                 $("#name").val(data.data[0].name);
                 $("#sex").val(data.data[0].sex);
                 $("#password").val(data.data[0].password);
-                $("#class").val(data.data[0].class);
-                $("#year").val(data.data[0].year);
-                if(data.data[0].part == 10002){ //学生
-                    $('#addclass').show();
-                } else {
+                if(data.data[0].part == 3){ //学生
                     $('#addclass').hide();
+                } else {
+                    $('#addclass').show();
+                    var class_info = data.data[0].class.split(';');
+                    debugger;
+                    $p_id.find('#class').empty();
+                    for(var i=0; i<class_info.length; i++){
+                        add_class();
+                    }
+                    var num = 0;
+                    $p_id.find('#class [name="class"]').each(function(){
+                        $(this).val(class_info[num]);
+                        num++;
+                    });
                 }
             },
             "error": function (data) {
@@ -336,7 +344,6 @@ $(function () {
             "url": '/account/resetPassword?seq_no=' + $('#seq_no').val(),
             "data": {},
             "success": function (data) {
-                debugger;
                 window.location.reload();
             },
             "error": function (data) {
@@ -344,6 +351,53 @@ $(function () {
             }
         });
     });
+
+
+    // 添加班级按钮
+    $("#addclassbtn").click(function () {
+        add_class();
+    });
+    // 获取班级列表
+    $.ajax({
+        "dataType": 'json',
+        "type": "get",
+        "timeout": 20000,
+        "url": '/grouping/classOther',
+        async:false,
+        "data": {},
+        "success": function (data) {
+            classOption += '<div class="class j_theme_choose w-40" style="height: 50px;">' +
+            '<select class="form-control mt-1 w-40" name="class" data-rule="班级:required;">' +
+                '<option value="">请选择</option>';
+            for(var i=0; i<data.length; i++){
+                classOption += '<option value="'+data[i].num1+'">'+data[i].key_val_cn+'</option>';
+            }
+            classOption += '</select>' +
+                '<button type="button" class="close closefirst" data-dismiss="alert" data-id="1" style="display:none;position: inherit;margin: -48px -12px 0 0;"></button> ' +
+                '</div>';
+            debugger;
+        },
+        "error": function (data) {
+            console.log(data);
+        }
+    });
+    // 添加班级方法
+    function add_class(){
+        $p_id.find("#class").append(classOption);
+        $p_id.find(".class").mouseenter(function(){
+            $(this).find(".closefirst").css("display","inherit");
+        });
+        $p_id.find(".class").mouseleave(function(){
+            $(this).find(".closefirst").css("display","none");
+        });
+        $p_id.find(".closefirst").click(function(){
+            if($p_id.find('#class').children('div').length>1){
+                $(this).parent().remove();
+            }
+        });
+    }
+    add_class();
+
 
     var picClient =new PicClient();
 
