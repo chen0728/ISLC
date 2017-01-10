@@ -152,6 +152,7 @@
 <script type="text/javascript" charset="utf-8"></script>
 <script>
     //左侧菜单json数据
+    debugger;
     var menu_data = [];
     $(function () {
         var result = '<%=menu_id%>';
@@ -217,9 +218,7 @@
     })
     var orderId='';
     var agentId='';
-    var sys_role_name='<%=role_name%>';
     var sys_username='<%=username%>';
-    var sys_id='<%=_id%>';
     var page_state = true;
     $("img").live('click',function(){
         //获取当前网址，如： http://localhost:8083/uimcardprj/share/meun.jsp

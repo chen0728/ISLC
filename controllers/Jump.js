@@ -26,7 +26,20 @@ module.exports = function (app) {
         //    router.get('/', function (req, res) {
         //        res.render('/index',{code:0,text:""});
         //    });
-        //后台登陆页面
+        // 首页
+    router.get('/',filter.authorize, function (req, res) {
+        var dayNames = new Array("星期日","星期一","星期二","星期三","星期四","星期五","星期六");
+        var Stamp = new Date();
+        var mm_dd = (Stamp.getMonth() + 1) +"月"+Stamp.getDate()+ "日";
+        var Week = dayNames[Stamp.getDay()];
+        res.render('Backstage/index',{
+            login_account_id:req.session.account_id,
+            menu_id:req.session.menu_id,
+            username:req.session.username,
+            mm_dd:mm_dd,
+            Week:Week});
+    });
+    //后台登陆页面
     router.get('/login', function (req, res) {
         res.render('Backstage/login',{code:0,text:""});
     });
@@ -39,25 +52,29 @@ module.exports = function (app) {
     router.post('/login', function (req, res) {
         var userInfo = req.body;
         knex.select('*').from('account').leftJoin('role_info', 'account.part', 'role_info.seq_no').where('account.account_id', userInfo.username).where('account.password', userInfo.password).then(function (reply) {
-                if(reply.length == 1){
-                    req.session.account_id = userInfo.username;
-                    res.render('Backstage/index',{
-                        login_account_id:req.session.account_id,
-                        menu_id:reply[0].menu_id,
-                        username:reply[0].name,
-                        mm_dd:'10月26日',
-                        Week:'周三',
-                        role_name:'哈哈哈',
-                        _id:123
-                    });
-                }else{
-                    res.redirect('/');
-                }
-            }).catch(function (err) {
-                next(err);
-            });
-    });
+            var dayNames = new Array("星期日","星期一","星期二","星期三","星期四","星期五","星期六");
+            var Stamp = new Date();
+            var mm_dd = (Stamp.getMonth() + 1) +"月"+Stamp.getDate()+ "日";
+            var Week = dayNames[Stamp.getDay()];
+            if(reply.length == 1){
+                req.session.account_id = userInfo.username;
+                req.session.menu_id = reply[0].menu_id;
+                req.session.username = reply[0].name;
 
+                res.render('Backstage/index',{
+                    login_account_id:req.session.account_id,
+                    menu_id:reply[0].menu_id,
+                    username:reply[0].name,
+                    mm_dd:mm_dd,
+                    Week:Week,
+                });
+            }else{
+                res.redirect('/');
+            }
+        }).catch(function (err) {
+            next(err);
+        });
+    });
     //前台登录验证
     router.post('/loginApp', function (req, res) {
         var userInfo = req.body;
@@ -74,10 +91,18 @@ module.exports = function (app) {
             next(err);
         });
     });
-
     //后台首页
     router.get('/index',filter.authorize, function (req, res) {
-        res.render('Backstage/index',{username:'超级管理员',mm_dd:'10月26日',Week:'周三',role_name:'哈哈哈',_id:123});
+        var dayNames = new Array("星期日","星期一","星期二","星期三","星期四","星期五","星期六");
+        var Stamp = new Date();
+        var mm_dd = (Stamp.getMonth() + 1) +"月"+Stamp.getDate()+ "日";
+        var Week = dayNames[Stamp.getDay()];
+        res.render('Backstage/index',{
+            login_account_id:req.session.account_id,
+            menu_id:req.session.menu_id,
+            username:req.session.username,
+            mm_dd:mm_dd,
+            Week:Week});
     });
     //后台首页
     router.get('/account_manage',filter.authorize, function (req, res) {

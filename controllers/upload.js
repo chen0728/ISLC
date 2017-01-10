@@ -14,9 +14,7 @@ var  AVATAR_UPLOAD_FOLDER = '/upload/';
 module.exports = function (app) {
     app.use('/', router);
 
-    router.get('/', function (req, res, next) {
-        res.send('Hello');
-    });
+
 
     router.get('/upload/:id', function (req, res, next) {
         var readstream = gfs.createReadStream({

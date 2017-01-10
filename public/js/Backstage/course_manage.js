@@ -5,6 +5,15 @@
 
 $(function () {
     var $p_id = $("#course_manage_page");
+    var part = $("#menu_id").val();
+    debugger;
+    if(part.indexOf("5")> -1){
+        var ajax_url_ = '/course_manage/list'
+    }else if(part.indexOf("6")> -1){
+        var ajax_url_ = '/course_manage/media'
+    }else{
+        var ajax_url_ = '/course_manage/other'
+    }
     //数据表格筛选处事件冒泡
     $('.j_bubble').click(function (event) {
         event.stopPropagation();
@@ -25,7 +34,7 @@ $(function () {
             class_status: $p_id.find('#status_q').val(), // 班级
         };
         var table_src = $('#course_Table'); // 定义指向
-        var ajax_url = '/course_manage/list'; // 定义数据请求路径
+        var ajax_url = ajax_url_; // 定义数据请求路径
         var pageSize = 10 ;// 定义每页长度默认为10
         var aoColumns = [
             {"col_id": "name"},
