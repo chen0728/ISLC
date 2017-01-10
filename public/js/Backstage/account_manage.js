@@ -110,12 +110,17 @@ $(function () {
                         '</ul>' +
                         '</div>';
                 } else {
+
                     retHtml = retHtml + '<div class="drop-opt">' +
                         '<a href="javascript:;" id="dropLabel-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">详情<span class="icon-chevron-down"></span></a>' +
                         '<ul class="drop-cnt in" role="menu" aria-labelledby="dropLabel-1">' +
-                        '<li><a class="employee_edit" href="javascript:void(0)" data-id="'+full.seq_no+'" data-toggle="modal">编辑</a></li>' +
-                        '<li><a class="employee_del" href="javascript:void(0)" data-id="'+full.seq_no+'" data-toggle="modal">删除</a></li>' +
-                        '<li><a class="employee_resetpass" data-id="'+full.seq_no+'" href="javascript:void(0)">重置密码</a></li>' +
+                        '<li><a class="employee_edit" href="javascript:void(0)" data-id="'+full.seq_no+'" data-toggle="modal">编辑</a></li>';
+                    if(full.status == 1){
+                        retHtml += '<li><a class="employee_del" href="javascript:void(0)" data-id="'+full.seq_no+'" data-toggle="modal">删除</a></li>';
+                    }else{
+                        retHtml += '<li><a class="employee_re" href="javascript:void(0)" data-id="'+full.seq_no+'" data-toggle="modal">恢复</a></li>'
+                    }
+                    retHtml += '<li><a class="employee_resetpass" data-id="'+full.seq_no+'" href="javascript:void(0)">重置密码</a></li>' +
                         '</ul>' +
                         '</div>';
 
@@ -270,6 +275,22 @@ $(function () {
         //    fnemployeePage.delEmployee($(this));
         //}
     });
+    // 动态绑定恢复事件
+    $(document).on("click", ".employee_re", function () {
+        $.ajax({
+            "dataType": 'json',
+            "type": "get",
+            "timeout": 20000,
+            "url": '/account/recovery?seq_no=' + $(this).attr('data-id'),
+            "data": {},
+            "success": function (data) {
+                window.location.reload();
+            },
+            "error": function (data) {
+                console.log(data);
+            }
+        });
+    });
     // 确认删除
     $("#confirmDialog").click(function () {
         $.ajax({
@@ -367,7 +388,7 @@ $(function () {
         "data": {},
         "success": function (data) {
             classOption += '<div class="class j_theme_choose w-40" style="height: 50px;">' +
-            '<select class="form-control mt-1 w-40" name="class" data-rule="班级:required;">' +
+                '<select class="form-control mt-1 w-40" name="class" data-rule="班级:required;">' +
                 '<option value="">请选择</option>';
             for(var i=0; i<data.length; i++){
                 classOption += '<option value="'+data[i].num1+'">'+data[i].key_val_cn+'</option>';

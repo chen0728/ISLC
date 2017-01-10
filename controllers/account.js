@@ -86,6 +86,17 @@ module.exports = function (app) {
         });
     });
 
+    //逻辑恢复用户
+    router.get('/account/recovery', function (req, res,next) {
+        var sql = knex('account').where('seq_no',req.query.seq_no).update('status',1);
+
+        sql.then(function (reply) {
+            res.json(reply);
+        }).catch(function (err) {
+            next(err);
+        });
+    });
+
     //用户重置密码
     router.get('/account/resetPassword', function (req, res,next) {
         var sql = knex('account').where('seq_no',req.query.seq_no).update('password',123456);

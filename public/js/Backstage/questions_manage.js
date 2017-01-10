@@ -107,18 +107,24 @@ $(function () {
                         retHtml = retHtml + '<div class="drop-opt">' +
                             '<a href="javascript:;" id="dropLabel-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">详情<span class="icon-chevron-down"></span></a>' +
                             '<ul class="drop-cnt in" role="menu" aria-labelledby="dropLabel-1">' +
-                            '<li><a class="employee_edit" href="javascript:void(0)" target="_blank" data-id="'+full.seq_no+'" data-toggle="modal">编辑</a></li>' +
-                            '<li><a class="employee_del" href="javascript:void(0)" data-id="'+full.seq_no+'" data-toggle="modal">删除</a></li>' +
-                            '</ul>' +
-                            '</div>';
+                            '<li><a class="employee_edit" href="javascript:void(0)" target="_blank" data-id="'+full.seq_no+'" data-toggle="modal">编辑</a></li>';
+                        if(full.status == 1){
+                            retHtml += '<li><a class="employee_del" href="javascript:void(0)" data-id="'+full.seq_no+'" data-toggle="modal">删除</a></li>';
+                        }else{
+                            retHtml += '<li><a class="employee_re" href="javascript:void(0)" data-id="'+full.seq_no+'" data-toggle="modal">恢复</a></li>';
+                        }
+                        retHtml += '</ul></div>';
                     }else if(full.type == '听力题'){
                         retHtml = retHtml + '<div class="drop-opt">' +
                             '<a href="javascript:;" id="dropLabel-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">详情<span class="icon-chevron-down"></span></a>' +
                             '<ul class="drop-cnt in" role="menu" aria-labelledby="dropLabel-1">' +
-                            '<li><a class="employee_edit newTLST" href="TLquestions_manage?seq_no='+full.seq_no+'" data-title="听力试题" target="_blank" data-toggle="modal"">编辑</a></li>' +
-                            '<li><a class="employee_del" href="javascript:void(0)" data-id="'+full.seq_no+'" data-toggle="modal">删除</a></li>' +
-                            '</ul>' +
-                            '</div>';
+                            '<li><a class="employee_edit newTLST" href="TLquestions_manage?seq_no='+full.seq_no+'" data-title="听力试题" target="_blank" data-toggle="modal"">编辑</a></li>';
+                        if(full.status == 1){
+                            retHtml += '<li><a class="employee_del" href="javascript:void(0)" data-id="'+full.seq_no+'" data-toggle="modal">删除</a></li>';
+                        }else{
+                            retHtml += '<li><a class="employee_re" href="javascript:void(0)" data-id="'+full.seq_no+'" data-toggle="modal">恢复</a></li>';
+                        }
+                        retHtml += '</ul></div>';
                     }
 
                 }else if (full.seq_no){
@@ -342,6 +348,7 @@ $(function () {
         //    fnemployeePage.delEmployee($(this));
         //}
     });
+
     // 确认删除
     $p_id.find("#confirmDialog").click(function () {
         $.ajax({
@@ -349,6 +356,23 @@ $(function () {
             "type": "get",
             "timeout": 20000,
             "url": '/questions/del?seq_no=' + $p_id.find('#seq_no').val(),
+            "data": {},
+            "success": function (data) {
+                window.location.reload();
+            },
+            "error": function (data) {
+                console.log(data);
+            }
+        });
+    });
+
+    // 动态绑定恢复事件
+    $(document).on("click", ".employee_re", function () {
+        $.ajax({
+            "dataType": 'json',
+            "type": "get",
+            "timeout": 20000,
+            "url": '/questions/recovery?seq_no=' + $(this).attr('data-id'),
             "data": {},
             "success": function (data) {
                 window.location.reload();

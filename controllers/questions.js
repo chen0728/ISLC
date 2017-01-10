@@ -103,7 +103,16 @@ module.exports = function (app) {
     //逻辑删除题目
     router.get('/questions/del', function (req, res,next) {
         var sql = knex('questions_bank').where('seq_no',req.query.seq_no).update('status',2);
+        sql.then(function (reply) {
+            res.json(reply);
+        }).catch(function (err) {
+            next(err);
+        });
+    });
 
+    //逻辑恢复题目
+    router.get('/questions/recovery', function (req, res,next) {
+        var sql = knex('questions_bank').where('seq_no',req.query.seq_no).update('status',1);
         sql.then(function (reply) {
             res.json(reply);
         }).catch(function (err) {
