@@ -357,6 +357,11 @@ $(function () {
                             $(this).find(".close-page").trigger("click");
                         }
                     });
+                    $("#navAside ul li a span").each(function(){
+                        if($(this).html().indexOf('试题管理') > -1){
+                            $(this).trigger("click");
+                        }
+                    });
                 },
                 "error": function (data) {
                     console.log(data);

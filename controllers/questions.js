@@ -151,26 +151,40 @@ module.exports = function (app) {
     router.get('/questions/TLNew', function (req, res,next) {
         var question = req.query.question;
         var question_list = req.query.question_list;
+        var related_bank ;
 
         question.account_id = req.session.account_id;
         question.date1 = new Date();
         question.date1 = moment().format('YYYY-MM-DD HH:mm:ss');
 
+        var time = new Date();
+        time = moment().format('YYYY-MM-DD HH:mm:ss');
+        var record_info = {
+            operator_id: req.session.account_id,
+            operator_name: req.session.username,
+            operat_time: time,
+            status: 1,
+            source: 1
+        };
+
         if(question.seq_no){//更新
             var sql = knex('questions_bank').where('seq_no',question.seq_no).update(question);
+            record_info.operation_type = '修改题目信息';
         }else{ //新增
             var sql = knex('questions_bank').insert(question);
+            record_info.operation_type = '添加题目信息';
         }
 
         sql.then(function (reply) {
+            related_bank = reply[0];
             if(question.seq_no){
+                record_info.record_id = question.seq_no;
                 return knex('questions_info').where('related_bank',question.seq_no).delete();
             }else{
+                record_info.record_id = related_bank;
                 return Promise;
             }
         }).then(function (reply) {
-
-            var related_bank = reply[0];
             return Promise.map(question_list, function (question_info) {
                 if(question.seq_no){
                     question_info.related_bank = question.seq_no;
@@ -180,13 +194,8 @@ module.exports = function (app) {
                 question_info.account_id = req.session.account_id;
                 return knex('questions_info').insert(question_info);
             });
-            if(question.seq_no){
-                return knex('questions_info').where('related_bank',question.seq_no);
-            }else{
-
-            }
-
-
+        }).then(function (reply) {
+            return knex('operation_record').insert(record_info);
         }).then(function (reply) {
             res.json(reply);
         }).catch(function (err) {
