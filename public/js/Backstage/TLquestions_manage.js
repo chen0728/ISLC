@@ -55,9 +55,9 @@ $(function () {
             $(this).find(".close").css("display","none");
         });
         $p_id.find(".closefirst").on('click',function(){
-            $p_id.find('#que_num').html('共 '+($p_id.find('#package_step1Form').children('div').length - 5)+' 题');
+            $p_id.find('#que_num').html('共 '+($p_id.find('#package_step1Form').children('div').length - 6)+' 题');
         });
-        $p_id.find('#que_num').html('共 '+($p_id.find('#package_step1Form').children('div').length - 4)+' 题');
+        $p_id.find('#que_num').html('共 '+($p_id.find('#package_step1Form').children('div').length - 5)+' 题');
     });
 
     //查看
@@ -267,7 +267,7 @@ $(function () {
                             $(this).find(".close").css("display","none");
                         });
                         $p_id.find(".closefirst").on('click',function(){
-                            $p_id.find('#que_num').html('共 '+($p_id.find('#package_step1Form').children('div').length - 5)+' 题');
+                            $p_id.find('#que_num').html('共 '+($p_id.find('#package_step1Form').children('div').length - 6)+' 题');
                         });
                         $p_id.find('#que_num').html('共 '+data.length+' 题');
                     }, "error": function (data) {
@@ -292,7 +292,7 @@ $(function () {
         });
         if(pass){
             question_list = [];
-            for(var i=0; i<$p_id.find('#package_step1Form').children('div').length - 4; i++){
+            for(var i=0; i<$p_id.find('#package_step1Form').children('div').length - 5; i++){
                 var answer = '';
                 if($p_id.find("#package_step1Form .timu:eq("+i+") [name='Q_CA']").is(':checked')){
                     answer += 'A';

@@ -24,7 +24,6 @@ $(function () {
             operation_type: $p_id.find('#operation_type_q').val(), // 操作类型
             operat_time_s: $p_id.find('#operat_time_s').val(), // 操作时间
             operat_time_e: $p_id.find('#operat_time_e').val(), // 操作时间
-            operator_part: $p_id.find('#operator_part_q').val() // 操作人角色
         };
 
         var table_src = $('#operation_Table'); // 定义指向
@@ -35,7 +34,6 @@ $(function () {
             {"col_id": "operator_name"},    //姓名
             {"col_id": "operation_type"},   //类型
             {"col_id": "operat_time"},  //时间
-            {"col_id": "operator_part"},    //角色
         ]; // 定义表格数据列id
         var aoColumnDefs = [{
             "colIndex": 0,
@@ -79,25 +77,6 @@ $(function () {
         }, {
             "colIndex": 4,
             "html": function (data, type, full) {
-                if (!data) {
-                    return '';
-                }
-                var text = '';
-                if(data == 1){
-                    return '<td><div class="text-center">教师</div></td>';
-                }else if(data == 3){
-
-                    return '<td><div class="text-center">管理员</div></td>';
-                }
-                /*for (var i = 0; i < fnemployeePage.stautss.length; i++) {
-                 if (fnemployeePage.stautss[i].key_id == data) {
-                 text = fnemployeePage.stautss[i].key_val_cn;
-                 }
-                 }*/
-            }
-        }, {
-            "colIndex": 5,
-            "html": function (data, type, full) {
                 var retHtml =  '<div class="drop-opt">' +
                     '<a class="employee_edit" href="javascript:void(0)" data-id="'+full.seq_no+'" data-toggle="modal">查看</a>' +
                     '</div>';
@@ -140,17 +119,11 @@ $(function () {
             "url": '/operation/list?seq_no=' + $('#seq_no').val(),
             "data": {},
             "success": function (data) {
-                if(data.data[0].operator_part == 1){ //学生
-                    data.data[0].operator_part = '教师';
-                } else {
-                    data.data[0].operator_part = '管理员';
-                }
                 if(data.data[0].operat_time){
                     data.data[0].operat_time = moment(data.data[0].operat_time).format('YYYY-MM-DD HH:mm:ss');
                 }
                 $("#seq_no").html('日志编号：'+data.data[0].seq_no);
                 $("#name").html(data.data[0].operator_name);
-                $("#operator_part").html(data.data[0].operator_part);
                 $("#operat_time").html('操作时间：'+data.data[0].operat_time);
                 $("#remarks").val(data.data[0].remarks);
 

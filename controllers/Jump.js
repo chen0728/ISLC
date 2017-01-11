@@ -51,26 +51,32 @@ module.exports = function (app) {
     //后台首页
     router.post('/login', function (req, res) {
         var userInfo = req.body;
+        var dayNames = new Array("星期日","星期一","星期二","星期三","星期四","星期五","星期六");
+        var Stamp = new Date();
+        var mm_dd = (Stamp.getMonth() + 1) +"月"+Stamp.getDate()+ "日";
+        var Week = dayNames[Stamp.getDay()];
         knex.select('*').from('account').leftJoin('role_info', 'account.part', 'role_info.seq_no').where('account.account_id', userInfo.username).where('account.password', userInfo.password).then(function (reply) {
-            var dayNames = new Array("星期日","星期一","星期二","星期三","星期四","星期五","星期六");
-            var Stamp = new Date();
-            var mm_dd = (Stamp.getMonth() + 1) +"月"+Stamp.getDate()+ "日";
-            var Week = dayNames[Stamp.getDay()];
             if(reply.length == 1){
+                var time = new Date();
+                time = moment().format('YYYY-MM-DD HH:mm:ss');
                 req.session.account_id = userInfo.username;
                 req.session.menu_id = reply[0].menu_id;
                 req.session.username = reply[0].name;
-
-                res.render('Backstage/index',{
-                    login_account_id:req.session.account_id,
-                    menu_id:reply[0].menu_id,
-                    username:reply[0].name,
-                    mm_dd:mm_dd,
-                    Week:Week,
+                return knex('operation_record').insert({
+                    operator_id: reply[0].account_id,
+                    operator_name: reply[0].name,
+                    operation_type: '登录',
+                    operat_time: time,
+                    record_id: reply[0].account_id,
+                    status: 1,
+                    source: 1
                 });
+
             }else{
                 res.redirect('/');
             }
+        }).then(function (reply) {
+            res.redirect('/index');
         }).catch(function (err) {
             next(err);
         });

@@ -60,15 +60,31 @@ module.exports = function (app) {
         var params = req.query.params;
         var sql = knex('account');
 
+        var time = new Date();
+        time = moment().format('YYYY-MM-DD HH:mm:ss');
+        var record_info = {
+            operator_id: req.session.account_id,
+            operator_name: req.session.username,
+            record_id: params.account_id,
+            operat_time: time,
+            status: 1,
+            source: 1
+        };
+
         //修改
         if(params.seq_no){
             sql = sql.where('seq_no',params.seq_no).update(params);
+            record_info.operation_type = '修改用户信息';
+
         } else {
             sql = sql.insert(params);
             params.regTime = moment().format('YYYY-MM-DD HH:mm:ss');
+            record_info.operation_type = '添加用户信息';
         }
 
         sql.then(function (reply) {
+            return knex('operation_record').insert(record_info);
+        }).then(function (reply) {
             res.json(reply);
         }).catch(function (err) {
             next(err);
@@ -80,6 +96,11 @@ module.exports = function (app) {
         var sql = knex('account').where('seq_no',req.query.seq_no).update('status',2);
 
         sql.then(function (reply) {
+            var time = new Date();
+            time = moment().format('YYYY-MM-DD HH:mm:ss');
+            return knex.raw("INSERT INTO operation_record (operator_id,operator_name,operation_type,record_id,operat_time,status,source)" +
+                " VALUES ('"+req.session.account_id+"','"+req.session.username+"','删除用户信息',(SELECT account_id FROM account WHERE seq_no = '"+req.query.seq_no+"'),'"+time+"',1,1)")
+        }).then(function (reply) {
             res.json(reply);
         }).catch(function (err) {
             next(err);
@@ -91,6 +112,11 @@ module.exports = function (app) {
         var sql = knex('account').where('seq_no',req.query.seq_no).update('status',1);
 
         sql.then(function (reply) {
+            var time = new Date();
+            time = moment().format('YYYY-MM-DD HH:mm:ss');
+            return knex.raw("INSERT INTO operation_record (operator_id,operator_name,operation_type,record_id,operat_time,status,source)" +
+                " VALUES ('"+req.session.account_id+"','"+req.session.username+"','恢复用户信息',(SELECT account_id FROM account WHERE seq_no = '"+req.query.seq_no+"'),'"+time+"',1,1)")
+        }).then(function (reply) {
             res.json(reply);
         }).catch(function (err) {
             next(err);
@@ -102,6 +128,11 @@ module.exports = function (app) {
         var sql = knex('account').where('seq_no',req.query.seq_no).update('password',123456);
 
         sql.then(function (reply) {
+            var time = new Date();
+            time = moment().format('YYYY-MM-DD HH:mm:ss');
+            return knex.raw("INSERT INTO operation_record (operator_id,operator_name,operation_type,record_id,operat_time,status,source)" +
+                " VALUES ('"+req.session.account_id+"','"+req.session.username+"','重置用户密码',(SELECT account_id FROM account WHERE seq_no = '"+req.query.seq_no+"'),'"+time+"',1,1)")
+        }).then(function (reply) {
             res.json(reply);
         }).catch(function (err) {
             next(err);
