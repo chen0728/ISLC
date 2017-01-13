@@ -116,16 +116,17 @@ $(function () {
             "dataType": 'json',
             "type": "get",
             "timeout": 20000,
-            "url": '/operation/list?seq_no=' + $('#seq_no').val(),
+            "url": '/operation/list?seq_no=' + $(this).attr('data-id'),
             "data": {},
             "success": function (data) {
+                debugger;
                 if(data.data[0].operat_time){
                     data.data[0].operat_time = moment(data.data[0].operat_time).format('YYYY-MM-DD HH:mm:ss');
                 }
                 $("#seq_no").html('日志编号：'+data.data[0].seq_no);
                 $("#name").html(data.data[0].operator_name);
                 $("#operat_time").html('操作时间：'+data.data[0].operat_time);
-                $("#remarks").val(data.data[0].remarks);
+                $("#remarks").val(data.data[0].operator_name+'（'+data.data[0].operator_id+'）在 '+data.data[0].operat_time+' 对（'+data.data[0].record_id+'）进行了 '+data.data[0].operation_type+' 操作');
 
             },
             "error": function (data) {
