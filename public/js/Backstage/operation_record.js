@@ -143,7 +143,33 @@ $(function () {
     }).on('hidden.bs.modal', function () {
         $(this).removeClass('modal-outer');
     });
+//日历控件
+    //var nowTemp = new Date();
+    //var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+    $('.form_datetime').each(function (i, n) {
+        var $date = $(n).find('.datepicker');
 
+        var checkout = $date.eq(1).datetimepicker({
+            format: 'yyyy-mm-dd hh:ii',
+            language: 'zh-TW',
+            autoclose: true
+        }).data('datetimepicker');
+
+        var checkin = $date.eq(0).datetimepicker({
+            format: 'yyyy-mm-dd hh:ii',
+            language: 'zh-TW',
+            autoclose: true
+        }).on('changeDate', function (ev) {
+            //if (ev.date.valueOf() > checkout.date.valueOf()) {
+            var newDate = new Date(ev.date)
+            newDate.setDate(newDate.getDate());
+            debugger;
+            checkout.setDate(newDate);
+            checkout.setStartDate(newDate);
+            //}
+            $date.eq(1).focus();
+        }).data('datetimepicker');
+    });
 
 });
 

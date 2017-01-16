@@ -32,7 +32,7 @@ module.exports = function (app) {
         }).then(function (reply) {
             if (reply) {
                 for(var i =0;i<reply.length;i++){
-                    reply[i].up_time = moment(reply[i].up_time).format('YYYY-MM-DD HH:MM');
+                    reply[i].up_time = moment(reply[i].up_time).format('YYYY-MM-DD HH:mm');
                 }
                 infos.data = reply;
                 res.json(infos);

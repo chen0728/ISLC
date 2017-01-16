@@ -139,36 +139,29 @@ $(function () {
                 $p_id.find("#idLab").val(data[0].seq_no);
                 $p_id.find("#nameLab").val(data[0].role_name);
                 var chk1 = document.getElementById('check1');
+                var chk2 = document.getElementById('check2');
+                var chk3 = document.getElementById('check3');
+                var chk4 = document.getElementById('check4');
+                var chk5 = document.getElementById('check5');
+                var chk6 = document.getElementById('check6');
                 if(data[0].menu_id.indexOf(';1;') >= 0){
                     chk1.checked = true;
+                    chk2.checked = true;
+                    chk3.checked = true;
+                    chk4.checked = true;
+                    chk5.checked = true;
                 }else{
                     chk1.checked = false;
-                }
-                var chk2 = document.getElementById('check2');
-                if(data[0].menu_id.indexOf(';2;') >= 0){
-                    chk2.checked = true;
-                }else{
                     chk2.checked = false;
-                }
-                var chk3 = document.getElementById('check3');
-                if(data[0].menu_id.indexOf(';3;') >= 0){
-                    chk3.checked = true;
-                }else{
                     chk3.checked = false;
-                }
-                var chk4 = document.getElementById('check4');
-                if(data[0].menu_id.indexOf(';4;') >= 0){
-                    chk4.checked = true;
-                }else{
                     chk4.checked = false;
+                    chk5.checked = false;
                 }
-                var chk5 = document.getElementById('check5');
                 if(data[0].menu_id.indexOf(';5;') >= 0){
                     chk5.checked = true;
                 }else{
                     chk5.checked = false;
                 }
-                var chk6 = document.getElementById('check6');
                 if(data[0].menu_id.indexOf(';6;') >= 0){
                     chk6.checked = true;
                 }else{
@@ -328,6 +321,33 @@ $(function () {
     }).on('hidden.bs.modal', function () {
         $(this).removeClass('modal-outer');
     });
+
+//日历控件
+//    var nowTemp = new Date();
+//    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+    $('.j_datebetween').each(function (i, n) {
+        var $date = $(n).find('.j_datepicker');
+        var checkin = $date.eq(0).datepicker({
+            format: 'yyyy-mm-dd',
+            language: 'zh-CN',
+            autoclose: true
+        }).on('changeDate', function (ev) {
+            //if (ev.date.valueOf() > checkout.date.valueOf()) {
+            var newDate = new Date(ev.date)
+            newDate.setDate(newDate.getDate() + 1);
+            checkout.setDate(newDate);
+            checkout.setStartDate(newDate);
+            //}
+            $date.eq(1).focus();
+        }).data('datepicker');
+
+        var checkout = $date.eq(1).datepicker({
+            format: 'yyyy-mm-dd',
+            language: 'zh-CN',
+            autoclose: true
+        }).data('datepicker');
+    });
+
 
 })
 

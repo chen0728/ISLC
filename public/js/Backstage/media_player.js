@@ -5,7 +5,8 @@
 $(function () {
     var $p_id = $("#media_player_page");
     //修改课程
-    seq_no = $p_id.find("#seq_no").val();
+    var seq_no = $p_id.find("#seq_no").val();
+    var download_url;
     //查询详情 并自动填充
     $.ajax({
         type: "get",
@@ -83,19 +84,22 @@ $(function () {
                     data: {},
                     success: function (data) {
                         if(data[0].data_url){
+                            debugger;
                             filedata = data[0].data_url.split(".")[data[0].data_url.split(".").length-1];
                             if('mp3,MP3,wav,WAV'.indexOf(filedata) > -1){
                                 $p_id.find("#playMediaModal").modal('show');
                                 $p_id.find("#mediaAreaLab").css({'font-size': '29px','margin':'0px 0px 0px 0px'});
                                 $p_id.find("#mediaAreaLab").html(data[0].name);
-                                $p_id.find("#media").html('<audio src="'+data[0].data_url+'" style="margin: -18px 0px -8px 0px;width: 534px;" controls="controls">您的浏览器不支持audio标签，请使用更新版本的浏览器。</audio>');
+                                $p_id.find("#media").html('<audio src="/upload/'+data[0].data_url+'" style="margin: -18px 0px -8px 0px;width: 534px;" controls="controls">您的浏览器不支持audio标签，请使用更新版本的浏览器。</audio>');
                                 $p_id.find("#videoButton").css('margin','0px 43px 0px 0px');
+                                download_url = data[0].data_url;
                             }else if('ogg,OGG,mp4,MP4,mpeg4,MPEG4,webm,WEBM'.indexOf(filedata) > -1){
                                 $p_id.find("#playMediaModal").modal('show');
                                 $p_id.find("#mediaAreaLab").css({'font-size': '20px','margin':'-38px 0px 0px -46px'});
                                 $p_id.find("#mediaAreaLab").html(data[0].name);
-                                $p_id.find("#media").html('<video src="'+data[0].data_url+'" style="margin: -18px 0px -28px -50px;width: 648px;" controls="controls">您的浏览器不支持video标签，请使用更新版本的浏览器。</video>');
+                                $p_id.find("#media").html('<video src="/upload/'+data[0].data_url+'" style="margin: -18px 0px -28px -50px;width: 648px;" controls="controls">您的浏览器不支持video标签，请使用更新版本的浏览器。</video>');
                                 $p_id.find("#videoButton").css('margin','0px 43px -20px 0px');
+                                download_url = data[0].data_url;
                             }else{
                                 window.open("/upload/"+data[0].data_url);
                             };
@@ -113,10 +117,15 @@ $(function () {
             alert("系统错误");
         }
     });
+    //弹窗下载
+    $p_id.find("#download").on("click",function(){
+        window.open("/upload/"+download_url);
+    });
     //关闭
     $p_id.find("#play_media_cancel").on("click",function(){
         $p_id.find("#media").html('');
     });
+
     $(".close").on('click',function(){
         $p_id.find("#media").html('');
     });

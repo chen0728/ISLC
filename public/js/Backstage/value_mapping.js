@@ -198,29 +198,30 @@ $(function () {
         debugger;
         $("#areaLab").html('添加字典');
         $('#addMapModal').modal('show');
-        debugger;
-        $.ajax({
-            type: "get",
-            url: '/value_mapping/select',
-            dataType: "json",
-            data:{},
-            success: function (data) {
-                debugger;
-                new_num=data[0].num1;
-                new_num1 = parseInt(new_num);
-            },
-            error: function (data) {
-                debugger;
-                alert("系统错误");
-            }
-        });
         $('#save_map').on('click', function () {
             debugger;
+            $.ajax({
+                type: "get",
+                url: '/value_mapping/select',
+                dataType: "json",
+                async: false,
+                data:{},
+                success: function (data) {
+                    debugger;
+                    new_num = parseInt(data[0].num1);
+                },
+                error: function (data) {
+                    debugger;
+                    alert("系统错误");
+                }
+            });
+            debugger;
             var data = {
-                num1:new_num1+1,
+                num1:new_num+1,
                 key_id:$p_id.find("#keyLab").val(),
                 key_val_cn:$p_id.find("#nameLab").val(),
                 data_status:1,
+                type:'班级'
             };
             debugger;
             $.ajax({
@@ -246,6 +247,31 @@ $(function () {
         $(this).removeClass('modal-outer');
     });
 
+    //日历控件
+//    var nowTemp = new Date();
+//    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+    $('.j_datebetween').each(function (i, n) {
+        var $date = $(n).find('.j_datepicker');
+        var checkin = $date.eq(0).datepicker({
+            format: 'yyyy-mm-dd',
+            language: 'zh-CN',
+            autoclose: true
+        }).on('changeDate', function (ev) {
+            //if (ev.date.valueOf() > checkout.date.valueOf()) {
+            var newDate = new Date(ev.date)
+            newDate.setDate(newDate.getDate() + 1);
+            checkout.setDate(newDate);
+            checkout.setStartDate(newDate);
+            //}
+            $date.eq(1).focus();
+        }).data('datepicker');
+
+        var checkout = $date.eq(1).datepicker({
+            format: 'yyyy-mm-dd',
+            language: 'zh-CN',
+            autoclose: true
+        }).data('datepicker');
+    });
 })
 
 

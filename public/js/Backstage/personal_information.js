@@ -128,7 +128,8 @@ $(function () {
     // 动态绑定编辑事件
     $(document).on("click", ".employee_edit", function () {
         debugger;
-        seq_no = $(this).attr('data-id');
+        var seq_no = $(this).attr('data-id');
+        new_seq = seq_no;
         //查询详情 并自动填充
         $.ajax({
             type: "get",
@@ -193,26 +194,26 @@ $(function () {
     });
     //删除
     $(document).on("click", ".employee_del", function () {
-        seq_no = $(this).attr('data-id');
+        var seq_no = $(this).attr('data-id');
         $("#delMapModal").modal('show');
         debugger;
-    });
-    $('#del_infor').on('click', function () {
-        debugger
-        $.ajax({
-            type: "post",
-            url: '/Pinformation/del?seq_no='+seq_no,
-            dataType: "json",
-            data:{},
-            success: function (data) {
-                debugger;
-                alert("删除成功！");
-                window.location.reload();
-            },
-            error: function (data) {
-                alert("系统错误");
-            }
-        })
+        $('#del_infor').on('click', function () {
+            debugger
+            $.ajax({
+                type: "post",
+                url: '/Pinformation/del?seq_no='+seq_no,
+                dataType: "json",
+                data:{},
+                success: function (data) {
+                    debugger;
+                    alert("删除成功！");
+                    window.location.reload();
+                },
+                error: function (data) {
+                    alert("系统错误");
+                }
+            })
+        });
     });
     //添加资料弹窗
     $('#addData').on('click', function () {
@@ -241,7 +242,7 @@ $(function () {
         }
         if($("#areaLab").html() == '资料详情'){
             var data = {
-                seq_no:seq_no,
+                seq_no:new_seq,
                 public:pub,
                 data_type: $p_id.find('#type_detail').val(),
                 name: $p_id.find('#name_detail').val(),
@@ -352,6 +353,31 @@ $(function () {
         }, 1000);
     })
 
+    //日历控件
+//    var nowTemp = new Date();
+//    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+    $('.j_datebetween').each(function (i, n) {
+        var $date = $(n).find('.j_datepicker');
+        var checkin = $date.eq(0).datepicker({
+            format: 'yyyy-mm-dd',
+            language: 'zh-CN',
+            autoclose: true
+        }).on('changeDate', function (ev) {
+            //if (ev.date.valueOf() > checkout.date.valueOf()) {
+            var newDate = new Date(ev.date)
+            newDate.setDate(newDate.getDate() + 1);
+            checkout.setDate(newDate);
+            checkout.setStartDate(newDate);
+            //}
+            $date.eq(1).focus();
+        }).data('datepicker');
+
+        var checkout = $date.eq(1).datepicker({
+            format: 'yyyy-mm-dd',
+            language: 'zh-CN',
+            autoclose: true
+        }).data('datepicker');
+    });
 })
 
 

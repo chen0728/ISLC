@@ -129,12 +129,22 @@ module.exports = function (app) {
     //新建组
     router.post('/grouping/new', function (req, res, next) {
         var pro = req.body;
-        mydate = moment().format('YYYY-MM-DD HH:mm:ss');
+        var mydate = moment().format('YYYY-MM-DD HH:mm:ss');
         pro.date1 = mydate;
         var sql = knex('grouping_info').insert(pro);
-        // 执行sql
+        var data_reply;
         sql.then(function (reply) {
-            res.json({data: reply});
+            data_reply = reply;
+            return knex('operation_record').insert({
+                operator_id: req.session.account_id,
+                operator_name: req.session.username,
+                operation_type: '新建分组',
+                operat_time: mydate,
+                record_id: reply,
+                status: 1,
+            });
+        }).then(function (reply) {
+            res.json({data: data_reply});
         }).catch(function (err) {
             next(err);
         });
@@ -142,9 +152,22 @@ module.exports = function (app) {
     //删除组
     router.post('/grouping/delGroup', function (req, res, next) {
         var seq_no = req.query.seq_no;
-        var sql = knex('grouping_info').where('seq_no',seq_no).del();
+        var sql = knex('grouping_info').where('seq_no',seq_no).update({class:'',account_id:'',student:'',status:2});
+        var data_reply;
         sql.then(function (reply) {
-            res.json(reply);
+            data_reply = reply;
+            var time = new Date();
+            time = moment().format('YYYY-MM-DD HH:mm:ss');
+            return knex('operation_record').insert({
+                operator_id: req.session.account_id,
+                operator_name: req.session.username,
+                operation_type: '删除分组',
+                operat_time: time,
+                record_id: seq_no,
+                status: 1,
+            });
+        }).then(function (reply) {
+            res.json(data_reply);
         }).catch(function (err) {
             next(err);
         });
@@ -157,8 +180,21 @@ module.exports = function (app) {
         }else{
             var sql = knex('grouping_info').update('remarks',pro.remarks).where('seq_no',pro.seq_no);
         }
+        var data_reply;
         sql.then(function (reply) {
-            res.json(reply);
+            data_reply = reply;
+            var time = new Date();
+            time = moment().format('YYYY-MM-DD HH:mm:ss');
+            return knex('operation_record').insert({
+                operator_id: req.session.account_id,
+                operator_name: req.session.username,
+                operation_type: '更改分组',
+                operat_time: time,
+                record_id: pro.seq_no,
+                status: 1,
+            });
+        }).then(function (reply) {
+            res.json(data_reply);
         }).catch(function (err) {
             next(err);
         });

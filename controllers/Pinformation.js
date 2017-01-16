@@ -106,25 +106,50 @@ module.exports = function (app) {
     router.post('/Pinformation/del', function (req, res, next) {
         var seq_no = req.query.seq_no;
         var sql = knex('data_info').update('status',2).where('seq_no',seq_no);
-        // 执行sql
+        var data_reply;
         sql.then(function (reply) {
-            res.json({data: reply});
+            data_reply = reply;
+            var time = new Date();
+            time = moment().format('YYYY-MM-DD HH:mm:ss');
+            return knex('operation_record').insert({
+                operator_id: req.session.account_id,
+                operator_name: req.session.username,
+                operation_type: '删除资料',
+                operat_time: time,
+                record_id: seq_no,
+                status: 1,
+            });
+        }).then(function (reply) {
+            res.json({data: data_reply});
         }).catch(function (err) {
             next(err);
         });
     });
-    //新建
+    //新建或更新
     router.post('/Pinformation/insert', function (req, res, next) {
         var pro = req.body;
-        pro.up_time = moment().format('YYYY-MM-DD HH:mm:ss');
+        var mydate = moment().format('YYYY-MM-DD HH:mm:ss');
+        pro.up_time = mydate;
+        var data_reply;
+        var record = {
+            operator_id: req.session.account_id,
+            operator_name: req.session.username,
+            operat_time: mydate,
+            record_id: pro.seq_no,
+            status: 1,
+        }
         if(pro.number){
             var sql = knex('data_info').insert(pro);
+            record.operation_type = '新建资料';
         }else{
             var sql = knex('data_info').update(pro).where('seq_no',pro.seq_no);
+            record.operation_type = '更改资料';
         }
-        // 执行sql
         sql.then(function (reply) {
-            res.json({data: reply});
+            data_reply = reply;
+            return knex('operation_record').insert(record);
+        }).then(function (reply) {
+            res.json({data: data_reply});
         }).catch(function (err) {
             next(err);
         });

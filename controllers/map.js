@@ -69,9 +69,20 @@ module.exports = function (app) {
         var pro = req.body;
         var num1 = req.query.num1;
         var sql = knex('value_mapping').update(pro).where('num1',num1);
-        // 执行sql
+        var mydate = moment().format('YYYY-MM-DD HH:mm:ss');
+        var data_reply;
         sql.then(function (reply) {
-            res.json({data: reply});
+            data_reply = reply;
+            return knex('operation_record').insert({
+                operator_id: req.session.account_id,
+                operator_name: req.session.username,
+                operation_type: '更新班级',
+                operat_time: mydate,
+                record_id: num1,
+                status: 1,
+            });
+        }).then(function (reply) {
+            res.json({data: data_reply});
         }).catch(function (err) {
             next(err);
         });
@@ -80,9 +91,20 @@ module.exports = function (app) {
     router.post('/value_mapping/del', function (req, res, next) {
         var num1 = req.query.num1;
         var sql = knex('value_mapping').update('data_status',2).where('num1',num1);
-        // 执行sql
+        var mydate = moment().format('YYYY-MM-DD HH:mm:ss');
+        var data_reply;
         sql.then(function (reply) {
-            res.json({data: reply});
+            data_reply = reply;
+            return knex('operation_record').insert({
+                operator_id: req.session.account_id,
+                operator_name: req.session.username,
+                operation_type: '删除班级',
+                operat_time: mydate,
+                record_id: num1,
+                status: 1,
+            });
+        }).then(function (reply) {
+            res.json({data: data_reply});
         }).catch(function (err) {
             next(err);
         });
@@ -91,12 +113,22 @@ module.exports = function (app) {
     //新建
     router.post('/value_mapping/insert', function (req, res, next) {
         var pro = req.body;
-        mydate = moment().format('YYYY-MM-DD HH:mm:ss');
+        var mydate = moment().format('YYYY-MM-DD HH:mm:ss');
         pro.date1 = mydate;
         var sql = knex('value_mapping').insert(pro);
-        // 执行sql
+        var data_reply;
         sql.then(function (reply) {
-            res.json({data: reply});
+            data_reply = reply;
+            return knex('operation_record').insert({
+                operator_id: req.session.account_id,
+                operator_name: req.session.username,
+                operation_type: '新建班级',
+                operat_time: mydate,
+                record_id: pro.num1,
+                status: 1,
+            });
+        }).then(function (reply) {
+            res.json({data: data_reply});
         }).catch(function (err) {
             next(err);
         });

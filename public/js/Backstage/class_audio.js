@@ -39,7 +39,7 @@ $(function () {
         var aoColumns = [
             {"col_id": "number"},
             {"col_id": "name"},
-            {"col_id": "up_time"},
+            {"col_id": "class_time"},
         ]; // 定义表格数据列id
         debugger;
         var aoColumnDefs = [{
@@ -114,7 +114,12 @@ $(function () {
             success: function (data) {
                 debugger;
                 $p_id.find("#audioAreaLab").html(data[0].name);
-                $p_id.find("#dudio").html('<audio src="/upload/'+data[0].class_audio+'" style="margin: -18px 0px -8px 37px;width: 477px;" controls="controls">您的浏览器不支持audio标签，请使用更新版本的浏览器。</audio>');
+                if(data[0].class_audio){
+                    $p_id.find("#dudio").html('<audio src="/upload/'+data[0].class_audio+'" style="margin: -18px 0px -8px 37px;width: 477px;" controls="controls">您的浏览器不支持audio标签，请使用更新版本的浏览器。</audio>');
+
+                }else{
+                    $p_id.find("#dudio").html('<div " style="margin: -16px 0px -8px 14px;width: 477px;">该课程暂无上课语音</div>');
+                }
                 //$p_id.find("#class").html('<audio src="/upload/'+data[0].class_audio+'" style="margin-top: -6px;" controls="controls">您的浏览器不支持audio标签，请使用更新版本的浏览器。</audio>');
             },
             error: function (data) {
@@ -145,7 +150,33 @@ $(function () {
     }).on('hidden.bs.modal', function () {
         $(this).removeClass('modal-outer');
     });
+    //日历控件
+    //var nowTemp = new Date();
+    //var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+    $('.form_datetime').each(function (i, n) {
+        var $date = $(n).find('.datepicker');
 
+        var checkout = $date.eq(1).datetimepicker({
+            format: 'yyyy-mm-dd hh:ii',
+            language: 'zh-TW',
+            autoclose: true
+        }).data('datetimepicker');
+
+        var checkin = $date.eq(0).datetimepicker({
+            format: 'yyyy-mm-dd hh:ii',
+            language: 'zh-TW',
+            autoclose: true
+        }).on('changeDate', function (ev) {
+            //if (ev.date.valueOf() > checkout.date.valueOf()) {
+            var newDate = new Date(ev.date)
+            newDate.setDate(newDate.getDate());
+            debugger;
+            checkout.setDate(newDate);
+            checkout.setStartDate(newDate);
+            //}
+            $date.eq(1).focus();
+        }).data('datetimepicker');
+    });
 })
 
 
